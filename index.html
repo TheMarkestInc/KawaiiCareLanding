@@ -109,9 +109,26 @@
         <div class="hero__overlay"></div>
       </div>
       <div class="hero__content container">
-        <h1 class="hero__title animate-in">The cute little thing that actually fixed my life.</h1>
+        <h1 class="hero__title animate-in">The cute little thing that actually fixed my <span class="hero__rotating-word" id="rotatingWord">life</span>.</h1>
         <p class="hero__subtitle animate-in">An AI companion that hangs on your bag, coaches you through weight loss, burnout, and lonely Friday nights&nbsp;&mdash; and never judges you. Also, you can yell at it.</p>
         <a href="http://eepurl.com/jzI29o" class="btn btn--primary btn--lg animate-in" target="_blank" rel="noopener noreferrer">Get on the Waitlist</a>
+        <div class="hero__platforms animate-in" aria-label="Also available on">
+          <span class="hero__platforms-label">also available on</span>
+          <div class="hero__platforms-logos">
+            <div class="hero__platform">
+              <img src="assets/corplogos/applelogo.png" alt="" width="20" height="24" loading="eager">
+              <span>iOS</span>
+            </div>
+            <div class="hero__platform">
+              <img src="assets/corplogos/androidlogo.png" alt="" width="22" height="24" loading="eager">
+              <span>Android</span>
+            </div>
+            <div class="hero__platform">
+              <img src="assets/corplogos/metalogo.png" alt="" width="28" height="20" loading="eager">
+              <span>Oculus</span>
+            </div>
+          </div>
+        </div>
         <p class="hero__small animate-in">Free. No spam. Just a tiny thing that gives a damn.</p>
       </div>
       <!-- Decorative floating elements -->
@@ -415,7 +432,9 @@
     </section>
 
     <!-- ======== PRICING / WAITLIST (Block 12) ======== -->
-    <section class="section section--alt" id="pricing">
+    <section class="section section--alt pricing-section" id="pricing">
+      <!-- Three.js 3D canvas -->
+      <canvas class="pricing-3d-canvas" id="pricing3d" aria-hidden="true"></canvas>
       <div class="container">
         <span class="tag animate-in">take the first step</span>
         <h2 class="section__title animate-in">You don't have to fix everything today. You just have to start.</h2>
@@ -532,6 +551,7 @@
     </div>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
   <script src="main.js" defer></script>
 </body>
 </html>

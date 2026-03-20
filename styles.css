@@ -3,6 +3,15 @@
    Mobile-first responsive design
    ======================================== */
 
+/* ---- Custom Font ---- */
+@font-face {
+  font-family: 'Frankfurter Russia';
+  src: url('assets/fonts/frankfurterrussia.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ---- CSS Custom Properties ---- */
 :root {
   /* Colors */
@@ -17,7 +26,7 @@
   --color-white: #FFFFFF;
 
   /* Typography */
-  --ff-heading: 'Quicksand', sans-serif;
+  --ff-heading: 'Frankfurter Russia', 'Quicksand', sans-serif;
   --ff-body: 'Nunito', sans-serif;
   --fs-hero: clamp(2rem, 5vw, 4.5rem);
   --fs-h2: clamp(1.75rem, 3.5vw, 3rem);
@@ -87,7 +96,7 @@ ul, ol { list-style: none; }
 h1, h2, h3, h4 {
   font-family: var(--ff-heading);
   line-height: 1.2;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 /* ---- Skip Link ---- */
@@ -451,11 +460,36 @@ body.nav-open {
 
 .hero__title {
   font-size: var(--fs-hero);
-  font-weight: 800;
+  font-weight: 400;
   color: var(--color-text);
   margin-bottom: 1.5rem;
   max-width: 800px;
   margin-inline: auto;
+}
+
+.hero__rotating-word {
+  display: inline-block;
+  position: relative;
+  color: var(--color-primary);
+  min-width: 2ch;
+}
+
+.hero__rotating-word.flip-out {
+  animation: word-flip-out 0.35s ease-in forwards;
+}
+
+.hero__rotating-word.flip-in {
+  animation: word-flip-in 0.35s ease-out forwards;
+}
+
+@keyframes word-flip-out {
+  0% { opacity: 1; transform: translateY(0) rotateX(0deg); filter: blur(0); }
+  100% { opacity: 0; transform: translateY(-20px) rotateX(60deg); filter: blur(4px); }
+}
+
+@keyframes word-flip-in {
+  0% { opacity: 0; transform: translateY(20px) rotateX(-60deg); filter: blur(4px); }
+  100% { opacity: 1; transform: translateY(0) rotateX(0deg); filter: blur(0); }
 }
 
 .hero__subtitle {
@@ -465,6 +499,41 @@ body.nav-open {
   margin-inline: auto;
   margin-bottom: 2rem;
   line-height: 1.8;
+}
+
+.hero__platforms {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.hero__platforms-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: lowercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 0.6rem;
+}
+
+.hero__platforms-logos {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.hero__platform {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: var(--ff-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.hero__platform img {
+  filter: brightness(0) invert(1);
+  opacity: 0.85;
 }
 
 .hero__small {
@@ -1109,6 +1178,26 @@ body.nav-open {
   margin-top: 1rem;
   font-size: var(--fs-small);
   color: var(--color-text-muted);
+}
+
+/* ======== PRICING 3D SHAPES ======== */
+.pricing-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-3d-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pricing-section > .container {
+  position: relative;
+  z-index: 1;
 }
 
 /* ======== FAQ ======== */

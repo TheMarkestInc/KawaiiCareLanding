@@ -6,6 +6,33 @@
 (function () {
   'use strict';
 
+  // ---- Hero Rotating Word ----
+  var rotatingEl = document.getElementById('rotatingWord');
+  if (rotatingEl) {
+    var words = ['life', 'routine', 'habits', 'burnout', 'self-care', 'energy', 'sleep', 'wellness', 'balance', 'focus', 'stability', 'rhythm'];
+    var wordIndex = 0;
+    var firstDelay = 2000; // "life" stays 2s
+    var wordDelay = 1000;  // rest 1s each
+
+    function flipToNext() {
+      rotatingEl.classList.add('flip-out');
+      setTimeout(function () {
+        wordIndex = (wordIndex + 1) % words.length;
+        rotatingEl.textContent = words[wordIndex];
+        rotatingEl.classList.remove('flip-out');
+        rotatingEl.classList.add('flip-in');
+        setTimeout(function () {
+          rotatingEl.classList.remove('flip-in');
+        }, 350);
+      }, 350);
+    }
+
+    setTimeout(function () {
+      flipToNext();
+      setInterval(flipToNext, wordDelay);
+    }, firstDelay);
+  }
+
   // ---- Liquid Glass: physics-based refraction (archisvaze/liquid-glass) ----
   var ua = navigator.userAgent.toLowerCase();
   var isChromium = ua.indexOf('chrome') !== -1 || ua.indexOf('edg') !== -1 || ua.indexOf('opr') !== -1 || ua.indexOf('opera') !== -1;
@@ -343,5 +370,200 @@
         section.appendChild(span);
       }
     });
+  }
+
+  // ---- Pricing 3D Scene (Three.js) ----
+  var pricingSection = document.getElementById('pricing');
+  var canvas3d = document.getElementById('pricing3d');
+
+  if (pricingSection && canvas3d && typeof THREE !== 'undefined' && !prefersReducedMotion) {
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    camera.position.set(0, 0, 12);
+
+    var renderer = new THREE.WebGLRenderer({
+      canvas: canvas3d,
+      alpha: true,
+      antialias: true
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.2;
+
+    // Lighting — soft studio setup
+    var ambientLight = new THREE.AmbientLight(0xfff0f5, 0.6);
+    scene.add(ambientLight);
+
+    var keyLight = new THREE.DirectionalLight(0xffffff, 0.9);
+    keyLight.position.set(5, 8, 10);
+    scene.add(keyLight);
+
+    var fillLight = new THREE.DirectionalLight(0xffc0cb, 0.4);
+    fillLight.position.set(-6, 2, 4);
+    scene.add(fillLight);
+
+    var rimLight = new THREE.DirectionalLight(0xc084fc, 0.35);
+    rimLight.position.set(0, -4, -6);
+    scene.add(rimLight);
+
+    // Materials — glossy physical
+    var pinkMat = new THREE.MeshStandardMaterial({
+      color: 0xFF6B9D, roughness: 0.18, metalness: 0.1,
+      emissive: 0xFF6B9D, emissiveIntensity: 0.05
+    });
+    var lavenderMat = new THREE.MeshStandardMaterial({
+      color: 0xC084FC, roughness: 0.15, metalness: 0.12,
+      emissive: 0xC084FC, emissiveIntensity: 0.05
+    });
+    var goldMat = new THREE.MeshStandardMaterial({
+      color: 0xFFC857, roughness: 0.2, metalness: 0.3,
+      emissive: 0xFFC857, emissiveIntensity: 0.04
+    });
+    var softPinkMat = new THREE.MeshStandardMaterial({
+      color: 0xFFB6C1, roughness: 0.25, metalness: 0.05,
+      emissive: 0xFFB6C1, emissiveIntensity: 0.03
+    });
+    var glassMat = new THREE.MeshStandardMaterial({
+      color: 0xffffff, roughness: 0.05, metalness: 0.1,
+      transparent: true, opacity: 0.45,
+      emissive: 0xffe0f0, emissiveIntensity: 0.08
+    });
+
+    // Geometries
+    var sphereGeo = new THREE.SphereGeometry(1, 64, 64);
+    var torusGeo = new THREE.TorusGeometry(0.8, 0.35, 32, 64);
+    var icoGeo = new THREE.IcosahedronGeometry(0.7, 0);
+    var capsuleGeo = new THREE.CylinderGeometry(0.4, 0.4, 1.4, 32, 1, false);
+    // Round the capsule ends
+    var capTop = new THREE.SphereGeometry(0.4, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+    var capBot = new THREE.SphereGeometry(0.4, 32, 16, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2);
+    var smallSphereGeo = new THREE.SphereGeometry(0.55, 48, 48);
+    var ringGeo = new THREE.TorusGeometry(0.65, 0.12, 24, 64);
+
+    // Meshes with positions — arranged around the sides
+    var meshes = [];
+
+    // 1. Big pink sphere — top left
+    var sphere1 = new THREE.Mesh(sphereGeo, pinkMat);
+    sphere1.position.set(-4.5, 2.5, -1);
+    sphere1.scale.setScalar(1.3);
+    scene.add(sphere1);
+    meshes.push({ mesh: sphere1, basePos: sphere1.position.clone(), floatSpeed: 0.25, floatAmp: 0.4, rotSpeed: { x: 0.0015, y: 0.0025, z: 0.001 } });
+
+    // 2. Small lavender sphere — top right
+    var sphere2 = new THREE.Mesh(smallSphereGeo, lavenderMat);
+    sphere2.position.set(4.2, 2.8, 0.5);
+    scene.add(sphere2);
+    meshes.push({ mesh: sphere2, basePos: sphere2.position.clone(), floatSpeed: 0.35, floatAmp: 0.3, rotSpeed: { x: 0.002, y: 0.003, z: 0.0015 } });
+
+    // 3. Torus — middle left
+    var torus = new THREE.Mesh(torusGeo, lavenderMat);
+    torus.position.set(-4.8, -1.5, 0);
+    torus.rotation.set(0.5, 0.3, 0);
+    scene.add(torus);
+    meshes.push({ mesh: torus, basePos: torus.position.clone(), floatSpeed: 0.2, floatAmp: 0.35, rotSpeed: { x: 0.004, y: 0.006, z: 0.002 } });
+
+    // 4. Gold capsule (pill) — bottom right
+    var pill = new THREE.Group();
+    var pillBody = new THREE.Mesh(capsuleGeo, goldMat);
+    var pillTop = new THREE.Mesh(capTop, goldMat);
+    pillTop.position.y = 0.7;
+    var pillBot = new THREE.Mesh(capBot, goldMat);
+    pillBot.position.y = -0.7;
+    pill.add(pillBody, pillTop, pillBot);
+    pill.position.set(4.8, -2.2, -0.5);
+    pill.rotation.set(0, 0, 0.5);
+    scene.add(pill);
+    meshes.push({ mesh: pill, basePos: pill.position.clone(), floatSpeed: 0.175, floatAmp: 0.45, rotSpeed: { x: 0.003, y: 0.002, z: 0.005 } });
+
+    // 5. Glass icosahedron — center right
+    var ico = new THREE.Mesh(icoGeo, glassMat);
+    ico.position.set(5, 0.5, 1);
+    ico.scale.setScalar(1.1);
+    scene.add(ico);
+    meshes.push({ mesh: ico, basePos: ico.position.clone(), floatSpeed: 0.3, floatAmp: 0.25, rotSpeed: { x: 0.005, y: 0.004, z: 0.003 } });
+
+    // 6. Soft pink ring — bottom left
+    var ring = new THREE.Mesh(ringGeo, softPinkMat);
+    ring.position.set(-3.8, -3, 0.5);
+    ring.rotation.set(0.8, 0.2, -0.3);
+    scene.add(ring);
+    meshes.push({ mesh: ring, basePos: ring.position.clone(), floatSpeed: 0.275, floatAmp: 0.3, rotSpeed: { x: 0.0035, y: 0.005, z: 0.0025 } });
+
+    // Mouse tracking state
+    var mouseTarget = { x: 0, y: 0 };
+    var mouseCurrent = { x: 0, y: 0 };
+
+    function onPointerMove(px, py) {
+      var rect = pricingSection.getBoundingClientRect();
+      mouseTarget.x = ((px - rect.left) / rect.width - 0.5) * 2;
+      mouseTarget.y = ((py - rect.top) / rect.height - 0.5) * 2;
+    }
+
+    pricingSection.addEventListener('mousemove', function (e) {
+      onPointerMove(e.clientX, e.clientY);
+    });
+    pricingSection.addEventListener('mouseleave', function () {
+      mouseTarget.x = 0;
+      mouseTarget.y = 0;
+    });
+    pricingSection.addEventListener('touchmove', function (e) {
+      onPointerMove(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true });
+    pricingSection.addEventListener('touchend', function () {
+      mouseTarget.x = 0;
+      mouseTarget.y = 0;
+    }, { passive: true });
+
+    // Resize handler
+    function resizeRenderer() {
+      var w = pricingSection.offsetWidth;
+      var h = pricingSection.offsetHeight;
+      renderer.setSize(w, h);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+    resizeRenderer();
+    window.addEventListener('resize', resizeRenderer);
+
+    // Render only when visible
+    var isVisible = false;
+    var pricingObserver = new IntersectionObserver(function (entries) {
+      isVisible = entries[0].isIntersecting;
+    }, { threshold: 0.05 });
+    pricingObserver.observe(pricingSection);
+
+    // Animation loop
+    var clock = new THREE.Clock();
+    (function animate() {
+      requestAnimationFrame(animate);
+      if (!isVisible) return;
+
+      var t = clock.getElapsedTime();
+
+      // Smooth mouse lerp
+      mouseCurrent.x += (mouseTarget.x - mouseCurrent.x) * 0.05;
+      mouseCurrent.y += (mouseTarget.y - mouseCurrent.y) * 0.05;
+
+      // Rotate entire scene gently based on mouse
+      scene.rotation.y = mouseCurrent.x * 0.25;
+      scene.rotation.x = -mouseCurrent.y * 0.15;
+
+      // Animate each mesh: float + self-rotate
+      for (var i = 0; i < meshes.length; i++) {
+        var m = meshes[i];
+        var mesh = m.mesh;
+        // Floating bob
+        mesh.position.y = m.basePos.y + Math.sin(t * m.floatSpeed + i * 1.5) * m.floatAmp;
+        mesh.position.x = m.basePos.x + Math.sin(t * m.floatSpeed * 0.7 + i) * m.floatAmp * 0.3;
+        // Self rotation
+        mesh.rotation.x += m.rotSpeed.x;
+        mesh.rotation.y += m.rotSpeed.y;
+        mesh.rotation.z += m.rotSpeed.z;
+      }
+
+      renderer.render(scene, camera);
+    })();
   }
 })();
