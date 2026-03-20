@@ -116,4 +116,66 @@
       }
     });
   });
+
+  // ---- Floating Emojis Across the Site ----
+  var emojiPool = [
+    '✨', '💖', '⭐', '🌸', '💫', '🎀', '💕', '🌟',
+    '🩷', '🌷', '🦋', '🍡', '🧸', '💗', '🎶', '☁️',
+    '🫧', '🪷', '🍰', '🌈', '💜', '🌺', '🐾', '🧁'
+  ];
+
+  var floatAnims = ['float-drift', 'float-sway', 'float-spin', 'float-zigzag', 'float-gentle'];
+
+  // Sections that receive floating emojis, with count per section
+  var emojiSections = [
+    { selector: '#problem',      count: 4 },
+    { selector: '#shift',        count: 3 },
+    { selector: '#product',      count: 5 },
+    { selector: '#founder',      count: 3 },
+    { selector: '#how-it-works', count: 4 },
+    { selector: '#before-after', count: 3 },
+    { selector: '#urgency',      count: 3 },
+    { selector: '#emotions',     count: 5 },
+    { selector: '#gamification', count: 4 },
+    { selector: '#social-proof', count: 3 },
+    { selector: '#pricing',      count: 4 },
+    { selector: '#faq',          count: 3 },
+    { selector: '#final-cta',    count: 3 }
+  ];
+
+  // Respect reduced-motion preference
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReducedMotion) {
+    emojiSections.forEach(function (cfg) {
+      var section = document.querySelector(cfg.selector);
+      if (!section) return;
+
+      for (var i = 0; i < cfg.count; i++) {
+        var span = document.createElement('span');
+        span.className = 'floating-emoji';
+        span.setAttribute('aria-hidden', 'true');
+        span.textContent = emojiPool[Math.floor(Math.random() * emojiPool.length)];
+
+        // Randomized placement and animation
+        var top = (10 + Math.random() * 75).toFixed(1);
+        var left = (3 + Math.random() * 90).toFixed(1);
+        var size = (0.9 + Math.random() * 1.1).toFixed(2);
+        var duration = (5 + Math.random() * 8).toFixed(1);
+        var delay = (Math.random() * 6).toFixed(1);
+        var opacity = (0.2 + Math.random() * 0.25).toFixed(2);
+        var anim = floatAnims[Math.floor(Math.random() * floatAnims.length)];
+
+        span.style.setProperty('--emoji-size', size + 'rem');
+        span.style.setProperty('--emoji-duration', duration + 's');
+        span.style.setProperty('--emoji-delay', delay + 's');
+        span.style.setProperty('--emoji-opacity', opacity);
+        span.style.setProperty('--emoji-anim', anim);
+        span.style.top = top + '%';
+        span.style.left = left + '%';
+
+        section.appendChild(span);
+      }
+    });
+  }
 })();
