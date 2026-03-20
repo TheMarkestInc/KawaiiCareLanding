@@ -22,7 +22,7 @@
     var BEZEL_WIDTH = 60;
     var IOR = 3.0;
     var SCALE_RATIO = 1.0;
-    var BLUR_AMT = 0.3;
+    var BLUR_AMT = 1.2;
     var SPEC_OPACITY = 0.5;
     var SPEC_SAT = 4;
     var BORDER_RADIUS = 0;
