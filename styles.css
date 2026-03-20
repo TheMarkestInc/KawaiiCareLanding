@@ -682,10 +682,12 @@ body.nav-open {
   justify-content: center;
 }
 
-.founder__placeholder {
+.founder__photo {
   border-radius: var(--radius-card);
-  overflow: hidden;
   max-width: 300px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
 .founder__text {
