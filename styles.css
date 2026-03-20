@@ -1647,10 +1647,17 @@ body.nav-open {
   border-left: 2px solid #ef4444;
 }
 
-/* Hide dashboard cards on very small screens */
+/* Scale down dashboard cards on small screens */
 @media (max-width: 480px) {
-  .dashboard-cards { display: none; }
-  .problem-hero-img__figure { width: 80%; }
+  .dashboard-cards {
+    display: block;
+    transform: scale(0.7);
+    transform-origin: center center;
+  }
+  .problem-hero-img {
+    min-height: 350px;
+  }
+  .problem-hero-img__figure { width: 55%; }
 }
 
 /* ======== MARQUEE SCROLL ======== */
