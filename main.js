@@ -6,6 +6,19 @@
 (function () {
   'use strict';
 
+  // ---- Liquid Glass: browser detection ----
+  // The SVG displacement filter works best in Chromium; provide fallback for others
+  var ua = navigator.userAgent.toLowerCase();
+  var isChromium = ua.indexOf('chrome') !== -1 || ua.indexOf('edg') !== -1 || ua.indexOf('opr') !== -1 || ua.indexOf('opera') !== -1;
+
+  if (!isChromium) {
+    var lgElements = document.querySelectorAll('.liquid-glass');
+    lgElements.forEach(function (el) {
+      el.classList.remove('liquid-glass');
+      el.classList.add('liquid-glass-fallback');
+    });
+  }
+
   // ---- Mobile Navigation ----
   const navToggle = document.getElementById('navToggle');
   const navDrawer = document.getElementById('navDrawer');

@@ -200,11 +200,62 @@ h1, h2, h3, h4 {
   left: 0;
   right: 0;
   z-index: 1000;
-  background: rgba(255, 248, 240, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  transition: background var(--transition);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  transition: background var(--transition), box-shadow var(--transition);
+}
+
+/* Liquid Glass effect — Chromium-based browsers */
+.nav.liquid-glass {
+  isolation: isolate;
+  background: transparent;
+}
+
+.nav.liquid-glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 10px 3px rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.01);
+  z-index: 0;
+}
+
+.nav.liquid-glass::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  filter: url(#liquid-glass-filter);
+  -webkit-filter: url(#liquid-glass-filter);
+  isolation: isolate;
+  z-index: -1;
+}
+
+/* Fallback for non-Chromium (Firefox, Safari) */
+.nav.liquid-glass-fallback {
+  background: rgba(255, 248, 240, 0.75);
+  backdrop-filter: blur(14px) saturate(1.3);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Scrolled state — slightly more opaque */
+.nav.nav--scrolled.liquid-glass::before {
+  box-shadow: inset 0 0 14px 4px rgba(255, 255, 255, 0.85);
+  background-color: rgba(255, 248, 240, 0.08);
+}
+
+.nav.nav--scrolled.liquid-glass-fallback {
+  background: rgba(255, 248, 240, 0.88);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
 }
 
 .nav__container {
@@ -214,6 +265,8 @@ h1, h2, h3, h4 {
   max-width: var(--container-max);
   margin-inline: auto;
   padding: 0.75rem var(--container-px);
+  position: relative;
+  z-index: 1;
 }
 
 .nav__logo {
