@@ -26,7 +26,8 @@
   --color-white: #FFFFFF;
 
   /* Typography */
-  --ff-heading: 'Frankfurter Russia', 'Quicksand', sans-serif;
+  --ff-heading: 'Quicksand', sans-serif;
+  --ff-heading-decorative: 'Frankfurter Russia', 'Quicksand', sans-serif;
   --ff-body: 'Nunito', sans-serif;
   --fs-hero: clamp(2rem, 5vw, 4.5rem);
   --fs-h2: clamp(1.75rem, 3.5vw, 3rem);
@@ -96,8 +97,7 @@ ul, ol { list-style: none; }
 h1, h2, h3, h4 {
   font-family: var(--ff-heading);
   line-height: 1.2;
-  font-weight: 300;
-  -webkit-text-stroke: 0.2px transparent;
+  font-weight: 800;
 }
 
 /* ---- Skip Link ---- */
