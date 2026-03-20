@@ -96,7 +96,8 @@ ul, ol { list-style: none; }
 h1, h2, h3, h4 {
   font-family: var(--ff-heading);
   line-height: 1.2;
-  font-weight: 400;
+  font-weight: 300;
+  -webkit-text-stroke: 0.2px transparent;
 }
 
 /* ---- Skip Link ---- */
@@ -1378,3 +1379,223 @@ body.nav-open {
 .animate-in:nth-child(2) { transition-delay: 0.1s; }
 .animate-in:nth-child(3) { transition-delay: 0.2s; }
 .animate-in:nth-child(4) { transition-delay: 0.3s; }
+
+/* ======== PROBLEM GALLERY (Block 2) ======== */
+.problem-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2.5rem;
+  align-items: stretch;
+}
+
+@media (min-width: 768px) {
+  .problem-gallery {
+    flex-direction: row;
+    gap: 2rem;
+  }
+}
+
+/* Slider */
+.problem-slider {
+  flex: 1;
+  position: relative;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: var(--color-white);
+  box-shadow: var(--shadow-card);
+  min-height: 300px;
+}
+
+.problem-slider__track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+}
+
+.problem-slider__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.problem-slider__slide--active {
+  opacity: 1;
+}
+
+.problem-slider__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-card);
+}
+
+.problem-slider__dots {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 2;
+}
+
+.problem-slider__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--color-white);
+  background: transparent;
+  cursor: pointer;
+  transition: background var(--transition);
+  padding: 0;
+}
+
+.problem-slider__dot--active {
+  background: var(--color-white);
+}
+
+.problem-slider__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition);
+  color: var(--color-text);
+}
+
+.problem-slider__arrow:hover {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.problem-slider__arrow--prev { left: 0.75rem; }
+.problem-slider__arrow--next { right: 0.75rem; }
+
+/* Hero image (right side) — hims-style composition */
+.problem-hero-img {
+  flex: 1;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: linear-gradient(135deg, #c9956b, #b8825e);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  min-height: 420px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.problem-hero-img__figure {
+  position: relative;
+  z-index: 2;
+  width: 55%;
+  max-width: 340px;
+  height: auto;
+  object-fit: contain;
+  align-self: flex-end;
+}
+
+/* Dashboard floating cards container */
+.dashboard-cards {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Individual dashboard card base */
+.dash-card {
+  position: absolute;
+  background: rgba(60, 40, 30, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.65rem;
+  line-height: 1.4;
+  text-align: left;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Card positions — spread around person */
+.dash-card--1 { top: 18%; left: 2%; width: 32%; animation: dashFloat1 6s ease-in-out infinite; }
+.dash-card--2 { top: 8%; left: 28%; width: 28%; animation: dashFloat2 7s ease-in-out infinite; }
+.dash-card--3 { top: 40%; right: 2%; width: 30%; animation: dashFloat3 5.5s ease-in-out infinite; }
+.dash-card--4 { bottom: 18%; right: 5%; width: 26%; animation: dashFloat4 6.5s ease-in-out infinite; }
+.dash-card--5 { bottom: 12%; right: 30%; width: 26%; animation: dashFloat5 7.5s ease-in-out infinite; }
+
+/* Float animations */
+@keyframes dashFloat1 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes dashFloat2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes dashFloat3 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes dashFloat4 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+@keyframes dashFloat5 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+
+/* Card inner elements */
+.dash-card__header { display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.5rem; }
+.dash-card__dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.dash-card__dot--green { background: #4ade80; }
+.dash-card__dot--white { background: #fff; }
+.dash-card__label { font-weight: 600; font-size: 0.7rem; }
+.dash-card__tag { display: inline-block; font-weight: 700; font-size: 0.72rem; margin-bottom: 0.4rem; color: #fff; }
+
+.dash-card__ring { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; }
+.dash-card__ring svg { flex-shrink: 0; }
+.dash-card__ring-label { font-size: 0.6rem; color: rgba(255,255,255,0.7); }
+
+.dash-card__stats { display: flex; gap: 0.75rem; }
+.dash-card__num { font-size: 1.1rem; font-weight: 700; display: block; }
+.dash-card__dim { font-size: 0.55rem; color: rgba(255,255,255,0.6); }
+
+.dash-card__bars { display: flex; flex-direction: column; gap: 0.35rem; }
+.dash-card__bar-label { font-size: 0.55rem; color: rgba(255,255,255,0.7); margin-bottom: 2px; }
+.dash-card__bar-track { height: 4px; background: rgba(255,255,255,0.12); border-radius: 2px; overflow: hidden; }
+.dash-card__bar-fill { height: 100%; border-radius: 2px; }
+
+.dash-card__text { font-size: 0.58rem; color: rgba(255,255,255,0.65); margin-top: 0.3rem; line-height: 1.4; }
+.dash-card__big-num { font-size: 2.2rem; font-weight: 300; line-height: 1; margin: 0.25rem 0; color: #fff; }
+
+.dash-card__badge {
+  display: inline-block;
+  background: #ef4444;
+  color: #fff;
+  font-size: 0.5rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.dash-card__list-item {
+  font-size: 0.58rem;
+  color: rgba(255,255,255,0.7);
+  margin-top: 0.2rem;
+  padding-left: 0.5rem;
+  border-left: 2px solid #ef4444;
+}
+
+/* Hide dashboard cards on very small screens */
+@media (max-width: 480px) {
+  .dashboard-cards { display: none; }
+  .problem-hero-img__figure { width: 80%; }
+}

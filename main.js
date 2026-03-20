@@ -566,4 +566,41 @@
       renderer.render(scene, camera);
     })();
   }
+
+  // ---- Problem Slider ----
+  var slides = document.querySelectorAll('.problem-slider__slide');
+  var dots = document.querySelectorAll('.problem-slider__dot');
+  var prevBtn = document.getElementById('sliderPrev');
+  var nextBtn = document.getElementById('sliderNext');
+
+  if (slides.length > 0) {
+    var currentSlide = 0;
+    var slideCount = slides.length;
+    var autoInterval = null;
+
+    function goToSlide(index) {
+      slides[currentSlide].classList.remove('problem-slider__slide--active');
+      dots[currentSlide].classList.remove('problem-slider__dot--active');
+      currentSlide = (index + slideCount) % slideCount;
+      slides[currentSlide].classList.add('problem-slider__slide--active');
+      dots[currentSlide].classList.add('problem-slider__dot--active');
+    }
+
+    function startAuto() {
+      autoInterval = setInterval(function () { goToSlide(currentSlide + 1); }, 4000);
+    }
+
+    function resetAuto() {
+      clearInterval(autoInterval);
+      startAuto();
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { goToSlide(currentSlide - 1); resetAuto(); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { goToSlide(currentSlide + 1); resetAuto(); });
+    dots.forEach(function (dot) {
+      dot.addEventListener('click', function () { goToSlide(parseInt(this.dataset.slide, 10)); resetAuto(); });
+    });
+
+    startAuto();
+  }
 })();
