@@ -96,8 +96,7 @@ ul, ol { list-style: none; }
 h1, h2, h3, h4 {
   font-family: var(--ff-heading);
   line-height: 1.2;
-  font-weight: 900;
-  -webkit-text-stroke: 0.5px currentColor;
+  font-weight: 700;
 }
 
 /* ---- Skip Link ---- */
@@ -289,6 +288,8 @@ h1, h2, h3, h4 {
 
 .nav__logo-icon {
   flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .nav__links {
@@ -1190,8 +1191,9 @@ body.nav-open {
 .pricing-card__current {
   font-family: var(--ff-heading);
   font-size: clamp(2.5rem, 5vw, 3.5rem);
-  font-weight: 700;
+  font-weight: 400;
   color: var(--color-primary);
+  letter-spacing: 0.02em;
 }
 
 .pricing-card__features {
