@@ -158,8 +158,8 @@ test.describe('Section Structure', () => {
 
   test('pricing card shows correct price', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('.pricing-card__current')).toContainText('$79');
-    await expect(page.locator('.pricing-card__old')).toContainText('$129');
+    await expect(page.locator('.pricing-card__current')).toContainText('$148.8');
+    await expect(page.locator('.pricing-card__old')).toContainText('$228');
   });
 
   test('FAQ has 6 items', async ({ page }) => {

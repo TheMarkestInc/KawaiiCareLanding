@@ -6,45 +6,171 @@
 (function () {
   'use strict';
 
-  // ---- Liquid Glass: SVG filter injection + browser detection ----
-  var liquidGlassSvg = '<svg width="100%" height="100%" viewBox="0 0 100% 100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
-    '<filter id="liquid-glass-filter">' +
-      '<feImage xlink:href="data:image/svg+xml,%3Csvg width=\'100%\' height=\'100%\' viewBox=\'0 0 100% 100%\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Crect x=\'0\' y=\'0\' width=\'100%\' height=\'100%\' rx=\'32\' fill=\'rgb%280 0 0 %2F100 / 2.55}%25%29\' /%3E%3Crect x=\'0\' y=\'0\' width=\'100%\' height=\'100%\' rx=\'32\' fill=\'%23FFF\' style=\'filter:blur(10}px)\' /%3E%3C/svg%3E" x="0%" y="0%" width="100%" height="100%" result="first" id="first" />' +
-      '<feImage xlink:href="data:image/svg+xml,%3Csvg width=\'100%\' height=\'100%\' viewBox=\'0 0 100% 100%\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Crect x=\'0\' y=\'0\' width=\'100%\' height=\'100%\' rx=\'32\' fill=\'rgb%28255 255 255 %2F0 / 2.55}%25%29\' style=\'filter:blur(0px)\' /%3E%3C/svg%3E" x="0%" y="0%" width="100%" height="100%" result="second" id="second" />' +
-      '<feImage xlink:href="data:image/svg+xml,%3Csvg width=\'100%\' height=\'100%\' viewBox=\'0 0 100% 100%\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Crect x=\'0\' y=\'0\' width=\'100%\' height=\'100%\' rx=\'32\' fill=\'%23000\' /%3E%3C/svg%3E" x="0%" y="0%" width="100%" height="100%" result="third" id="third" />' +
-      '<feImage xlink:href="data:image/svg+xml,%3Csvg width=\'100%\' height=\'100%\' viewBox=\'0 0 100% 100%\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cdefs%3E%3ClinearGradient id=\'gradient1\' x1=\'0%25\' y1=\'0%25\' x2=\'100%25\' y2=\'0%25\'%3E%3Cstop offset=\'0%25\' stop-color=\'%23000\'/%3E%3Cstop offset=\'100%25\' stop-color=\'%2300F\'/%3E%3C/linearGradient%3E%3ClinearGradient id=\'gradient2\' x1=\'0%25\' y1=\'0%25\' x2=\'0%25\' y2=\'100%25\'%3E%3Cstop offset=\'0%25\' stop-color=\'%23000\'/%3E%3Cstop offset=\'100%25\' stop-color=\'%230F0\'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x=\'0\' y=\'0\' width=\'100%\' height=\'100%\' rx=\'32\' fill=\'%237F7F7F\' /%3E%3Crect x=\'0\' y=\'0\' width=\'100%\' height=\'100%\' rx=\'32\' fill=\'%23000\' /%3E%3Crect x=\'0\' y=\'0\' width=\'100%\' height=\'100%\' rx=\'32\' fill=\'url(%23gradient1)\' style=\'mix-blend-mode: screen\' /%3E%3Crect x=\'0\' y=\'0\' width=\'100%\' height=\'100%\' rx=\'32\' fill=\'url(%23gradient2)\' style=\'mix-blend-mode: screen\' /%3E%3Crect x=\'0\' y=\'0\' width=\'100%\' height=\'100%\' rx=\'32\' fill=\'rgb%28127 127 127 %2F100%25%29\' style=\'filter:blur(40px)\' /%3E%3C/svg%3E" x="0%" y="0%" width="100%" height="100%" result="fourth" id="fourth" />' +
-      '<feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="2" seed="92" result="noise" />' +
-      '<feGaussianBlur in="noise" stdDeviation="2" result="blurred" />' +
-      '<feGaussianBlur stdDeviation="2.2" id="preblur" in="SourceGraphic" result="preblur" />' +
-      '<feOffset dx="43" dy="43" in="preblur" result="preblurOffset" />' +
-      '<feDisplacementMap in="preblurOffset" in2="blurred" scale="39" xChannelSelector="R" yChannelSelector="G" result="displaced" />' +
-      '<feDisplacementMap id="dispR" in2="fourth" in="displaced" scale="-137" xChannelSelector="B" yChannelSelector="G" />' +
-      '<feColorMatrix type="matrix" values="1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" result="disp1" />' +
-      '<feDisplacementMap id="dispG" in2="fourth" in="displaced" scale="-150" xChannelSelector="B" yChannelSelector="G" />' +
-      '<feColorMatrix type="matrix" values="0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0" result="disp2" />' +
-      '<feDisplacementMap id="dispB" in2="fourth" in="displaced" scale="-163" xChannelSelector="B" yChannelSelector="G" />' +
-      '<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0" result="disp3" />' +
-      '<feBlend in2="disp2" mode="screen" />' +
-      '<feBlend in2="disp1" mode="screen" />' +
-      '<feGaussianBlur stdDeviation="0.9" id="postblur" />' +
-      '<feBlend in2="second" mode="screen" />' +
-      '<feBlend in2="first" mode="multiply" />' +
-      '<feComposite in2="third" operator="in" />' +
-    '</filter>' +
-  '</svg>';
-
+  // ---- Liquid Glass: physics-based refraction (archisvaze/liquid-glass) ----
   var ua = navigator.userAgent.toLowerCase();
   var isChromium = ua.indexOf('chrome') !== -1 || ua.indexOf('edg') !== -1 || ua.indexOf('opr') !== -1 || ua.indexOf('opera') !== -1;
 
-  var glassElements = document.querySelectorAll('.liquid-glass');
-  glassElements.forEach(function (el) {
-    if (isChromium) {
-      el.insertAdjacentHTML('beforeend', liquidGlassSvg);
-    } else {
+  if (!isChromium) {
+    var lgElements = document.querySelectorAll('.liquid-glass');
+    lgElements.forEach(function (el) {
       el.classList.remove('liquid-glass');
       el.classList.add('liquid-glass-fallback');
+    });
+  } else {
+    // Glass parameters (tuned for a nav bar)
+    var GLASS_THICKNESS = 80;
+    var BEZEL_WIDTH = 60;
+    var IOR = 3.0;
+    var SCALE_RATIO = 1.0;
+    var BLUR_AMT = 0.3;
+    var SPEC_OPACITY = 0.5;
+    var SPEC_SAT = 4;
+    var BORDER_RADIUS = 0;
+
+    var surfaceFn = function (x) {
+      return Math.pow(1 - Math.pow(1 - x, 4), 0.25);
+    };
+
+    function calcRefractionProfile(thickness, bezel, heightFn, ior, samples) {
+      samples = samples || 128;
+      var eta = 1 / ior;
+      var profile = new Float64Array(samples);
+      for (var i = 0; i < samples; i++) {
+        var x = i / samples;
+        var y = heightFn(x);
+        var dx = x < 1 ? 0.0001 : -0.0001;
+        var y2 = heightFn(x + dx);
+        var deriv = (y2 - y) / dx;
+        var mag = Math.sqrt(deriv * deriv + 1);
+        var nx = -deriv / mag;
+        var ny = -1 / mag;
+        var dot = ny;
+        var k = 1 - eta * eta * (1 - dot * dot);
+        if (k < 0) { profile[i] = 0; continue; }
+        var sq = Math.sqrt(k);
+        var refX = eta * nx - (eta * dot + sq) * nx;
+        var refY = eta - (eta * dot + sq) * ny;
+        profile[i] = refX * ((y * bezel + thickness) / refY);
+      }
+      return profile;
     }
-  });
+
+    function genDisplacementMap(w, h, radius, bezel, profile, maxDisp) {
+      var c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      var ctx = c.getContext('2d');
+      var img = ctx.createImageData(w, h);
+      var d = img.data;
+      for (var i = 0; i < d.length; i += 4) {
+        d[i] = 128; d[i + 1] = 128; d[i + 2] = 0; d[i + 3] = 255;
+      }
+      var r = radius, rSq = r * r, r1Sq = (r + 1) * (r + 1);
+      var rBSq = Math.max(r - bezel, 0) * Math.max(r - bezel, 0);
+      var wB = w - r * 2, hB = h - r * 2, S = profile.length;
+      for (var y1 = 0; y1 < h; y1++) {
+        for (var x1 = 0; x1 < w; x1++) {
+          var px = x1 < r ? x1 - r : x1 >= w - r ? x1 - r - wB : 0;
+          var py = y1 < r ? y1 - r : y1 >= h - r ? y1 - r - hB : 0;
+          var dSq = px * px + py * py;
+          if (dSq > r1Sq || dSq < rBSq) continue;
+          var dist = Math.sqrt(dSq);
+          var fromSide = r - dist;
+          var op = dSq < rSq ? 1 : 1 - (dist - Math.sqrt(rSq)) / (Math.sqrt(r1Sq) - Math.sqrt(rSq));
+          if (op <= 0 || dist === 0) continue;
+          var cos = px / dist, sin = py / dist;
+          var bi = Math.min(((fromSide / bezel) * S) | 0, S - 1);
+          var disp = profile[bi] || 0;
+          var dX = (-cos * disp) / maxDisp, dY = (-sin * disp) / maxDisp;
+          var idx = (y1 * w + x1) * 4;
+          d[idx] = (128 + dX * 127 * op + 0.5) | 0;
+          d[idx + 1] = (128 + dY * 127 * op + 0.5) | 0;
+        }
+      }
+      ctx.putImageData(img, 0, 0);
+      return c.toDataURL();
+    }
+
+    function genSpecularMap(w, h, radius, bezel, angle) {
+      angle = angle != null ? angle : Math.PI / 3;
+      var c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      var ctx = c.getContext('2d');
+      var img = ctx.createImageData(w, h);
+      var d = img.data;
+      d.fill(0);
+      var r = radius, rSq = r * r, r1Sq = (r + 1) * (r + 1);
+      var rBSq = Math.max(r - bezel, 0) * Math.max(r - bezel, 0);
+      var wB = w - r * 2, hB = h - r * 2;
+      var sv = [Math.cos(angle), Math.sin(angle)];
+      for (var y1 = 0; y1 < h; y1++) {
+        for (var x1 = 0; x1 < w; x1++) {
+          var px = x1 < r ? x1 - r : x1 >= w - r ? x1 - r - wB : 0;
+          var py = y1 < r ? y1 - r : y1 >= h - r ? y1 - r - hB : 0;
+          var dSq = px * px + py * py;
+          if (dSq > r1Sq || dSq < rBSq) continue;
+          var dist = Math.sqrt(dSq);
+          var fromSide = r - dist;
+          var op = dSq < rSq ? 1 : 1 - (dist - Math.sqrt(rSq)) / (Math.sqrt(r1Sq) - Math.sqrt(rSq));
+          if (op <= 0 || dist === 0) continue;
+          var cos = px / dist, sin = -py / dist;
+          var dot = Math.abs(cos * sv[0] + sin * sv[1]);
+          var edge = Math.sqrt(Math.max(0, 1 - (1 - fromSide) * (1 - fromSide)));
+          var coeff = dot * edge;
+          var col = (255 * coeff) | 0;
+          var alpha = (col * coeff * op) | 0;
+          var idx = (y1 * w + x1) * 4;
+          d[idx] = col; d[idx + 1] = col; d[idx + 2] = col; d[idx + 3] = alpha;
+        }
+      }
+      ctx.putImageData(img, 0, 0);
+      return c.toDataURL();
+    }
+
+    var glassEl = document.getElementById('nav');
+    var lgTimer;
+
+    function rebuildGlassFilter() {
+      var w = glassEl.offsetWidth, h = glassEl.offsetHeight;
+      if (w < 2 || h < 2) return;
+      var clampedBezel = Math.min(BEZEL_WIDTH, BORDER_RADIUS > 0 ? BORDER_RADIUS - 1 : Math.min(w, h) / 2 - 1);
+      var profile = calcRefractionProfile(GLASS_THICKNESS, clampedBezel, surfaceFn, IOR, 128);
+      var maxDisp = 1;
+      for (var i = 0; i < profile.length; i++) {
+        var absV = Math.abs(profile[i]);
+        if (absV > maxDisp) maxDisp = absV;
+      }
+      var dispUrl = genDisplacementMap(w, h, BORDER_RADIUS || Math.min(w, h) / 2, clampedBezel, profile, maxDisp);
+      var specUrl = genSpecularMap(w, h, BORDER_RADIUS || Math.min(w, h) / 2, clampedBezel * 2.5);
+      var scale = maxDisp * SCALE_RATIO;
+
+      var svgDefs = document.getElementById('svg-defs');
+      if (svgDefs) {
+        svgDefs.innerHTML =
+          '<filter id="liquid-glass-filter" x="0%" y="0%" width="100%" height="100%">' +
+            '<feGaussianBlur in="SourceGraphic" stdDeviation="' + BLUR_AMT + '" result="blurred_source" />' +
+            '<feImage href="' + dispUrl + '" x="0" y="0" width="' + w + '" height="' + h + '" result="disp_map" />' +
+            '<feDisplacementMap in="blurred_source" in2="disp_map" scale="' + scale + '" xChannelSelector="R" yChannelSelector="G" result="displaced" />' +
+            '<feColorMatrix in="displaced" type="saturate" values="' + SPEC_SAT + '" result="displaced_sat" />' +
+            '<feImage href="' + specUrl + '" x="0" y="0" width="' + w + '" height="' + h + '" result="spec_layer" />' +
+            '<feComposite in="displaced_sat" in2="spec_layer" operator="in" result="spec_masked" />' +
+            '<feComponentTransfer in="spec_layer" result="spec_faded">' +
+              '<feFuncA type="linear" slope="' + SPEC_OPACITY + '" />' +
+            '</feComponentTransfer>' +
+            '<feBlend in="spec_masked" in2="displaced" mode="normal" result="with_sat" />' +
+            '<feBlend in="spec_faded" in2="with_sat" mode="normal" />' +
+          '</filter>';
+      }
+    }
+
+    // Build filter once DOM is ready, and rebuild on resize
+    requestAnimationFrame(function () {
+      requestAnimationFrame(rebuildGlassFilter);
+    });
+    window.addEventListener('resize', function () {
+      clearTimeout(lgTimer);
+      lgTimer = setTimeout(rebuildGlassFilter, 150);
+    });
+  }
 
   // ---- Mobile Navigation ----
   const navToggle = document.getElementById('navToggle');
