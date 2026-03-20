@@ -1,0 +1,25 @@
+{
+  "name": "kawaiicarelanding",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheMarkestInc/KawaiiCareLanding.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/TheMarkestInc/KawaiiCareLanding/issues"
+  },
+  "homepage": "https://github.com/TheMarkestInc/KawaiiCareLanding#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "serve": "^14.2.6"
+  }
+}
