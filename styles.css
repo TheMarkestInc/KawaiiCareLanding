@@ -200,6 +200,20 @@ h1, h2, h3, h4 {
   left: 0;
   right: 0;
   z-index: 1000;
+  padding: 0.75rem var(--container-px) 0;
+  pointer-events: none;
+}
+
+.nav__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: 0.75rem 1.5rem;
+  position: relative;
+  z-index: 1;
+  pointer-events: auto;
   transition: background var(--transition), box-shadow var(--transition);
   --tint-color: 255, 182, 193;
   --tint-opacity: 0.12;
@@ -207,12 +221,12 @@ h1, h2, h3, h4 {
 }
 
 /* Liquid Glass — Chromium (canvas-generated displacement map) */
-.nav.liquid-glass {
+.nav__container.liquid-glass {
   isolation: isolate;
   border-radius: 999px;
 }
 
-.nav.liquid-glass::before {
+.nav__container.liquid-glass::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -222,7 +236,7 @@ h1, h2, h3, h4 {
   pointer-events: none;
 }
 
-.nav.liquid-glass::after {
+.nav__container.liquid-glass::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -234,32 +248,22 @@ h1, h2, h3, h4 {
 }
 
 /* Fallback for non-Chromium (Firefox, Safari) */
-.nav.liquid-glass-fallback {
+.nav__container.liquid-glass-fallback {
   background: rgba(255, 182, 193, 0.15);
   backdrop-filter: blur(28px) !important;
   -webkit-backdrop-filter: blur(28px) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
 }
 
 /* Scrolled state */
-.nav.nav--scrolled {
+.nav__container.nav--scrolled {
   box-shadow: 0px 4px var(--outer-shadow-blur) rgba(0, 0, 0, 0.12);
 }
 
-.nav.nav--scrolled.liquid-glass-fallback {
+.nav__container.nav--scrolled.liquid-glass-fallback {
   background: rgba(255, 220, 230, 0.8);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-}
-
-.nav__container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: var(--container-max);
-  margin-inline: auto;
-  padding: 0.75rem var(--container-px);
-  position: relative;
-  z-index: 1;
 }
 
 .nav__logo {
@@ -285,8 +289,8 @@ h1, h2, h3, h4 {
 .nav__link {
   font-family: var(--ff-heading);
   font-size: var(--fs-small);
-  font-weight: 600;
-  color: var(--color-text-muted);
+  font-weight: 700;
+  color: var(--color-text);
   transition: color var(--transition);
 }
 

@@ -126,7 +126,7 @@
       return c.toDataURL();
     }
 
-    var glassEl = document.getElementById('nav');
+    var glassEl = document.getElementById('navGlass');
     var lgTimer;
 
     function rebuildGlassFilter() {
@@ -249,14 +249,14 @@
   }
 
   // ---- Sticky Nav Background on Scroll ----
-  var nav = document.getElementById('nav');
+  var navContainer = document.getElementById('navGlass') || document.querySelector('.nav__container');
   var scrollThreshold = 50;
 
   function updateNav() {
     if (window.scrollY > scrollThreshold) {
-      nav.classList.add('nav--scrolled');
+      navContainer.classList.add('nav--scrolled');
     } else {
-      nav.classList.remove('nav--scrolled');
+      navContainer.classList.remove('nav--scrolled');
     }
   }
 
