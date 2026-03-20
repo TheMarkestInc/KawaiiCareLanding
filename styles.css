@@ -209,6 +209,7 @@ h1, h2, h3, h4 {
 /* Liquid Glass — Chromium (canvas-generated displacement map) */
 .nav.liquid-glass {
   isolation: isolate;
+  border-radius: 999px;
 }
 
 .nav.liquid-glass::before {
