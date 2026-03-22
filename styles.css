@@ -105,7 +105,7 @@ ul, ol { list-style: none; }
 h1, h2, h3, h4 {
   font-family: var(--ff-heading);
   line-height: 1.2;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 /* ---- Skip Link ---- */
@@ -1412,26 +1412,45 @@ body.nav-open {
   letter-spacing: 0.02em;
 }
 
-.pricing-card__features {
+.pricing-card__perks {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
   margin-bottom: 1.5rem;
-  text-align: left;
-  max-width: 280px;
-  margin-inline: auto;
 }
 
-.pricing-card__features li {
-  padding: 0.5rem 0;
-  padding-left: 1.75rem;
-  position: relative;
-  color: var(--color-text);
+.pricing-perk {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  max-width: 140px;
 }
 
-.pricing-card__features li::before {
-  content: '✓';
-  position: absolute;
-  left: 0;
-  color: var(--color-primary);
+.pricing-perk__icon {
+  width: 80px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.pricing-perk__icon img {
+  width: 56px;
+  height: auto;
+}
+
+.pricing-perk__label {
+  font-family: var(--ff-heading);
+  font-size: 0.8rem;
   font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.3;
+  text-align: center;
 }
 
 .pricing-card__fine {
@@ -1770,20 +1789,20 @@ body.nav-open {
 }
 
 .problem-slider__icon--tactile {
-  left: 6%;
-  top: 12%;
+  left: 2%;
+  top: 18%;
   animation: neonFlicker 3s ease-in-out infinite, svgFloat3 4.5s ease-in-out infinite;
 }
 
 .problem-slider__icon--talks {
-  right: 6%;
-  top: 10%;
+  right: 8%;
+  top: 8%;
   animation: neonFlicker 3s ease-in-out infinite 1s, svgFloat1 4s ease-in-out infinite;
 }
 
 .problem-slider__icon--wearable {
-  right: 6%;
-  bottom: 18%;
+  right: 12%;
+  bottom: 28%;
   animation: neonFlicker 3s ease-in-out infinite 2s, svgFloat2 5s ease-in-out infinite;
 }
 
