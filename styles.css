@@ -60,6 +60,7 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -80,6 +81,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
+}
+
+main {
+  overflow-x: clip;
 }
 
 img, svg, video {
@@ -517,6 +525,8 @@ body.nav-open {
   margin-bottom: 1.5rem;
   max-width: 800px;
   margin-inline: auto;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .hero__rotating-word {
@@ -573,6 +583,7 @@ body.nav-open {
   display: flex;
   justify-content: center;
   gap: 2rem;
+  flex-wrap: wrap;
 }
 
 .hero__platform {
@@ -1320,6 +1331,7 @@ body.nav-open {
   background: #2D2D2D;
   color: rgba(255, 255, 255, 0.7);
   padding: 3rem 0;
+  overflow-x: clip;
 }
 
 .footer__top {
