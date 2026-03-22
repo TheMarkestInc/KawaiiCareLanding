@@ -59,6 +59,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1790,6 +1791,9 @@ body.nav-open {
   .problem-hero-img__figure { width: 55%; margin-right: -12%; }
   .problem-hero-img__phone { right: 30%; }
   .problem-hero-img__watch { right: 20%; }
+  .problem-hero-img__expert { width: 28px; right: 26%; top: 14%; }
+  .problem-hero-img__digitizes { width: 28px; right: 32%; }
+  .problem-hero-img__proactive { width: 28px; left: 26%; bottom: 20%; }
 }
 
 /* ======== MARQUEE SCROLL ======== */
