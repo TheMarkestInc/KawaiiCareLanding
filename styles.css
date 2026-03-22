@@ -1564,6 +1564,28 @@ body.nav-open {
   align-self: flex-end;
 }
 
+.problem-hero-img__phone {
+  position: absolute;
+  z-index: 3;
+  left: 5%;
+  bottom: 5%;
+  width: 28%;
+  max-width: 180px;
+  height: auto;
+  object-fit: contain;
+}
+
+.problem-hero-img__watch {
+  position: absolute;
+  z-index: 3;
+  left: 30%;
+  bottom: 2%;
+  width: 14%;
+  max-width: 90px;
+  height: auto;
+  object-fit: contain;
+}
+
 /* Dashboard floating cards container — perspective ribbon */
 .dashboard-cards {
   position: absolute;
@@ -1571,25 +1593,25 @@ body.nav-open {
   z-index: 1;
   pointer-events: none;
   perspective: 900px;
-  perspective-origin: 0% 60%;
+  perspective-origin: 100% 60%;
   overflow: hidden;
 }
 
 .dashboard-cards__track {
   position: absolute;
-  bottom: 12%;
-  left: -60%;
+  top: 15%;
+  right: -60%;
   display: flex;
   gap: 1.5rem;
   align-items: center;
-  transform: rotateY(-32deg) rotateX(6deg) rotateZ(-3deg);
+  transform: rotateY(32deg) rotateX(6deg) rotateZ(3deg);
   transform-style: preserve-3d;
   animation: dashRibbon 18s linear infinite;
 }
 
 @keyframes dashRibbon {
-  0%   { transform: rotateY(-32deg) rotateX(6deg) rotateZ(-3deg) translateX(0); }
-  100% { transform: rotateY(-32deg) rotateX(6deg) rotateZ(-3deg) translateX(-50%); }
+  0%   { transform: rotateY(32deg) rotateX(6deg) rotateZ(3deg) translateX(0); }
+  100% { transform: rotateY(32deg) rotateX(6deg) rotateZ(3deg) translateX(50%); }
 }
 
 /* Individual dashboard card base */
@@ -1607,6 +1629,14 @@ body.nav-open {
   line-height: 1.4;
   text-align: left;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  opacity: 0.45;
+  transition: opacity .3s, box-shadow .3s;
+  animation: dashShimmer 3s ease-in-out infinite alternate;
+}
+
+@keyframes dashShimmer {
+  0%   { border-color: rgba(255,255,255,0.08); }
+  100% { border-color: rgba(255,255,255,0.25); }
 }
 
 /* Remove old absolute positioning — now flex items */
@@ -1664,9 +1694,14 @@ body.nav-open {
 /* Scale down dashboard cards on small screens */
 @media (max-width: 480px) {
   .dashboard-cards {
-    display: block;
-    transform: scale(0.7);
-    transform-origin: center center;
+    perspective: 600px;
+  }
+  .dashboard-cards__track {
+    gap: 1rem;
+  }
+  .dash-card {
+    width: 140px;
+    padding: 0.5rem 0.75rem;
   }
   .problem-hero-img {
     min-height: 350px;

@@ -190,6 +190,7 @@
           <div class="problem-hero-img">
             <!-- Floating dashboard cards (behind the figure) -->
             <div class="dashboard-cards">
+              <div class="dashboard-cards__track">
               <div class="dash-card dash-card--1">
                 <div class="dash-card__header">
                   <span class="dash-card__dot dash-card__dot--green"></span>
@@ -235,9 +236,59 @@
                 <p class="dash-card__text">Indicates a risk of heart disease.</p>
                 <div class="dash-card__list-item">LDL Cholesterol</div>
               </div>
+
+              <!-- Duplicate set for seamless loop -->
+              <div class="dash-card dash-card--1">
+                <div class="dash-card__header">
+                  <span class="dash-card__dot dash-card__dot--green"></span>
+                  <span class="dash-card__label">All biomarkers</span>
+                </div>
+                <div class="dash-card__ring">
+                  <svg viewBox="0 0 80 80" width="80" height="80">
+                    <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="6"/>
+                    <circle cx="40" cy="40" r="34" fill="none" stroke="#4ade80" stroke-width="6" stroke-dasharray="170 214" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+                  </svg>
+                  <span class="dash-card__ring-label">Optimal</span>
+                </div>
+                <div class="dash-card__stats">
+                  <div><span class="dash-card__num" style="color:#4ade80">66</span> <span class="dash-card__dim">In range</span></div>
+                  <div><span class="dash-card__num">3</span> <span class="dash-card__dim">Out of range</span></div>
+                </div>
+              </div>
+
+              <div class="dash-card dash-card--2">
+                <span class="dash-card__tag">31 years old</span>
+                <div class="dash-card__bars">
+                  <div class="dash-card__bar"><span class="dash-card__bar-label">Aging faster</span><div class="dash-card__bar-track"><div class="dash-card__bar-fill" style="width:25%;background:#f87171"></div></div></div>
+                  <div class="dash-card__bar"><span class="dash-card__bar-label">Aging normally</span><div class="dash-card__bar-track"><div class="dash-card__bar-fill" style="width:60%;background:#fbbf24"></div></div></div>
+                  <div class="dash-card__bar"><span class="dash-card__bar-label">Aging slower</span><div class="dash-card__bar-track"><div class="dash-card__bar-fill" style="width:85%;background:#4ade80"></div></div></div>
+                </div>
+              </div>
+
+              <div class="dash-card dash-card--3">
+                <span class="dash-card__dot dash-card__dot--white"></span>
+                <span class="dash-card__label">Nutrition</span>
+                <p class="dash-card__text">Eat plants and fiber-rich foods, like vegetables, fruits, beans, whole grains, oats, and greens.</p>
+              </div>
+
+              <div class="dash-card dash-card--4">
+                <span class="dash-card__label">Biological Age</span>
+                <div class="dash-card__big-num">41</div>
+                <p class="dash-card__text">Your biological age is 3 years older than your chronological age.</p>
+              </div>
+
+              <div class="dash-card dash-card--5">
+                <span class="dash-card__badge">Needs attention</span>
+                <span class="dash-card__label" style="font-weight:700">Heart health</span>
+                <p class="dash-card__text">Indicates a risk of heart disease.</p>
+                <div class="dash-card__list-item">LDL Cholesterol</div>
+              </div>
+              </div>
             </div>
 
-            <!-- Main figure image (on top) -->
+            <!-- Main figure images (on top) -->
+            <img class="problem-hero-img__phone" alt="Phone app" src="assets/web2/composition_with_docktor/phone.png" loading="lazy">
+            <img class="problem-hero-img__watch" alt="Smart watch" src="assets/web2/composition_with_docktor/watch.png" loading="lazy">
             <img class="problem-hero-img__figure" alt="Doctor illustration" fetchpriority="low" src="assets/web2/composition_with_docktor/doctor.png" loading="lazy">
           </div>
         </div>
