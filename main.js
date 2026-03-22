@@ -6,10 +6,38 @@
 (function () {
   'use strict';
 
+  // ---- Marquee Gif Circles ----
+  var gifCircles = document.querySelectorAll('.marquee__gif');
+  if (gifCircles.length) {
+    var frameCount = 5;
+    var tick = 0;
+    // Set initial frame based on data-offset
+    gifCircles.forEach(function (circle) {
+      var offset = parseInt(circle.getAttribute('data-offset'), 10) || 0;
+      var imgs = circle.querySelectorAll('img');
+      imgs.forEach(function (img, i) {
+        if (i === offset % frameCount) img.classList.add('marquee__gif--active');
+      });
+    });
+    setInterval(function () {
+      tick++;
+      gifCircles.forEach(function (circle) {
+        var offset = parseInt(circle.getAttribute('data-offset'), 10) || 0;
+        var imgs = circle.querySelectorAll('img');
+        var active = (tick + offset) % frameCount;
+        imgs.forEach(function (img, i) {
+          if (i === active) img.classList.add('marquee__gif--active');
+          else img.classList.remove('marquee__gif--active');
+        });
+      });
+    }, 500);
+  }
+
   // ---- Hero Rotating Word ----
   var rotatingEl = document.getElementById('rotatingWord');
   if (rotatingEl) {
     var words = ['life', 'routine', 'habits', 'burnout', 'self-care', 'energy', 'sleep', 'wellness', 'balance', 'focus', 'stability', 'rhythm'];
+    var wordColors = ['#ff6b9d', '#f59e0b', '#10b981', '#8b5cf6', '#ec4899', '#06b6d4', '#6366f1', '#f43f5e', '#14b8a6', '#a855f7', '#e11d48', '#0ea5e9'];
     var wordIndex = 0;
     var firstDelay = 2000; // "life" stays 2s
     var wordDelay = 1000;  // rest 1s each
@@ -19,6 +47,7 @@
       setTimeout(function () {
         wordIndex = (wordIndex + 1) % words.length;
         rotatingEl.textContent = words[wordIndex];
+        rotatingEl.style.color = wordColors[wordIndex];
         rotatingEl.classList.remove('flip-out');
         rotatingEl.classList.add('flip-in');
         setTimeout(function () {
