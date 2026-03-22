@@ -1026,6 +1026,10 @@ body.nav-open {
 
 .split__panel {
   padding: clamp(2rem, 5vw, 4rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .split__panel--before {
@@ -1038,9 +1042,18 @@ body.nav-open {
   color: var(--color-white);
 }
 
-.split__content {
-  max-width: 520px;
-  margin-inline: auto;
+.split__img-wrap {
+  width: 100%;
+  max-width: 480px;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.split__img-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .split__label {
