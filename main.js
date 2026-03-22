@@ -401,11 +401,29 @@
     });
   }
 
-  // ---- Pricing 3D Scene (Three.js) ----
+  // ---- Pricing 3D Scene (Three.js) — lazy-loaded ----
   var pricingSection = document.getElementById('pricing');
   var canvas3d = document.getElementById('pricing3d');
 
-  if (pricingSection && canvas3d && typeof THREE !== 'undefined' && !prefersReducedMotion) {
+  if (pricingSection && canvas3d && !prefersReducedMotion) {
+    var threeLoaded = false;
+    var lazyThreeObserver = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting && !threeLoaded) {
+        threeLoaded = true;
+        lazyThreeObserver.disconnect();
+        var s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+        s.onload = function () { initPricing3D(); };
+        document.head.appendChild(s);
+      }
+    }, { rootMargin: '200px' });
+    lazyThreeObserver.observe(pricingSection);
+  }
+
+  function initPricing3D() {
+    var pricingSection = document.getElementById('pricing');
+    var canvas3d = document.getElementById('pricing3d');
+    if (!pricingSection || !canvas3d || typeof THREE === 'undefined') return;
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
     camera.position.set(0, 0, 12);

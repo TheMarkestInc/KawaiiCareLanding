@@ -1,28 +1,28 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" itemscope itemtype="https://schema.org/WebPage">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kawaii Care — AI Wellness Companion for Weight Loss, Burnout & Healthy Habits</title>
+  <title>Kawaii Care â€” AI Wellness Companion for Weight Loss, Burnout & Healthy Habits</title>
   <meta name="description" content="Meet Kawaii Care: a cute AI-powered physical companion that clips to your bag, coaches you through weight loss, burnout recovery, sleep, hydration & healthy habits daily. Syncs with Apple Health. Join 2,000+ women on the waitlist.">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
   <link rel="canonical" href="https://kawaiicare.com/">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Kawaii Care — AI Wellness Companion for Weight Loss, Burnout & Healthy Habits">
-  <meta property="og:description" content="A cute AI companion that hangs on your bag, coaches you through weight loss, burnout & healthy habits — and never judges you. Like Tamagotchi meets a life coach.">
+  <meta property="og:title" content="Kawaii Care â€” AI Wellness Companion for Weight Loss, Burnout & Healthy Habits">
+  <meta property="og:description" content="A cute AI companion that hangs on your bag, coaches you through weight loss, burnout & healthy habits â€” and never judges you. Like Tamagotchi meets a life coach.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Kawaii Care">
   <meta property="og:url" content="https://kawaiicare.com/">
   <meta property="og:image" content="https://kawaiicare.com/assets/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Kawaii Care — cute AI wellness companion device">
+  <meta property="og:image:alt" content="Kawaii Care â€” cute AI wellness companion device">
   <meta property="og:locale" content="en_US">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Kawaii Care — AI Wellness Companion That Actually Works">
+  <meta name="twitter:title" content="Kawaii Care â€” AI Wellness Companion That Actually Works">
   <meta name="twitter:description" content="A cute physical AI companion for weight loss, burnout recovery & daily habits. Tamagotchi meets a life coach. Join the waitlist.">
   <meta name="twitter:image" content="https://kawaiicare.com/assets/og-image.jpg">
   <meta name="twitter:image:alt" content="Kawaii Care AI wellness companion">
@@ -30,7 +30,8 @@
   <!-- Preconnect to Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@300;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@300;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@300;500;600;700;800&display=swap" rel="stylesheet"></noscript>
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
@@ -38,6 +39,11 @@
   <link rel="apple-touch-icon" href="assets/logo_big.jpg">
 
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Preload LCP-critical font -->
+  <link rel="preload" href="assets/fonts/frankfurterrussia.otf" as="font" type="font/otf" crossorigin>
+  <!-- Preload hero video poster (LCP candidate) -->
+  <link rel="preload" href="assets/herovideo-poster.webp" as="image" type="image/webp">
 
   <!-- Structured Data: Organization -->
   <script type="application/ld+json">
@@ -141,7 +147,7 @@
         "name": "What if cute stuff isn't my thing?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Dragon skin. Cat skin. Bear skin. Multiple customizable character skins are available. Also — everyone says that until they hold one."
+          "text": "Dragon skin. Cat skin. Bear skin. Multiple customizable character skins are available. Also â€” everyone says that until they hold one."
         }
       },
       {
@@ -149,7 +155,7 @@
         "name": "Is the Kawaii Care AI good?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Powered by GPT. Learns your patterns. Gets better over time. Built by a certified coach with a Ph.D — except it lives on your bag and doesn't charge $200/hour."
+          "text": "Powered by GPT. Learns your patterns. Gets better over time. Built by a certified coach with a Ph.D â€” except it lives on your bag and doesn't charge $200/hour."
         }
       },
       {
@@ -157,7 +163,7 @@
         "name": "I've tried everything. Why would Kawaii Care work?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Because everything you tried lived in your phone — where you also doomscroll and compare yourself to people who are lying. Kawaii Care is separate. Physical. Right there when you look up. That's the difference."
+          "text": "Because everything you tried lived in your phone â€” where you also doomscroll and compare yourself to people who are lying. Kawaii Care is separate. Physical. Right there when you look up. That's the difference."
         }
       }
     ]
@@ -178,7 +184,7 @@
   <header class="nav" id="nav">
     <div class="nav__container liquid-glass" id="navGlass">
       <a href="#" class="nav__logo" aria-label="Kawaii Care home">
-        <img class="nav__logo-icon" src="assets/logo_big.jpg" alt="Kawaii Care logo" width="40" height="40">
+        <img class="nav__logo-icon" src="assets/logo_big.webp" alt="Kawaii Care logo" width="40" height="40" decoding="async">
         <span class="nav__logo-text">Kawaii Care</span>
       </a>
 
@@ -236,9 +242,9 @@
   <main id="main">
 
     <!-- ======== HERO (Block 1) ======== -->
-    <section class="hero" id="hero" aria-label="Kawaii Care — AI wellness companion">
+    <section class="hero" id="hero" aria-label="Kawaii Care â€” AI wellness companion">
       <div class="hero__video-wrap">
-        <video class="hero__video" autoplay muted loop playsinline poster="assets/herovideo-poster.jpg">
+        <video class="hero__video" autoplay muted loop playsinline poster="assets/herovideo-poster.webp">
           <source src="assets/herovideo.webm" type="video/webm">
         </video>
         <div class="hero__overlay"></div>
@@ -267,15 +273,15 @@
           <span class="hero__platforms-label">also available on</span>
           <div class="hero__platforms-logos">
             <div class="hero__platform">
-              <img src="assets/corplogos/applelogo.png" alt="" width="20" height="24" loading="eager">
+              <img src="assets/corplogos/applelogo.png" alt="" width="20" height="24" decoding="async">
               <span>iOS</span>
             </div>
             <div class="hero__platform">
-              <img src="assets/corplogos/androidlogo.png" alt="" width="22" height="24" loading="eager">
+              <img src="assets/corplogos/androidlogo.png" alt="" width="22" height="24" decoding="async">
               <span>Android</span>
             </div>
             <div class="hero__platform">
-              <img src="assets/corplogos/metalogo.png" alt="" width="28" height="20" loading="eager">
+              <img src="assets/corplogos/metalogo.png" alt="" width="28" height="20" decoding="async">
               <span>Oculus</span>
             </div>
           </div>
@@ -283,14 +289,14 @@
         <p class="hero__small animate-in">Free. No spam. Just a tiny thing that gives a damn.</p>
       </div>
       <!-- Decorative floating elements -->
-      <div class="hero__decor hero__decor--1" aria-hidden="true">✨</div>
-      <div class="hero__decor hero__decor--2" aria-hidden="true">💖</div>
-      <div class="hero__decor hero__decor--3" aria-hidden="true">⭐</div>
-      <div class="hero__decor hero__decor--4" aria-hidden="true">🌸</div>
-      <div class="hero__decor hero__decor--5" aria-hidden="true">💫</div>
-      <div class="hero__decor hero__decor--6" aria-hidden="true">🎀</div>
-      <div class="hero__decor hero__decor--7" aria-hidden="true">💕</div>
-      <div class="hero__decor hero__decor--8" aria-hidden="true">🌟</div>
+      <div class="hero__decor hero__decor--1" aria-hidden="true">âœ¨</div>
+      <div class="hero__decor hero__decor--2" aria-hidden="true">ðŸ’–</div>
+      <div class="hero__decor hero__decor--3" aria-hidden="true">â­</div>
+      <div class="hero__decor hero__decor--4" aria-hidden="true">ðŸŒ¸</div>
+      <div class="hero__decor hero__decor--5" aria-hidden="true">ðŸ’«</div>
+      <div class="hero__decor hero__decor--6" aria-hidden="true">ðŸŽ€</div>
+      <div class="hero__decor hero__decor--7" aria-hidden="true">ðŸ’•</div>
+      <div class="hero__decor hero__decor--8" aria-hidden="true">ðŸŒŸ</div>
     </section>
 
     <!-- ======== THE PROBLEM (Block 2) ======== -->
@@ -305,10 +311,16 @@
           <div class="problem-slider">
             <div class="problem-slider__track" id="problemSliderTrack">
               <div class="problem-slider__slide problem-slider__slide--active">
-                <img src="assets/slider1.png" alt="Wellness lifestyle slide 1" loading="lazy">
+                <picture>
+                  <source srcset="assets/slider1.webp" type="image/webp">
+                  <img src="assets/slider1.png" alt="Wellness lifestyle slide 1" loading="lazy" decoding="async">
+                </picture>
               </div>
               <div class="problem-slider__slide">
-                <img src="assets/slider2.jpg" alt="Wellness lifestyle slide 2" loading="lazy">
+                <picture>
+                  <source srcset="assets/slider2.webp" type="image/webp">
+                  <img src="assets/slider2.jpg" alt="Wellness lifestyle slide 2" loading="lazy" decoding="async">
+                </picture>
               </div>
             </div>
             <div class="problem-slider__dots" id="problemSliderDots">
@@ -317,9 +329,9 @@
             </div>
             <button class="problem-slider__arrow problem-slider__arrow--prev" aria-label="Previous slide" id="sliderPrev">&#8249;</button>
             <button class="problem-slider__arrow problem-slider__arrow--next" aria-label="Next slide" id="sliderNext">&#8250;</button>
-            <img class="problem-slider__icon problem-slider__icon--tactile" alt="Tactile" src="assets/web2/states/tactile.svg" loading="lazy">
-            <img class="problem-slider__icon problem-slider__icon--talks" alt="Talks" src="assets/web2/states/talks.svg" loading="lazy">
-            <img class="problem-slider__icon problem-slider__icon--wearable" alt="Wearable" src="assets/web2/states/Wearable.svg" loading="lazy">
+            <img class="problem-slider__icon problem-slider__icon--tactile" alt="Tactile" src="assets/web2/states/tactile.svg" loading="lazy" decoding="async">
+            <img class="problem-slider__icon problem-slider__icon--talks" alt="Talks" src="assets/web2/states/talks.svg" loading="lazy" decoding="async">
+            <img class="problem-slider__icon problem-slider__icon--wearable" alt="Wearable" src="assets/web2/states/Wearable.svg" loading="lazy" decoding="async">
           </div>
 
           <!-- Right: Lifestyle Image + Floating Dashboard Cards -->
@@ -423,12 +435,21 @@
             </div>
 
             <!-- Main figure images (on top) -->
-            <img class="problem-hero-img__proactive" alt="ProActive" src="assets/web2/states/ProActive.svg" loading="lazy">
-            <img class="problem-hero-img__phone" alt="Phone app" src="assets/web2/composition_with_docktor/phone.png" loading="lazy">
-            <img class="problem-hero-img__digitizes" alt="Digitizes" src="assets/web2/states/Digitizes.svg" loading="lazy">
-            <img class="problem-hero-img__watch" alt="Smart watch" src="assets/web2/composition_with_docktor/watch.png" loading="lazy">
-            <img class="problem-hero-img__figure" alt="Doctor illustration" fetchpriority="low" src="assets/web2/composition_with_docktor/doctor.png" loading="lazy">
-            <img class="problem-hero-img__expert" alt="Expert badge" src="assets/web2/states/Expert.svg" loading="lazy">
+            <img class="problem-hero-img__proactive" alt="ProActive" src="assets/web2/states/ProActive.svg" loading="lazy" decoding="async">
+            <picture>
+              <source srcset="assets/web2/composition_with_docktor/phone.webp" type="image/webp">
+              <img class="problem-hero-img__phone" alt="Phone app" src="assets/web2/composition_with_docktor/phone.png" loading="lazy" decoding="async">
+            </picture>
+            <img class="problem-hero-img__digitizes" alt="Digitizes" src="assets/web2/states/Digitizes.svg" loading="lazy" decoding="async">
+            <picture>
+              <source srcset="assets/web2/composition_with_docktor/watch.webp" type="image/webp">
+              <img class="problem-hero-img__watch" alt="Smart watch" src="assets/web2/composition_with_docktor/watch.png" loading="lazy" decoding="async">
+            </picture>
+            <picture>
+              <source srcset="assets/web2/composition_with_docktor/doctor.webp" type="image/webp">
+              <img class="problem-hero-img__figure" alt="Doctor illustration" src="assets/web2/composition_with_docktor/doctor.png" loading="lazy" decoding="async">
+            </picture>
+            <img class="problem-hero-img__expert" alt="Expert badge" src="assets/web2/states/Expert.svg" loading="lazy" decoding="async">
           </div>
         </div>
       </div>
@@ -441,27 +462,27 @@
 
         <div class="benefits-grid animate-in">
           <div class="benefit">
-            <div class="benefit__icon"><img src="assets/web2/states/talks.svg" alt="Talks" loading="lazy"></div>
+            <div class="benefit__icon"><img src="assets/web2/states/talks.svg" alt="Talks" loading="lazy" decoding="async"></div>
             <p class="benefit__label">Talks</p>
           </div>
           <div class="benefit">
-            <div class="benefit__icon"><img src="assets/web2/states/Digitizes.svg" alt="Life, Sorted" loading="lazy"></div>
+            <div class="benefit__icon"><img src="assets/web2/states/Digitizes.svg" alt="Life, Sorted" loading="lazy" decoding="async"></div>
             <p class="benefit__label">Life, Sorted</p>
           </div>
           <div class="benefit">
-            <div class="benefit__icon"><img src="assets/web2/states/ProActive.svg" alt="Pro-Active" loading="lazy"></div>
+            <div class="benefit__icon"><img src="assets/web2/states/ProActive.svg" alt="Pro-Active" loading="lazy" decoding="async"></div>
             <p class="benefit__label">Pro-Active</p>
           </div>
           <div class="benefit">
-            <div class="benefit__icon"><img src="assets/web2/states/tactile.svg" alt="Tactile" loading="lazy"></div>
+            <div class="benefit__icon"><img src="assets/web2/states/tactile.svg" alt="Tactile" loading="lazy" decoding="async"></div>
             <p class="benefit__label">Tactile</p>
           </div>
           <div class="benefit">
-            <div class="benefit__icon"><img src="assets/web2/states/Wearable.svg" alt="Wearable" loading="lazy"></div>
+            <div class="benefit__icon"><img src="assets/web2/states/Wearable.svg" alt="Wearable" loading="lazy" decoding="async"></div>
             <p class="benefit__label">Wearable</p>
           </div>
           <div class="benefit">
-            <div class="benefit__icon"><img src="assets/web2/states/Expert.svg" alt="Expert Supported" loading="lazy"></div>
+            <div class="benefit__icon"><img src="assets/web2/states/Expert.svg" alt="Expert Supported" loading="lazy" decoding="async"></div>
             <p class="benefit__label">Expert<br>Supported</p>
           </div>
         </div>
@@ -489,38 +510,38 @@
       <div class="marquee__track">
         <!-- Set 1 -->
         <span class="marquee__text">sleep better</span>
-        <div class="marquee__img marquee__gif" data-offset="0"><img src="assets/web2/gif/pic1.jpg" alt=""><img src="assets/web2/gif/pic2.jpg" alt=""><img src="assets/web2/gif/pic3.jpg" alt=""><img src="assets/web2/gif/pic4.jpg" alt=""><img src="assets/web2/gif/pic5.jpg" alt=""></div>
+        <div class="marquee__img marquee__gif" data-offset="0"><img src="assets/web2/gif/pic1.webp" alt="" decoding="async"><img src="assets/web2/gif/pic2.webp" alt="" decoding="async"><img src="assets/web2/gif/pic3.webp" alt="" decoding="async"><img src="assets/web2/gif/pic4.webp" alt="" decoding="async"><img src="assets/web2/gif/pic5.webp" alt="" decoding="async"></div>
         <span class="marquee__text">move more</span>
-        <div class="marquee__img marquee__gif" data-offset="1"><img src="assets/web2/gif/pic1.jpg" alt=""><img src="assets/web2/gif/pic2.jpg" alt=""><img src="assets/web2/gif/pic3.jpg" alt=""><img src="assets/web2/gif/pic4.jpg" alt=""><img src="assets/web2/gif/pic5.jpg" alt=""></div>
+        <div class="marquee__img marquee__gif" data-offset="1"><img src="assets/web2/gif/pic1.webp" alt="" decoding="async"><img src="assets/web2/gif/pic2.webp" alt="" decoding="async"><img src="assets/web2/gif/pic3.webp" alt="" decoding="async"><img src="assets/web2/gif/pic4.webp" alt="" decoding="async"><img src="assets/web2/gif/pic5.webp" alt="" decoding="async"></div>
         <span class="marquee__text">stress less</span>
-        <div class="marquee__img marquee__gif" data-offset="2"><img src="assets/web2/gif/pic1.jpg" alt=""><img src="assets/web2/gif/pic2.jpg" alt=""><img src="assets/web2/gif/pic3.jpg" alt=""><img src="assets/web2/gif/pic4.jpg" alt=""><img src="assets/web2/gif/pic5.jpg" alt=""></div>
+        <div class="marquee__img marquee__gif" data-offset="2"><img src="assets/web2/gif/pic1.webp" alt="" decoding="async"><img src="assets/web2/gif/pic2.webp" alt="" decoding="async"><img src="assets/web2/gif/pic3.webp" alt="" decoding="async"><img src="assets/web2/gif/pic4.webp" alt="" decoding="async"><img src="assets/web2/gif/pic5.webp" alt="" decoding="async"></div>
         <span class="marquee__text">feel alive</span>
-        <div class="marquee__img marquee__gif" data-offset="3"><img src="assets/web2/gif/pic1.jpg" alt=""><img src="assets/web2/gif/pic2.jpg" alt=""><img src="assets/web2/gif/pic3.jpg" alt=""><img src="assets/web2/gif/pic4.jpg" alt=""><img src="assets/web2/gif/pic5.jpg" alt=""></div>
+        <div class="marquee__img marquee__gif" data-offset="3"><img src="assets/web2/gif/pic1.webp" alt="" decoding="async"><img src="assets/web2/gif/pic2.webp" alt="" decoding="async"><img src="assets/web2/gif/pic3.webp" alt="" decoding="async"><img src="assets/web2/gif/pic4.webp" alt="" decoding="async"><img src="assets/web2/gif/pic5.webp" alt="" decoding="async"></div>
         <span class="marquee__text">stay hydrated</span>
-        <div class="marquee__img marquee__gif" data-offset="4"><img src="assets/web2/gif/pic1.jpg" alt=""><img src="assets/web2/gif/pic2.jpg" alt=""><img src="assets/web2/gif/pic3.jpg" alt=""><img src="assets/web2/gif/pic4.jpg" alt=""><img src="assets/web2/gif/pic5.jpg" alt=""></div>
+        <div class="marquee__img marquee__gif" data-offset="4"><img src="assets/web2/gif/pic1.webp" alt="" decoding="async"><img src="assets/web2/gif/pic2.webp" alt="" decoding="async"><img src="assets/web2/gif/pic3.webp" alt="" decoding="async"><img src="assets/web2/gif/pic4.webp" alt="" decoding="async"><img src="assets/web2/gif/pic5.webp" alt="" decoding="async"></div>
         <span class="marquee__text">build habits</span>
-        <div class="marquee__img marquee__gif" data-offset="0"><img src="assets/web2/gif/pic1.jpg" alt=""><img src="assets/web2/gif/pic2.jpg" alt=""><img src="assets/web2/gif/pic3.jpg" alt=""><img src="assets/web2/gif/pic4.jpg" alt=""><img src="assets/web2/gif/pic5.jpg" alt=""></div>
+        <div class="marquee__img marquee__gif" data-offset="0"><img src="assets/web2/gif/pic1.webp" alt="" decoding="async"><img src="assets/web2/gif/pic2.webp" alt="" decoding="async"><img src="assets/web2/gif/pic3.webp" alt="" decoding="async"><img src="assets/web2/gif/pic4.webp" alt="" decoding="async"><img src="assets/web2/gif/pic5.webp" alt="" decoding="async"></div>
         <span class="marquee__text">love yourself</span>
-        <div class="marquee__img marquee__gif" data-offset="1"><img src="assets/web2/gif/pic1.jpg" alt=""><img src="assets/web2/gif/pic2.jpg" alt=""><img src="assets/web2/gif/pic3.jpg" alt=""><img src="assets/web2/gif/pic4.jpg" alt=""><img src="assets/web2/gif/pic5.jpg" alt=""></div>
+        <div class="marquee__img marquee__gif" data-offset="1"><img src="assets/web2/gif/pic1.webp" alt="" decoding="async"><img src="assets/web2/gif/pic2.webp" alt="" decoding="async"><img src="assets/web2/gif/pic3.webp" alt="" decoding="async"><img src="assets/web2/gif/pic4.webp" alt="" decoding="async"><img src="assets/web2/gif/pic5.webp" alt="" decoding="async"></div>
         <span class="marquee__text">find your rhythm</span>
-        <div class="marquee__img marquee__gif" data-offset="2"><img src="assets/web2/gif/pic1.jpg" alt=""><img src="assets/web2/gif/pic2.jpg" alt=""><img src="assets/web2/gif/pic3.jpg" alt=""><img src="assets/web2/gif/pic4.jpg" alt=""><img src="assets/web2/gif/pic5.jpg" alt=""></div>
+        <div class="marquee__img marquee__gif" data-offset="2"><img src="assets/web2/gif/pic1.webp" alt="" decoding="async"><img src="assets/web2/gif/pic2.webp" alt="" decoding="async"><img src="assets/web2/gif/pic3.webp" alt="" decoding="async"><img src="assets/web2/gif/pic4.webp" alt="" decoding="async"><img src="assets/web2/gif/pic5.webp" alt="" decoding="async"></div>
         <!-- Set 2 (duplicate for seamless loop) -->
         <span class="marquee__text">sleep better</span>
-        <div class="marquee__img marquee__gif" data-offset="3"><img src="assets/web2/gif/pic1.jpg" alt=""><img src="assets/web2/gif/pic2.jpg" alt=""><img src="assets/web2/gif/pic3.jpg" alt=""><img src="assets/web2/gif/pic4.jpg" alt=""><img src="assets/web2/gif/pic5.jpg" alt=""></div>
+        <div class="marquee__img marquee__gif" data-offset="3"><img src="assets/web2/gif/pic1.webp" alt="" decoding="async"><img src="assets/web2/gif/pic2.webp" alt="" decoding="async"><img src="assets/web2/gif/pic3.webp" alt="" decoding="async"><img src="assets/web2/gif/pic4.webp" alt="" decoding="async"><img src="assets/web2/gif/pic5.webp" alt="" decoding="async"></div>
         <span class="marquee__text">move more</span>
-        <div class="marquee__img marquee__gif" data-offset="4"><img src="assets/web2/gif/pic1.jpg" alt=""><img src="assets/web2/gif/pic2.jpg" alt=""><img src="assets/web2/gif/pic3.jpg" alt=""><img src="assets/web2/gif/pic4.jpg" alt=""><img src="assets/web2/gif/pic5.jpg" alt=""></div>
+        <div class="marquee__img marquee__gif" data-offset="4"><img src="assets/web2/gif/pic1.webp" alt="" decoding="async"><img src="assets/web2/gif/pic2.webp" alt="" decoding="async"><img src="assets/web2/gif/pic3.webp" alt="" decoding="async"><img src="assets/web2/gif/pic4.webp" alt="" decoding="async"><img src="assets/web2/gif/pic5.webp" alt="" decoding="async"></div>
         <span class="marquee__text">stress less</span>
-        <div class="marquee__img marquee__gif" data-offset="0"><img src="assets/web2/gif/pic1.jpg" alt=""><img src="assets/web2/gif/pic2.jpg" alt=""><img src="assets/web2/gif/pic3.jpg" alt=""><img src="assets/web2/gif/pic4.jpg" alt=""><img src="assets/web2/gif/pic5.jpg" alt=""></div>
+        <div class="marquee__img marquee__gif" data-offset="0"><img src="assets/web2/gif/pic1.webp" alt="" decoding="async"><img src="assets/web2/gif/pic2.webp" alt="" decoding="async"><img src="assets/web2/gif/pic3.webp" alt="" decoding="async"><img src="assets/web2/gif/pic4.webp" alt="" decoding="async"><img src="assets/web2/gif/pic5.webp" alt="" decoding="async"></div>
         <span class="marquee__text">feel alive</span>
-        <div class="marquee__img marquee__gif" data-offset="1"><img src="assets/web2/gif/pic1.jpg" alt=""><img src="assets/web2/gif/pic2.jpg" alt=""><img src="assets/web2/gif/pic3.jpg" alt=""><img src="assets/web2/gif/pic4.jpg" alt=""><img src="assets/web2/gif/pic5.jpg" alt=""></div>
+        <div class="marquee__img marquee__gif" data-offset="1"><img src="assets/web2/gif/pic1.webp" alt="" decoding="async"><img src="assets/web2/gif/pic2.webp" alt="" decoding="async"><img src="assets/web2/gif/pic3.webp" alt="" decoding="async"><img src="assets/web2/gif/pic4.webp" alt="" decoding="async"><img src="assets/web2/gif/pic5.webp" alt="" decoding="async"></div>
         <span class="marquee__text">stay hydrated</span>
-        <div class="marquee__img marquee__gif" data-offset="2"><img src="assets/web2/gif/pic1.jpg" alt=""><img src="assets/web2/gif/pic2.jpg" alt=""><img src="assets/web2/gif/pic3.jpg" alt=""><img src="assets/web2/gif/pic4.jpg" alt=""><img src="assets/web2/gif/pic5.jpg" alt=""></div>
+        <div class="marquee__img marquee__gif" data-offset="2"><img src="assets/web2/gif/pic1.webp" alt="" decoding="async"><img src="assets/web2/gif/pic2.webp" alt="" decoding="async"><img src="assets/web2/gif/pic3.webp" alt="" decoding="async"><img src="assets/web2/gif/pic4.webp" alt="" decoding="async"><img src="assets/web2/gif/pic5.webp" alt="" decoding="async"></div>
         <span class="marquee__text">build habits</span>
-        <div class="marquee__img marquee__gif" data-offset="3"><img src="assets/web2/gif/pic1.jpg" alt=""><img src="assets/web2/gif/pic2.jpg" alt=""><img src="assets/web2/gif/pic3.jpg" alt=""><img src="assets/web2/gif/pic4.jpg" alt=""><img src="assets/web2/gif/pic5.jpg" alt=""></div>
+        <div class="marquee__img marquee__gif" data-offset="3"><img src="assets/web2/gif/pic1.webp" alt="" decoding="async"><img src="assets/web2/gif/pic2.webp" alt="" decoding="async"><img src="assets/web2/gif/pic3.webp" alt="" decoding="async"><img src="assets/web2/gif/pic4.webp" alt="" decoding="async"><img src="assets/web2/gif/pic5.webp" alt="" decoding="async"></div>
         <span class="marquee__text">love yourself</span>
-        <div class="marquee__img marquee__gif" data-offset="4"><img src="assets/web2/gif/pic1.jpg" alt=""><img src="assets/web2/gif/pic2.jpg" alt=""><img src="assets/web2/gif/pic3.jpg" alt=""><img src="assets/web2/gif/pic4.jpg" alt=""><img src="assets/web2/gif/pic5.jpg" alt=""></div>
+        <div class="marquee__img marquee__gif" data-offset="4"><img src="assets/web2/gif/pic1.webp" alt="" decoding="async"><img src="assets/web2/gif/pic2.webp" alt="" decoding="async"><img src="assets/web2/gif/pic3.webp" alt="" decoding="async"><img src="assets/web2/gif/pic4.webp" alt="" decoding="async"><img src="assets/web2/gif/pic5.webp" alt="" decoding="async"></div>
         <span class="marquee__text">find your rhythm</span>
-        <div class="marquee__img marquee__gif" data-offset="0"><img src="assets/web2/gif/pic1.jpg" alt=""><img src="assets/web2/gif/pic2.jpg" alt=""><img src="assets/web2/gif/pic3.jpg" alt=""><img src="assets/web2/gif/pic4.jpg" alt=""><img src="assets/web2/gif/pic5.jpg" alt=""></div>
+        <div class="marquee__img marquee__gif" data-offset="0"><img src="assets/web2/gif/pic1.webp" alt="" decoding="async"><img src="assets/web2/gif/pic2.webp" alt="" decoding="async"><img src="assets/web2/gif/pic3.webp" alt="" decoding="async"><img src="assets/web2/gif/pic4.webp" alt="" decoding="async"><img src="assets/web2/gif/pic5.webp" alt="" decoding="async"></div>
       </div>
     </div>
 
@@ -599,13 +620,19 @@
         <div class="split__panel split__panel--before">
           <h3 class="split__label">Before</h3>
           <div class="split__img-wrap">
-            <img src="assets/web2/upgrade/bad.jpg" alt="Before Kawaii Care" loading="lazy">
+            <picture>
+              <source srcset="assets/web2/upgrade/bad.webp" type="image/webp">
+              <img src="assets/web2/upgrade/bad.jpg" alt="Before Kawaii Care" loading="lazy" decoding="async">
+            </picture>
           </div>
         </div>
         <div class="split__panel split__panel--after">
           <h3 class="split__label">After <span>90 days</span></h3>
           <div class="split__img-wrap">
-            <img src="assets/web2/upgrade/good.jpg" alt="After Kawaii Care" loading="lazy">
+            <picture>
+              <source srcset="assets/web2/upgrade/good.webp" type="image/webp">
+              <img src="assets/web2/upgrade/good.jpg" alt="After Kawaii Care" loading="lazy" decoding="async">
+            </picture>
           </div>
         </div>
       </div>
@@ -635,39 +662,39 @@
 
         <div class="faces animate-in">
           <div class="face-card">
-            <div class="face-card__emoji">😊</div>
+            <div class="face-card__emoji">ðŸ˜Š</div>
             <span class="face-card__label">Happy</span>
           </div>
           <div class="face-card">
-            <div class="face-card__emoji">😴</div>
+            <div class="face-card__emoji">ðŸ˜´</div>
             <span class="face-card__label">Sleepy</span>
           </div>
           <div class="face-card">
-            <div class="face-card__emoji">😤</div>
+            <div class="face-card__emoji">ðŸ˜¤</div>
             <span class="face-card__label">Hangry</span>
           </div>
           <div class="face-card">
-            <div class="face-card__emoji">😒</div>
+            <div class="face-card__emoji">ðŸ˜’</div>
             <span class="face-card__label">Pouty</span>
           </div>
           <div class="face-card">
-            <div class="face-card__emoji">🥹</div>
+            <div class="face-card__emoji">ðŸ¥¹</div>
             <span class="face-card__label">Proud</span>
           </div>
           <div class="face-card">
-            <div class="face-card__emoji">💧</div>
+            <div class="face-card__emoji">ðŸ’§</div>
             <span class="face-card__label">Thirsty</span>
           </div>
           <div class="face-card">
-            <div class="face-card__emoji">😢</div>
+            <div class="face-card__emoji">ðŸ˜¢</div>
             <span class="face-card__label">Ghosted</span>
           </div>
           <div class="face-card">
-            <div class="face-card__emoji">🎉</div>
+            <div class="face-card__emoji">ðŸŽ‰</div>
             <span class="face-card__label">Party Mode</span>
           </div>
           <div class="face-card">
-            <div class="face-card__emoji">😈</div>
+            <div class="face-card__emoji">ðŸ˜ˆ</div>
             <span class="face-card__label">Sassy</span>
           </div>
         </div>
@@ -676,15 +703,15 @@
           <h3 class="skins__title">Character Skins</h3>
           <div class="skins__grid">
             <div class="skin-card">
-              <div class="skin-card__icon">🐱</div>
+              <div class="skin-card__icon">ðŸ±</div>
               <span class="skin-card__label">Cat</span>
             </div>
             <div class="skin-card">
-              <div class="skin-card__icon">🐻</div>
+              <div class="skin-card__icon">ðŸ»</div>
               <span class="skin-card__label">Bear</span>
             </div>
             <div class="skin-card">
-              <div class="skin-card__icon">🐉</div>
+              <div class="skin-card__icon">ðŸ‰</div>
               <span class="skin-card__label">Dragon</span>
             </div>
           </div>
@@ -704,28 +731,28 @@
 
         <div class="features animate-in">
           <div class="feature">
-            <div class="feature__icon" aria-hidden="true">🔥</div>
+            <div class="feature__icon" aria-hidden="true">ðŸ”¥</div>
             <div class="feature__content">
               <h3 class="feature__title">Streaks</h3>
               <p class="feature__text">Watch your streak grow right on the toy's screen. Miss a day and it resets. Brutal? Maybe. Effective? Absolutely.</p>
             </div>
           </div>
           <div class="feature">
-            <div class="feature__icon" aria-hidden="true">👯</div>
+            <div class="feature__icon" aria-hidden="true">ðŸ‘¯</div>
             <div class="feature__content">
               <h3 class="feature__title">Friends Leaderboard</h3>
               <p class="feature__text">Connect with friends and see who's actually sticking with their goals. Healthy competition, kawaii style.</p>
             </div>
           </div>
           <div class="feature">
-            <div class="feature__icon" aria-hidden="true">👗</div>
+            <div class="feature__icon" aria-hidden="true">ðŸ‘—</div>
             <div class="feature__content">
               <h3 class="feature__title">Unlockable Outfits</h3>
               <p class="feature__text">Hit milestones, unlock new looks. Your creature gets cuter the healthier you get. It's vanity for good.</p>
             </div>
           </div>
           <div class="feature">
-            <div class="feature__icon" aria-hidden="true">❤️‍🩹</div>
+            <div class="feature__icon" aria-hidden="true">â¤ï¸â€ðŸ©¹</div>
             <div class="feature__content">
               <h3 class="feature__title">Health Data Sync</h3>
               <p class="feature__text">Apple Health, Google Health, Samsung Health&nbsp;&mdash; steps, sleep, workouts all flow in automatically. No manual logging. No friction.</p>
@@ -740,36 +767,45 @@
     <!-- ======== SOCIAL PROOF (Block 11) ======== -->
     <section class="bubbles-section" id="social-proof">
       <div class="bubbles-scene">
-        <!-- Bubble 1 — top center -->
+        <!-- Bubble 1 â€” top center -->
         <div class="bubble bubble--1 animate-in">
           <div class="bubble__card">
             <p class="bubble__text">I spent $3,000 on wellness apps in two years. This $228 toy did more in a month. &#x1F525;</p>
           </div>
           <div class="bubble__dots"><span></span><span></span><span></span></div>
           <div class="bubble__avatar">
-            <img src="assets/pic/pic1.jpg" alt="User" loading="lazy">
+            <picture>
+              <source srcset="assets/pic/pic1.webp" type="image/webp">
+              <img src="assets/pic/pic1.jpg" alt="User" loading="lazy" decoding="async">
+            </picture>
           </div>
         </div>
 
-        <!-- Bubble 2 — left -->
+        <!-- Bubble 2 â€” left -->
         <div class="bubble bubble--2 animate-in">
           <div class="bubble__card">
             <p class="bubble__text">I cried when it said "I'm proud of you" after my first 7-day streak. I know it's a toy. I don't care.</p>
           </div>
           <div class="bubble__dots bubble__dots--left"><span></span><span></span><span></span></div>
           <div class="bubble__avatar">
-            <img src="assets/pic/pic2.jpg" alt="User" loading="lazy">
+            <picture>
+              <source srcset="assets/pic/pic2.webp" type="image/webp">
+              <img src="assets/pic/pic2.jpg" alt="User" loading="lazy" decoding="async">
+            </picture>
           </div>
         </div>
 
-        <!-- Bubble 3 — right -->
+        <!-- Bubble 3 â€” right -->
         <div class="bubble bubble--3 animate-in">
           <div class="bubble__card">
             <p class="bubble__text">My therapist asked what changed. I showed her a plush bear. She wants one now too.</p>
           </div>
           <div class="bubble__dots"><span></span><span></span><span></span></div>
           <div class="bubble__avatar">
-            <img src="assets/pic/pic3.jpg" alt="User" loading="lazy">
+            <picture>
+              <source srcset="assets/pic/pic3.webp" type="image/webp">
+              <img src="assets/pic/pic3.jpg" alt="User" loading="lazy" decoding="async">
+            </picture>
           </div>
         </div>
       </div>
@@ -813,20 +849,20 @@
           </div>
           <div class="pricing-card__perks">
             <div class="pricing-perk">
-              <div class="pricing-perk__icon"><img src="assets/web2/points_icon/shipping.svg" alt="Free shipping icon" loading="lazy"></div>
+              <div class="pricing-perk__icon"><img src="assets/web2/points_icon/shipping.svg" alt="Free shipping icon" loading="lazy" decoding="async"></div>
               <p class="pricing-perk__label">FREE shipping &amp;<br>easy returns</p>
             </div>
             <div class="pricing-perk">
-              <div class="pricing-perk__icon"><img src="assets/web2/points_icon/pay.svg" alt="Companion app icon" loading="lazy"></div>
+              <div class="pricing-perk__icon"><img src="assets/web2/points_icon/pay.svg" alt="Companion app icon" loading="lazy" decoding="async"></div>
               <p class="pricing-perk__label">Companion App &amp;<br>Expert Support</p>
             </div>
             <div class="pricing-perk">
-              <div class="pricing-perk__icon"><img src="assets/web2/points_icon/days.svg" alt="30-day guarantee icon" loading="lazy"></div>
+              <div class="pricing-perk__icon"><img src="assets/web2/points_icon/days.svg" alt="30-day guarantee icon" loading="lazy" decoding="async"></div>
               <p class="pricing-perk__label">30-day money<br>back guarantee</p>
             </div>
           </div>
           <p class="pricing-card__fine">No credit card. Fully refundable. Zero risk.</p>
-          <a href="http://eepurl.com/jzI29o" class="btn btn--primary btn--lg pricing-card__cta" target="_blank" rel="noopener noreferrer">Join the Waitlist — It's Free</a>
+          <a href="http://eepurl.com/jzI29o" class="btn btn--primary btn--lg pricing-card__cta" target="_blank" rel="noopener noreferrer">Join the Waitlist â€” It's Free</a>
           <p class="pricing-card__social">2,000+ women already in. Your future self will be annoyed if you scroll past this.</p>
         </div>
       </div>
@@ -835,8 +871,14 @@
     <!-- ======== FOUNDER STORY (Block 5) ======== -->
     <section class="section section--alt founder-section" id="founder" aria-label="Kawaii Care founder story">
       <div class="founder-bg">
-        <img class="founder-bg__img founder-bg__img--left" src="assets/web2/collage/collage_1.jpg" alt="" loading="lazy" aria-hidden="true">
-        <img class="founder-bg__img founder-bg__img--right" src="assets/web2/collage/collage_2.png" alt="" loading="lazy" aria-hidden="true">
+        <picture>
+          <source srcset="assets/web2/collage/collage_1.webp" type="image/webp">
+          <img class="founder-bg__img founder-bg__img--left" src="assets/web2/collage/collage_1.jpg" alt="" loading="lazy" decoding="async" aria-hidden="true">
+        </picture>
+        <picture>
+          <source srcset="assets/web2/collage/collage_2.webp" type="image/webp">
+          <img class="founder-bg__img founder-bg__img--right" src="assets/web2/collage/collage_2.png" alt="" loading="lazy" decoding="async" aria-hidden="true">
+        </picture>
       </div>
       <div class="container">
         <span class="tag animate-in">why this exists</span>
@@ -844,7 +886,10 @@
 
         <div class="founder animate-in">
           <div class="founder__image">
-            <img class="founder__photo" src="assets/web2/nadya.jpeg" alt="Nadia Valery, Ph.D — Founder and CEO of Kawaii Care" width="300" height="300" loading="lazy">
+            <picture>
+              <source srcset="assets/web2/nadya.webp" type="image/webp">
+              <img class="founder__photo" src="assets/web2/nadya.jpeg" alt="Nadia Valery, Ph.D â€” Founder and CEO of Kawaii Care" width="300" height="300" loading="lazy" decoding="async">
+            </picture>
             <p class="founder__name">Nadia Valery, Ph.D</p>
             <p class="founder__role">Founder &amp; CEO</p>
           </div>
@@ -894,7 +939,7 @@
             <p class="faq-item__answer">Because everything you tried lived in your phone&nbsp;&mdash; where you also doomscroll and compare yourself to people who are lying. This is separate. Physical. Right there when you look up. That's the difference.</p>
           </details>
         </div>
-        <a href="http://eepurl.com/jzI29o" class="btn btn--primary btn--lg animate-in" style="margin-top:2.5rem" target="_blank" rel="noopener noreferrer">Join the Waitlist — It's Free</a>
+        <a href="http://eepurl.com/jzI29o" class="btn btn--primary btn--lg animate-in" style="margin-top:2.5rem" target="_blank" rel="noopener noreferrer">Join the Waitlist â€” It's Free</a>
       </div>
     </section>
 
@@ -952,7 +997,6 @@
     </div>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
   <script src="main.js" defer></script>
 </body>
 </html>
