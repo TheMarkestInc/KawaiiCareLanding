@@ -1564,17 +1564,38 @@ body.nav-open {
   align-self: flex-end;
 }
 
-/* Dashboard floating cards container */
+/* Dashboard floating cards container — perspective ribbon */
 .dashboard-cards {
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
+  perspective: 900px;
+  perspective-origin: 0% 60%;
+  overflow: hidden;
+}
+
+.dashboard-cards__track {
+  position: absolute;
+  bottom: 12%;
+  left: -60%;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  transform: rotateY(-32deg) rotateX(6deg) rotateZ(-3deg);
+  transform-style: preserve-3d;
+  animation: dashRibbon 18s linear infinite;
+}
+
+@keyframes dashRibbon {
+  0%   { transform: rotateY(-32deg) rotateX(6deg) rotateZ(-3deg) translateX(0); }
+  100% { transform: rotateY(-32deg) rotateX(6deg) rotateZ(-3deg) translateX(-50%); }
 }
 
 /* Individual dashboard card base */
 .dash-card {
-  position: absolute;
+  flex-shrink: 0;
+  width: 180px;
   background: rgba(60, 40, 30, 0.55);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -1588,19 +1609,12 @@ body.nav-open {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Card positions — spread around person */
-.dash-card--1 { top: 18%; left: 2%; width: 32%; animation: dashFloat1 6s ease-in-out infinite; }
-.dash-card--2 { top: 8%; left: 28%; width: 28%; animation: dashFloat2 7s ease-in-out infinite; }
-.dash-card--3 { top: 40%; right: 2%; width: 30%; animation: dashFloat3 5.5s ease-in-out infinite; }
-.dash-card--4 { bottom: 18%; right: 5%; width: 26%; animation: dashFloat4 6.5s ease-in-out infinite; }
-.dash-card--5 { bottom: 12%; right: 30%; width: 26%; animation: dashFloat5 7.5s ease-in-out infinite; }
-
-/* Float animations */
-@keyframes dashFloat1 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-@keyframes dashFloat2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-@keyframes dashFloat3 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-@keyframes dashFloat4 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
-@keyframes dashFloat5 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+/* Remove old absolute positioning — now flex items */
+.dash-card--1, .dash-card--2, .dash-card--3, .dash-card--4, .dash-card--5 {
+  position: static;
+  top: auto; left: auto; right: auto; bottom: auto;
+  animation: none;
+}
 
 /* Card inner elements */
 .dash-card__header { display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.5rem; }
