@@ -168,9 +168,9 @@
             - img "Smart watch" [ref=e67]
             - img "Doctor illustration" [ref=e68]
             - img "Expert badge" [ref=e69]
-      - generic: ☁️
-      - generic: 🧸
-      - generic: ☁️
+      - generic: 💖
+      - generic: ✨
+      - generic: ✨
       - generic: 🧁
     - region "Kawaii Care benefits" [ref=e70]:
       - generic [ref=e71]:
@@ -224,9 +224,9 @@
         - generic [ref=e142]:
           - heading "After 90 days" [level=3] [ref=e143]
           - img "After Kawaii Care" [ref=e145]
-      - generic: 🍡
-      - generic: 🦋
-      - generic: 💗
+      - generic: 💕
+      - generic: 💕
+      - generic: 🫧
     - generic [ref=e146]:
       - generic [ref=e148]:
         - generic [ref=e149]:
@@ -252,9 +252,9 @@
         - /url: "#pricing"
         - generic [ref=e198]: ↓
         - text: NOT CONVINCED? KEEP SCROLLING
+      - generic: 🌷
+      - generic: 💕
       - generic: 💗
-      - generic: 🎶
-      - generic: 🌈
     - region "Kawaii Care pricing and waitlist" [ref=e199]:
       - generic [ref=e200]:
         - generic [ref=e201]: take the first step
@@ -285,14 +285,11 @@
           - link "Join the Waitlist — It's Free" [ref=e217] [cursor=pointer]:
             - /url: http://eepurl.com/jzI29o
           - paragraph [ref=e218]: 2,000+ women already in. Your future self will be annoyed if you scroll past this.
-      - generic: 🎀
-      - generic: 🧁
+      - generic: 🦋
       - generic: 🌺
-      - generic: 🎶
+      - generic: 🧸
+      - generic: 🪷
     - region "Kawaii Care founder story" [ref=e219]:
-      - generic:
-        - img
-        - img
       - generic [ref=e222]:
         - generic [ref=e224]: A year ago her life was a total mess. So she built her way out.
         - img "Nadia Valery, Ph.D — Founder and CEO of Kawaii Care" [ref=e226]
@@ -303,9 +300,9 @@
           - paragraph [ref=e231]: 15 years optimizing Fortune 500 systems — but couldn't fix her own burnout, brain fog, and 20 extra lbs.
           - paragraph [ref=e232]: So she fused behavioral science, coaching psychology, and product design into a tiny companion that actually shows up for you.
           - paragraph [ref=e233]: "Six months later: 20 lbs down. New husband. A company. And a little creature that still won't shut up about hydration."
-      - generic: 🌸
-      - generic: 🫧
-      - generic: 🩷
+      - generic: 💫
+      - generic: 🪷
+      - generic: 💖
     - region "Frequently asked questions about Kawaii Care" [ref=e234]:
       - generic [ref=e235]:
         - generic [ref=e236]: FAQ
@@ -326,8 +323,8 @@
         - link "Join the Waitlist — It's Free" [ref=e251] [cursor=pointer]:
           - /url: http://eepurl.com/jzI29o
       - generic: 💜
-      - generic: 🐾
-      - generic: ⭐
+      - generic: 🫧
+      - generic: 🧁
   - contentinfo [ref=e252]:
     - generic [ref=e253]:
       - generic [ref=e254]:

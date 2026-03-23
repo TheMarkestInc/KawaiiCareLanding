@@ -894,50 +894,44 @@ body.nav-open {
 /* ======== FOUNDER ======== */
 .founder-section {
   position: relative;
-  overflow: hidden;
 }
 
-.founder-bg {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.founder-bg__img {
-  width: 50%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.18;
-  will-change: transform;
-}
-
-.founder-bg__img--left {
-  animation: founderParallax1 8s ease-in-out infinite;
-}
-
-.founder-bg__img--right {
-  animation: founderParallax2 9s ease-in-out infinite;
-}
-
-@keyframes founderParallax1 {
-  0%, 100% { transform: translateY(0) scale(1.02); }
-  50% { transform: translateY(-18px) scale(1.05); }
-}
-
-@keyframes founderParallax2 {
-  0%, 100% { transform: translateY(0) scale(1.03); }
-  50% { transform: translateY(14px) scale(1.06); }
-}
-
-.founder-section .container {
+/* --- flyby collage images between pricing & founder --- */
+.flyby {
   position: relative;
-  z-index: 1;
+  height: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.flyby__img {
+  position: absolute;
+  width: 200px;
+  height: auto;
+  border-radius: 14px;
+  opacity: 0;
+  will-change: transform, opacity;
+  box-shadow: 0 8px 32px rgba(0,0,0,.12);
+  object-fit: cover;
+}
+
+.flyby__img--left {
+  left: 32%;
+  top: -60px;
+  transform: translateY(100px) rotate(-8deg);
+}
+
+.flyby__img--right {
+  right: 32%;
+  top: -40px;
+  transform: translateY(100px) rotate(6deg);
 }
 
 /* --- MTG-style founder card --- */
 .founder-card {
+  position: relative;
+  z-index: 20;
   max-width: 480px;
   margin: 1.5rem auto 0;
   border-radius: 18px;
@@ -1663,7 +1657,7 @@ body.nav-open {
 
 .pricing-section > .container {
   position: relative;
-  z-index: 1;
+  z-index: 20;
 }
 
 /* ======== FAQ ======== */

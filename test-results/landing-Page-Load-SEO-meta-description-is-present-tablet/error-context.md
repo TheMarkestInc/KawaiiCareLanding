@@ -36,10 +36,10 @@
   - main [ref=e26]:
     - region "Kawaii Care — AI wellness companion" [ref=e27]:
       - generic [ref=e31]:
-        - heading "The cute little thing that actually fixed my energy ." [level=1] [ref=e32]:
+        - heading "The cute little thing that actually fixed my self-care ." [level=1] [ref=e32]:
           - text: The cute little thing
           - text: that actually fixed my
-          - generic [ref=e33]: energy
+          - generic [ref=e33]: self-care
           - text: .
         - paragraph [ref=e34]: An AI companion that hangs on your bag, coaches you through weight loss, burnout, and lonely Friday nights — and never judges you. Also, you can yell at it.
         - generic [ref=e35]:
@@ -161,10 +161,10 @@
             - img "Smart watch" [ref=e82]
             - img "Doctor illustration" [ref=e83]
             - img "Expert badge" [ref=e84]
-      - generic: 🧁
-      - generic: 🌟
+      - generic: 🩷
       - generic: 💫
-      - generic: 🌷
+      - generic: 🪷
+      - generic: 🐾
     - region "Kawaii Care benefits" [ref=e85]:
       - generic [ref=e86]:
         - generic [ref=e87]: kawaii care benefits
@@ -217,9 +217,9 @@
         - generic [ref=e157]:
           - heading "After 90 days" [level=3] [ref=e158]
           - img "After Kawaii Care" [ref=e160]
-      - generic: 💕
-      - generic: 🍡
-      - generic: 🌟
+      - generic: 🧸
+      - generic: 🎀
+      - generic: 🦋
     - generic [ref=e161]:
       - generic [ref=e163]:
         - generic [ref=e164]:
@@ -245,9 +245,9 @@
         - /url: "#pricing"
         - generic [ref=e213]: ↓
         - text: NOT CONVINCED? KEEP SCROLLING
-      - generic: 💕
-      - generic: 🌸
-      - generic: 🎀
+      - generic: ⭐
+      - generic: ☁️
+      - generic: 🌺
     - region "Kawaii Care pricing and waitlist" [ref=e214]:
       - generic [ref=e215]:
         - generic [ref=e216]: take the first step
@@ -278,14 +278,11 @@
           - link "Join the Waitlist — It's Free" [ref=e232] [cursor=pointer]:
             - /url: http://eepurl.com/jzI29o
           - paragraph [ref=e233]: 2,000+ women already in. Your future self will be annoyed if you scroll past this.
-      - generic: 🐾
-      - generic: 🍡
-      - generic: 💫
-      - generic: 🧁
+      - generic: 🌸
+      - generic: 🌈
+      - generic: 🌟
+      - generic: ⭐
     - region "Kawaii Care founder story" [ref=e234]:
-      - generic:
-        - img
-        - img
       - generic [ref=e237]:
         - generic [ref=e239]: A year ago her life was a total mess. So she built her way out.
         - img "Nadia Valery, Ph.D — Founder and CEO of Kawaii Care" [ref=e241]
@@ -296,9 +293,9 @@
           - paragraph [ref=e246]: 15 years optimizing Fortune 500 systems — but couldn't fix her own burnout, brain fog, and 20 extra lbs.
           - paragraph [ref=e247]: So she fused behavioral science, coaching psychology, and product design into a tiny companion that actually shows up for you.
           - paragraph [ref=e248]: "Six months later: 20 lbs down. New husband. A company. And a little creature that still won't shut up about hydration."
-      - generic: ☁️
-      - generic: 🍰
-      - generic: 🍰
+      - generic: 💫
+      - generic: 🐾
+      - generic: ✨
     - region "Frequently asked questions about Kawaii Care" [ref=e249]:
       - generic [ref=e250]:
         - generic [ref=e251]: FAQ
@@ -318,9 +315,9 @@
             - generic "I've tried everything. Why would this work? +" [ref=e265] [cursor=pointer]
         - link "Join the Waitlist — It's Free" [ref=e266] [cursor=pointer]:
           - /url: http://eepurl.com/jzI29o
-      - generic: 🍡
-      - generic: 🎀
-      - generic: 🍡
+      - generic: ⭐
+      - generic: 🐾
+      - generic: 💗
   - contentinfo [ref=e267]:
     - generic [ref=e268]:
       - generic [ref=e269]:
