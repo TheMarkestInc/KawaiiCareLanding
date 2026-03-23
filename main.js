@@ -250,15 +250,14 @@
   }
 
   // ---- WebGL Liquid Glass (fallback for non-Chromium browsers) ----
-  // Mirrors the SVG version by:
-  //  • mapping nav-local pixels → true viewport UVs so the refraction shows
-  //    the exact region behind the bar (like backdrop-filter)
-  //  • using a 32-tap golden-angle spiral blur with Gaussian weights
-  //    (replaces the sparse 16-sample Poisson disc)
+  // backdrop-filter sees the actual composited pixels behind the element.
+  // We can't access those from WebGL, so we paint the hero video + overlay
+  // gradient onto an offscreen canvas each frame and sample from that.
   function initWebGLGlass(navEl) {
     var THICKNESS = 80, BEZEL = 60, IOR = 3.0;
     var BLUR_AMT = 1.2, SPEC = 0.5, TINT = 0.06;
 
+    /* --- WebGL canvas inside nav --- */
     var cvs = document.createElement('canvas');
     cvs.style.cssText = 'position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;';
     navEl.insertBefore(cvs, navEl.firstChild);
@@ -266,45 +265,71 @@
     var dpr = Math.min(window.devicePixelRatio, 2);
     var renderer = new THREE.WebGLRenderer({ canvas: cvs, alpha: true, antialias: false });
     renderer.setPixelRatio(dpr);
-
     var scene = new THREE.Scene();
     var camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
+    /* --- offscreen canvas: composites what the user actually sees --- */
     var heroVideo = document.querySelector('.hero__video');
-    var bgTex = null, bgAspect = 16 / 9;
+    var heroSection = document.querySelector('.hero');
+    var offCanvas = document.createElement('canvas');
+    var offCtx = offCanvas.getContext('2d');
+    var bgTexture = new THREE.CanvasTexture(offCanvas);
+    bgTexture.minFilter = THREE.LinearFilter;
+    bgTexture.magFilter = THREE.LinearFilter;
 
-    function applyPoster() {
-      var url = (heroVideo && heroVideo.getAttribute('poster')) || 'assets/herovideo-poster.webp';
-      new THREE.TextureLoader().load(url, function (t) {
-        t.minFilter = THREE.LinearFilter; t.magFilter = THREE.LinearFilter;
-        if (!bgTex || !(bgTex.isVideoTexture)) {
-          bgTex = t; bgAspect = t.image.width / t.image.height;
-          mat.uniforms.uBgTex.value = t;
-          mat.uniforms.uBgAspect.value = bgAspect;
+    function paintBgCanvas() {
+      var vw = window.innerWidth, vh = window.innerHeight;
+      // size the offscreen canvas to viewport (only re-allocate on change)
+      if (offCanvas.width !== vw || offCanvas.height !== vh) {
+        offCanvas.width = vw;
+        offCanvas.height = vh;
+      }
+
+      // hero rect in viewport coords (accounts for scroll)
+      var heroRect = heroSection ? heroSection.getBoundingClientRect() : { left: 0, top: 0, width: vw, height: vh };
+
+      // 1) fill with the page background colour (below the hero)
+      offCtx.fillStyle = '#fff8f0';
+      offCtx.fillRect(0, 0, vw, vh);
+
+      // 2) draw the video into the hero region (object-fit: cover)
+      if (heroVideo && heroVideo.readyState >= 2 && heroVideo.videoWidth > 0) {
+        var vidW = heroVideo.videoWidth, vidH = heroVideo.videoHeight;
+        var hrW = heroRect.width, hrH = heroRect.height;
+        var vidAspect = vidW / vidH, hrAspect = hrW / hrH;
+        var sx, sy, sw, sh;
+        if (vidAspect > hrAspect) {
+          sh = vidH; sw = vidH * hrAspect;
+          sx = (vidW - sw) / 2; sy = 0;
+        } else {
+          sw = vidW; sh = vidW / hrAspect;
+          sx = 0; sy = (vidH - sh) / 2;
         }
-      });
-    }
-    function applyVideo() {
-      if (!heroVideo) return;
-      try {
-        var vt = new THREE.VideoTexture(heroVideo);
-        vt.minFilter = THREE.LinearFilter; vt.magFilter = THREE.LinearFilter;
-        bgTex = vt;
-        bgAspect = (heroVideo.videoWidth / heroVideo.videoHeight) || 16 / 9;
-        mat.uniforms.uBgTex.value = vt;
-        mat.uniforms.uBgAspect.value = bgAspect;
-      } catch (_) { /* keep poster */ }
+        // draw the video into the hero's on-screen region
+        offCtx.drawImage(heroVideo, sx, sy, sw, sh,
+                         heroRect.left, heroRect.top, hrW, hrH);
+      }
+
+      // 3) the hero overlay gradient (same as CSS .hero__overlay)
+      var grad = offCtx.createLinearGradient(0, heroRect.top, 0, heroRect.top + heroRect.height);
+      grad.addColorStop(0,   'rgba(255,248,240,0.6)');
+      grad.addColorStop(0.5, 'rgba(255,248,240,0.75)');
+      grad.addColorStop(1,   'rgba(255,248,240,0.95)');
+      offCtx.fillStyle = grad;
+      offCtx.fillRect(heroRect.left, heroRect.top, heroRect.width, heroRect.height);
+
+      bgTexture.needsUpdate = true;
     }
 
-    /* ---------- shaders ---------- */
+    /* --- shader: much simpler now — texture IS the viewport image --- */
     var VS = 'varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position,1.0);}';
     var FS = [
       'precision highp float;',
       'varying vec2 vUv;',
       '',
-      'uniform vec2  uNavSize;',    // nav element size (px × dpr)
-      'uniform vec2  uNavPos;',     // nav screen position (left,top px × dpr)
-      'uniform vec2  uViewport;',   // full viewport size (px × dpr)
+      'uniform vec2  uNavSize;',   // nav px * dpr
+      'uniform vec2  uNavPos;',    // nav (left,top) px * dpr
+      'uniform vec2  uViewport;',  // viewport px * dpr
       'uniform float uRadius;',
       'uniform float uBezel;',
       'uniform float uThick;',
@@ -313,7 +338,6 @@
       'uniform float uSpec;',
       'uniform float uTint;',
       'uniform sampler2D uBgTex;',
-      'uniform float uBgAspect;',
       '',
       'float sdRR(vec2 p,vec2 h,float r){',
       '  vec2 q=abs(p)-h+r;',
@@ -321,14 +345,10 @@
       '}',
       'float surf(float t){float s=1.0-t;return pow(1.0-s*s*s*s,0.25);}',
       '',
-      '/* viewport UV → bg texture UV (cover-fit to viewport) */',
       'vec3 sampleBg(vec2 vpUV){',
-      '  float sa=uViewport.x/uViewport.y;',
-      '  vec2 c=vpUV;',
-      '  if(uBgAspect>sa){float s=sa/uBgAspect;c.x=c.x*s+(1.0-s)*0.5;}',
-      '  else{float s=uBgAspect/sa;c.y=c.y*s+(1.0-s)*0.5;}',
+      '  vec2 c=clamp(vpUV,0.0,1.0);',
       '  c.y=1.0-c.y;',
-      '  return texture2D(uBgTex,clamp(c,0.0,1.0)).rgb;',
+      '  return texture2D(uBgTex,c).rgb;',
       '}',
       '',
       '/* 32-tap golden-angle spiral blur with Gaussian weights */',
@@ -374,9 +394,8 @@
       '  g.y=sdRR(p+vec2(0.0,eps),hs,uRadius)-sd;',
       '  g=normalize(g);',
       '',
-      '  /* displacement in px → viewport UV */',
-      '  vec2 offPx=-g*disp;',
-      '  vec2 vpUV=(lp+offPx+uNavPos)/uViewport;',
+      '  /* local px + displacement → viewport UV */',
+      '  vec2 vpUV=(lp-g*disp+uNavPos)/uViewport;',
       '',
       '  vec3 col=sampleBlur(vpUV,uBlur);',
       '',
@@ -410,18 +429,11 @@
         uBlur:     { value: BLUR_AMT },
         uSpec:     { value: SPEC },
         uTint:     { value: TINT },
-        uBgTex:    { value: null },
-        uBgAspect: { value: bgAspect }
+        uBgTex:    { value: bgTexture }
       },
       transparent: true, depthTest: false
     });
     scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat));
-
-    applyPoster();
-    if (heroVideo) {
-      if (heroVideo.readyState >= 2) applyVideo();
-      else heroVideo.addEventListener('loadeddata', applyVideo, { once: true });
-    }
 
     function resize() {
       var w = navEl.offsetWidth, h = navEl.offsetHeight;
@@ -434,6 +446,7 @@
     }
 
     function frame() {
+      paintBgCanvas();
       var rect = navEl.getBoundingClientRect();
       mat.uniforms.uNavPos.value.set(rect.left * dpr, rect.top * dpr);
       renderer.render(scene, camera);
