@@ -490,7 +490,7 @@ body.nav-open {
 }
 
 /* Desktop nav */
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .nav__links {
     display: flex;
   }
@@ -604,33 +604,36 @@ body.nav-open {
 
 .hero__platforms-label {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.95rem;
   text-transform: lowercase;
-  letter-spacing: 0.05em;
-  color: rgba(255, 255, 255, 0.55);
-  margin-bottom: 0.6rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 0.9rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .hero__platforms-logos {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 2.8rem;
   flex-wrap: wrap;
 }
 
 .hero__platform {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  color: rgba(255, 255, 255, 0.85);
+  gap: 0.6rem;
+  color: rgba(255, 255, 255, 0.95);
   font-family: var(--ff-heading);
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 1.15rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6), 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .hero__platform img {
-  filter: brightness(0) invert(1);
-  opacity: 0.85;
+  filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+  opacity: 0.95;
+  width: auto;
 }
 
 .hero__small {
@@ -767,6 +770,28 @@ body.nav-open {
   }
 }
 
+/* Safe zone: all rounded card blocks sit above floating emojis */
+.card,
+.founder-card,
+.split__img-wrap,
+.face-card,
+.skin-card,
+.feature,
+.pricing-card,
+.pricing-perk__icon,
+.faq-item,
+.problem-slider,
+.problem-slider__slide img,
+.problem-hero-img,
+.bento-cell,
+.step,
+.emotion-card,
+.upgrade-card__inner,
+.social-proof__bubble {
+  position: relative;
+  z-index: 1;
+}
+
 /* ======== SECTIONS (general) ======== */
 .section {
   padding: var(--section-py) 0;
@@ -886,7 +911,7 @@ body.nav-open {
   line-height: 1.7;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .cards {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -1100,7 +1125,7 @@ body.nav-open {
   border-radius: 1px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .steps {
     flex-direction: row;
     justify-content: center;
@@ -1172,7 +1197,7 @@ body.nav-open {
   line-height: 1.8;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .split {
     grid-template-columns: 1fr 1fr;
   }
@@ -1303,7 +1328,7 @@ body.nav-open {
   line-height: 1.6;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .features {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1512,7 +1537,7 @@ body.nav-open {
 }
 
 /* ---- Mobile adjustments ---- */
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   .reviews-scene,
   .reviews-scene--bottom {
     display: flex;
@@ -1614,6 +1639,15 @@ body.nav-open {
 .pricing-perk__icon img {
   width: 56px;
   height: auto;
+}
+
+.pricing-perk__icon--double {
+  width: auto;
+  gap: 0.5rem;
+}
+
+.pricing-perk__icon--double img {
+  width: 48px;
 }
 
 .pricing-perk__label {
@@ -1807,7 +1841,7 @@ body.nav-open {
   color: var(--color-white);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .footer__top {
     flex-direction: row;
     justify-content: space-between;
@@ -1850,7 +1884,7 @@ body.nav-open {
   align-items: stretch;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .problem-gallery {
     flex-direction: row;
     gap: 2rem;
@@ -1865,14 +1899,13 @@ body.nav-open {
   overflow: hidden;
   background: var(--color-white);
   box-shadow: var(--shadow-card);
-  min-height: 300px;
+  aspect-ratio: 4 / 3;
 }
 
 .problem-slider__track {
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 300px;
 }
 
 .problem-slider__slide {
@@ -1952,7 +1985,7 @@ body.nav-open {
 .problem-slider__icon {
   position: absolute;
   z-index: 3;
-  width: 43px;
+  width: 65px;
   height: auto;
   pointer-events: none;
   filter: drop-shadow(0 0 1px rgba(255,255,255,0.6)) drop-shadow(0 0 3px rgba(255,255,255,0.3));
@@ -1967,14 +2000,14 @@ body.nav-open {
 }
 
 .problem-slider__icon--talks {
-  right: 8%;
-  top: 8%;
+  right: 0%;
+  top: 5%;
   animation: neonFlicker 3s ease-in-out infinite 1s, svgFloat1 4s ease-in-out infinite;
 }
 
 .problem-slider__icon--wearable {
-  right: 12%;
-  bottom: 28%;
+  right: 2%;
+  bottom: 22%;
   animation: neonFlicker 3s ease-in-out infinite 2s, svgFloat2 5s ease-in-out infinite;
 }
 
@@ -1983,7 +2016,7 @@ body.nav-open {
   flex: 1;
   border-radius: var(--radius-card);
   overflow: hidden;
-  background: linear-gradient(145deg, #f5d5c8 0%, #e8b4a0 30%, #d4a08c 60%, #c48b78 100%);
+  background: linear-gradient(145deg, #1a0533 0%, #2d1b69 20%, #4a1942 40%, #6b2fa0 60%, #3d1f8a 80%, #1b0a3d 100%);
   box-shadow: var(--shadow-card);
   position: relative;
   min-height: 420px;
@@ -1995,8 +2028,8 @@ body.nav-open {
 .problem-hero-img__figure {
   position: relative;
   z-index: 2;
-  width: 50%;
-  max-width: 320px;
+  width: 56%;
+  max-width: 360px;
   height: auto;
   object-fit: contain;
   align-self: flex-end;
@@ -2007,10 +2040,10 @@ body.nav-open {
 .problem-hero-img__phone {
   position: absolute;
   z-index: 3;
-  right: 34%;
+  right: 42%;
   bottom: 5%;
-  width: 34%;
-  max-width: 220px;
+  width: 44%;
+  max-width: 280px;
   height: auto;
   object-fit: contain;
   filter: sepia(0.12) saturate(0.85) brightness(1.08) contrast(0.95) drop-shadow(2px 4px 8px rgba(0,0,0,0.3));
@@ -2019,7 +2052,7 @@ body.nav-open {
 .problem-hero-img__watch {
   position: absolute;
   z-index: 3;
-  right: 24%;
+  right: 32%;
   bottom: 2%;
   width: 18%;
   max-width: 120px;
@@ -2031,40 +2064,37 @@ body.nav-open {
 .problem-hero-img__expert {
   position: absolute;
   z-index: 4;
-  right: 28%;
-  top: 16%;
-  width: 43px;
+  right: 35%;
+  top: 22%;
+  width: 8%;
   height: auto;
   filter: drop-shadow(0 0 1px rgba(255,255,255,0.6)) drop-shadow(0 0 3px rgba(255,255,255,0.3));
-  animation: neonFlicker 3s ease-in-out infinite, svgFloat1 4s ease-in-out infinite;
-  will-change: transform, filter;
-  transition: transform 0.15s ease-out;
+  animation: neonFlicker 3s ease-in-out infinite;
+  will-change: filter;
 }
 
 .problem-hero-img__digitizes {
   position: absolute;
   z-index: 4;
-  right: 34%;
-  bottom: 55%;
-  width: 43px;
+  right: 40%;
+  bottom: 45%;
+  width: 8%;
   height: auto;
   filter: drop-shadow(0 0 1px rgba(255,255,255,0.6)) drop-shadow(0 0 3px rgba(255,255,255,0.3));
-  animation: neonFlicker 3s ease-in-out infinite 1s, svgFloat2 5s ease-in-out infinite;
-  will-change: transform, filter;
-  transition: transform 0.15s ease-out;
+  animation: neonFlicker 3s ease-in-out infinite 1s;
+  will-change: filter;
 }
 
 .problem-hero-img__proactive {
   position: absolute;
   z-index: 4;
-  left: 28%;
+  left: 10%;
   bottom: 22%;
-  width: 43px;
+  width: 8%;
   height: auto;
   filter: drop-shadow(0 0 1px rgba(255,255,255,0.6)) drop-shadow(0 0 3px rgba(255,255,255,0.3));
-  animation: neonFlicker 3s ease-in-out infinite 2s, svgFloat3 4.5s ease-in-out infinite;
-  will-change: transform, filter;
-  transition: transform 0.15s ease-out;
+  animation: neonFlicker 3s ease-in-out infinite 2s;
+  will-change: filter;
 }
 
 @keyframes svgFloat1 {
@@ -2117,6 +2147,31 @@ body.nav-open {
 @keyframes dashRibbon {
   0%   { transform: rotateY(32deg) rotateX(6deg) rotateZ(3deg) translateX(0); }
   100% { transform: rotateY(32deg) rotateX(6deg) rotateZ(3deg) translateX(50%); }
+}
+
+/* Fallback for devices without backdrop-filter or 3D transforms */
+@supports not (backdrop-filter: blur(1px)) {
+  .dashboard-cards {
+    perspective: none;
+  }
+  .dashboard-cards__track {
+    transform: none;
+    transform-style: flat;
+    animation: dashRibbonFlat 20s linear infinite;
+    top: 10%;
+    right: -80%;
+  }
+  @keyframes dashRibbonFlat {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(60%); }
+  }
+  .dash-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(60, 40, 30, 0.75);
+    filter: none;
+    opacity: 0.55;
+  }
 }
 
 /* Individual dashboard card base */
@@ -2210,7 +2265,7 @@ body.nav-open {
 }
 
 /* Scale down dashboard cards on small screens */
-@media (max-width: 480px) {
+@media (max-width: 1023px) {
   .dashboard-cards {
     perspective: 600px;
   }
@@ -2223,15 +2278,10 @@ body.nav-open {
     padding: 0.5rem 0.75rem;
   }
   .problem-hero-img {
-    min-height: 280px;
+    min-height: auto;
+    aspect-ratio: 4 / 3;
   }
-  .problem-hero-img__figure { width: 55%; margin-right: -12%; }
-  .problem-hero-img__phone { right: 30%; }
-  .problem-hero-img__watch { right: 20%; }
-  .problem-hero-img__expert { width: 28px; right: 26%; top: 14%; }
-  .problem-hero-img__digitizes { width: 28px; right: 32%; }
-  .problem-hero-img__proactive { width: 28px; left: 26%; bottom: 20%; }
-  .problem-slider__icon { width: 28px; }
+  .problem-slider__icon { width: 42px; }
 }
 
 /* ======== MARQUEE SCROLL ======== */
@@ -2304,8 +2354,25 @@ body.nav-open {
   text-align: center;
 }
 
-@media (max-width: 480px) {
-  .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+/* nudge Life,Sorted right & Wearable left (desktop) */
+.benefits-grid .benefit:nth-child(2) { transform: translateX(105px); }
+.benefits-grid .benefit:nth-child(5) { transform: translateX(-105px); }
+
+@media (max-width: 1023px) {
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem 1rem;
+  }
+  .benefits-grid .benefit:nth-child(2) { transform: none; }
+  .benefits-grid .benefit:nth-child(5) { transform: none; }
+  /* Group 1 left column: Talks(1), Wearable(5), Pro-Active(4) */
+  /* Group 2 right column: Life Sorted(2), Tactile(3), Expert(6) */
+  .benefits-grid .benefit:nth-child(1) { order: 1; }
+  .benefits-grid .benefit:nth-child(5) { order: 2; }
+  .benefits-grid .benefit:nth-child(4) { order: 3; }
+  .benefits-grid .benefit:nth-child(2) { order: 4; }
+  .benefits-grid .benefit:nth-child(3) { order: 5; }
+  .benefits-grid .benefit:nth-child(6) { order: 6; }
 }
 
 .benefit {
@@ -2357,7 +2424,7 @@ body.nav-open {
   margin-inline: auto;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .bento-grid {
     grid-template-columns: 1.2fr 1fr;
     grid-template-rows: auto auto;

@@ -867,83 +867,43 @@
   var heroImg = document.querySelector('.problem-hero-img');
   if (heroImg) {
     var cards = heroImg.querySelectorAll('.dash-card');
-    function updateDashCards() {
-      var rect = heroImg.getBoundingClientRect();
-      var centerX = rect.left + rect.width / 2;
-      var half = rect.width / 2;
-      cards.forEach(function (card) {
-        var cr = card.getBoundingClientRect();
-        var cardCenter = cr.left + cr.width / 2;
-        var dist = Math.abs(cardCenter - centerX);
-        var t = Math.max(0, 1 - dist / half); // 1 at center, 0 at edges
-        var opacity = 0.4 + t * 0.6;
-        var scale = 1 + t * 0.12;
-        var lift = t * -8;
-        card.style.opacity = opacity;
-        card.style.transform = 'scale(' + scale + ') translateY(' + lift + 'px)';
-        var glowOuter = 8 + t * 24;
-        var glowAlpha = 0.06 + t * 0.35;
-        var glowInner = 4 + t * 12;
-        var glowInnerAlpha = 0.03 + t * 0.15;
-        var borderAlpha = 0.1 + t * 0.45;
-        card.style.boxShadow = '0 4px 20px rgba(0,0,0,0.2), 0 0 ' + glowOuter + 'px rgba(255,255,255,' + glowAlpha + '), inset 0 0 ' + glowInner + 'px rgba(255,255,255,' + glowInnerAlpha + ')';
-        card.style.borderColor = 'rgba(255,255,255,' + borderAlpha + ')';
-        var dsBlur1 = 1 + t * 1.5;
-        var dsAlpha1 = 0.4 + t * 0.5;
-        var dsBlur2 = 3 + t * 4;
-        var dsAlpha2 = 0.15 + t * 0.3;
-        card.style.filter = 'drop-shadow(0 0 ' + dsBlur1 + 'px rgba(255,255,255,' + dsAlpha1 + ')) drop-shadow(0 0 ' + dsBlur2 + 'px rgba(255,255,255,' + dsAlpha2 + '))';
-      });
+    // Only run spotlight JS if backdrop-filter is supported (modern device)
+    var supportsBackdrop = CSS.supports && CSS.supports('backdrop-filter', 'blur(1px)');
+    if (supportsBackdrop) {
+      function updateDashCards() {
+        var rect = heroImg.getBoundingClientRect();
+        var centerX = rect.left + rect.width / 2;
+        var half = rect.width / 2;
+        cards.forEach(function (card) {
+          var cr = card.getBoundingClientRect();
+          var cardCenter = cr.left + cr.width / 2;
+          var dist = Math.abs(cardCenter - centerX);
+          var t = Math.max(0, 1 - dist / half); // 1 at center, 0 at edges
+          var opacity = 0.4 + t * 0.6;
+          var scale = 1 + t * 0.12;
+          var lift = t * -8;
+          card.style.opacity = opacity;
+          card.style.transform = 'scale(' + scale + ') translateY(' + lift + 'px)';
+          var glowOuter = 8 + t * 24;
+          var glowAlpha = 0.06 + t * 0.35;
+          var glowInner = 4 + t * 12;
+          var glowInnerAlpha = 0.03 + t * 0.15;
+          var borderAlpha = 0.1 + t * 0.45;
+          card.style.boxShadow = '0 4px 20px rgba(0,0,0,0.2), 0 0 ' + glowOuter + 'px rgba(255,255,255,' + glowAlpha + '), inset 0 0 ' + glowInner + 'px rgba(255,255,255,' + glowInnerAlpha + ')';
+          card.style.borderColor = 'rgba(255,255,255,' + borderAlpha + ')';
+          var dsBlur1 = 1 + t * 1.5;
+          var dsAlpha1 = 0.4 + t * 0.5;
+          var dsBlur2 = 3 + t * 4;
+          var dsAlpha2 = 0.15 + t * 0.3;
+          card.style.filter = 'drop-shadow(0 0 ' + dsBlur1 + 'px rgba(255,255,255,' + dsAlpha1 + ')) drop-shadow(0 0 ' + dsBlur2 + 'px rgba(255,255,255,' + dsAlpha2 + '))';
+        });
+        requestAnimationFrame(updateDashCards);
+      }
       requestAnimationFrame(updateDashCards);
     }
-    requestAnimationFrame(updateDashCards);
   }
 
-  // ---- SVG badges parallax (mouse on desktop, touch on mobile) ----
-  var svgBadges = [
-    { el: heroImg.querySelector('.problem-hero-img__expert'), speed: 18 },
-    { el: heroImg.querySelector('.problem-hero-img__digitizes'), speed: 14 },
-    { el: heroImg.querySelector('.problem-hero-img__proactive'), speed: 20 }
-  ].filter(function(b) { return b.el; });
-
-  if (svgBadges.length) {
-    var mx = 0, my = 0;
-
-    function applyParallax() {
-      var rect = heroImg.getBoundingClientRect();
-      var cx = (mx - rect.left) / rect.width - 0.5;   // -0.5 to 0.5
-      var cy = (my - rect.top) / rect.height - 0.5;
-      svgBadges.forEach(function(b) {
-        var dx = cx * b.speed;
-        var dy = cy * b.speed;
-        b.el.style.transform = 'translate(' + dx + 'px, ' + dy + 'px)';
-      });
-    }
-
-    heroImg.addEventListener('mousemove', function(e) {
-      mx = e.clientX; my = e.clientY;
-      requestAnimationFrame(applyParallax);
-    });
-
-    heroImg.addEventListener('mouseleave', function() {
-      mx = 0; my = 0;
-      svgBadges.forEach(function(b) {
-        b.el.style.transform = '';
-      });
-    });
-
-    heroImg.addEventListener('touchmove', function(e) {
-      var t = e.touches[0];
-      mx = t.clientX; my = t.clientY;
-      requestAnimationFrame(applyParallax);
-    }, { passive: true });
-
-    heroImg.addEventListener('touchend', function() {
-      svgBadges.forEach(function(b) {
-        b.el.style.transform = '';
-      });
-    });
-  }
+  // SVG badges parallax removed — icons are now static
 
   // ---- Founder Card Scroll-Driven Fly-In ----
   (function founderFlyIn() {
