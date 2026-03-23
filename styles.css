@@ -1244,10 +1244,10 @@ body.nav-open {
   }
 }
 
-/* ======== SOCIAL PROOF — mymind-style Reviews ======== */
+/* ======== SOCIAL PROOF — mymind-style Floating Bubbles ======== */
 .reviews-section {
   position: relative;
-  padding: clamp(4rem, 8vw, 8rem) 0;
+  padding: clamp(4rem, 8vw, 7rem) 0 clamp(3rem, 6vw, 5rem);
   overflow: hidden;
   text-align: center;
 }
@@ -1263,101 +1263,161 @@ body.nav-open {
     #1a1225;
 }
 
-/* ---- Grid container ---- */
-.reviews-grid {
+/* ---- Scene (bubble container) ---- */
+.reviews-scene {
   position: relative;
   z-index: 1;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 0 clamp(1rem, 4vw, 3rem);
+  min-height: 420px;
+  padding: 0 clamp(1rem, 5vw, 4rem);
+}
+
+.reviews-scene--bottom {
+  min-height: 380px;
+}
+
+/* ---- Individual bubble ---- */
+.bubble {
+  position: absolute;
   display: flex;
   flex-direction: column;
-  gap: clamp(1.25rem, 2.5vw, 2rem);
+  align-items: flex-end;
+  animation: bubbleFloat 6s ease-in-out infinite;
 }
 
-/* ---- Rows ---- */
-.reviews-row {
-  display: flex;
-  gap: clamp(1rem, 2vw, 1.5rem);
-}
-
-.reviews-row--left  { justify-content: flex-start; }
-.reviews-row--right { justify-content: flex-end; }
-.reviews-row--center{ justify-content: center; }
-
-.reviews-row--two {
-  justify-content: center;
-}
-
-.reviews-row--cta {
-  justify-content: center;
-  margin-top: 1rem;
-}
-
-/* ---- Review card ---- */
-.review-card {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: clamp(1.25rem, 2vw, 1.75rem) clamp(1.5rem, 2.5vw, 2rem);
-  max-width: 520px;
+.bubble__card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  padding: 1.25rem 1.5rem;
+  max-width: 380px;
   text-align: left;
-  transition: transform .3s ease, box-shadow .3s ease;
+  transition: box-shadow .3s ease;
 }
 
-.review-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(192, 132, 252, 0.15);
+.bubble:hover .bubble__card {
+  box-shadow: 0 8px 32px rgba(192, 132, 252, 0.2);
 }
 
-.review-card__body {
-  margin-bottom: 1rem;
-}
-
-.review-card__text {
-  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
-  line-height: 1.7;
+.bubble__text {
+  font-size: 0.95rem;
+  line-height: 1.65;
   color: rgba(255, 255, 255, 0.88);
   margin: 0;
   font-style: italic;
 }
 
-.review-card__author {
+/* Dots tail connecting card to avatar */
+.bubble__dots {
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  padding-right: 20px;
+  margin: -2px 0;
 }
 
-.review-card__avatar {
-  width: 40px;
-  height: 40px;
+.bubble__dots--left {
+  align-items: flex-start;
+  padding-right: 0;
+  padding-left: 20px;
+}
+
+.bubble__dots span {
+  display: block;
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-.review-card__name {
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
+.bubble__dots span:nth-child(1) { width: 10px; height: 10px; }
+.bubble__dots span:nth-child(2) { width: 7px; height: 7px; }
+.bubble__dots span:nth-child(3) { width: 5px; height: 5px; }
+
+.bubble__avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.bubble__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---- Bubble positions (top scene) ---- */
+.bubble--1 {
+  top: 0;
+  left: 5%;
+  align-items: flex-end;
+  animation-delay: 0s;
+}
+
+.bubble--2 {
+  top: 48%;
+  left: 8%;
+  align-items: flex-start;
+  animation-delay: 2s;
+}
+
+.bubble--3 {
+  top: 30%;
+  right: 4%;
+  align-items: flex-end;
+  animation-delay: 4s;
+}
+
+/* ---- Bubble positions (bottom scene) ---- */
+.bubble--4 {
+  top: 0;
+  left: 15%;
+  align-items: flex-start;
+  animation-delay: 1s;
+}
+
+.bubble--5 {
+  top: 40%;
+  right: 5%;
+  align-items: flex-end;
+  animation-delay: 3s;
+}
+
+/* ---- Floating animations ---- */
+@keyframes bubbleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
 }
 
 /* ---- Section title ---- */
 .reviews-section__title {
+  position: relative;
+  z-index: 1;
   font-family: var(--ff-heading);
   font-size: clamp(2.4rem, 5.5vw, 5.333rem);
   font-weight: 400;
   letter-spacing: -0.04em;
   line-height: 0.92;
   color: rgba(255, 255, 255, 0.9);
-  margin: clamp(1rem, 3vw, 2.5rem) 0;
+  margin: clamp(1.5rem, 3vw, 2.5rem) 0;
   padding: 0 1rem;
 }
 
-/* ---- CTA link ---- */
+/* ---- CTA ---- */
+.reviews-cta-wrap {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+  padding-bottom: 1rem;
+}
+
 .reviews-cta {
   display: inline-flex;
   align-items: center;
@@ -1386,17 +1446,26 @@ body.nav-open {
 
 /* ---- Mobile adjustments ---- */
 @media (max-width: 768px) {
-  .reviews-row--two {
+  .reviews-scene,
+  .reviews-scene--bottom {
+    display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 1.5rem;
+    min-height: auto;
+    padding: 0 1rem;
   }
-  .reviews-row--left,
-  .reviews-row--right {
-    justify-content: center;
+  .bubble {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    transform: none;
+    animation-name: bubbleFloat !important;
   }
-  .review-card {
-    max-width: 100%;
-  }
+  .bubble--1, .bubble--4 { align-self: flex-start; }
+  .bubble--2, .bubble--5 { align-self: flex-end; }
+  .bubble--3 { align-self: center; }
+  .bubble__card { max-width: 320px; }
   .reviews-section__title {
     font-size: clamp(2rem, 8vw, 2.889rem);
     line-height: 1.05;
