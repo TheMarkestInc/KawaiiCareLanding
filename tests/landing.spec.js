@@ -114,7 +114,7 @@ test.describe('Section Structure', () => {
   test('founder section exists', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('#founder')).toBeAttached();
-    await expect(page.locator('#founder .section__title')).toContainText('built her way out');
+    await expect(page.locator('#founder .founder-card__title')).toContainText('built her way out');
   });
 
   test('how-it-works has 3 steps', async ({ page }) => {

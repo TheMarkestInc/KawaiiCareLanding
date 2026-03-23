@@ -944,4 +944,66 @@
       });
     });
   }
+
+  // ---- Founder Card Scroll-Driven Fly-In ----
+  (function founderFlyIn() {
+    var card = document.querySelector('.founder-card');
+    if (!card) return;
+
+    // Remove the generic animate-in so we drive it entirely via scroll
+    card.classList.remove('animate-in');
+    card.classList.add('founder-card--flying');
+
+    // Initial hidden state
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(140px) scale(0.82) rotate(-3deg)';
+
+    var ticking = false;
+    var prevProgress = -1;
+
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function update() {
+      ticking = false;
+      var rect = card.getBoundingClientRect();
+      var vh = window.innerHeight;
+
+      // Start animating when the card's top enters the bottom 15% of viewport
+      // Fully visible when the card center reaches viewport center
+      var startTrigger = vh * 1.0;   // card top at bottom of viewport
+      var endTrigger   = vh * 0.35;  // card top at ~35% from top
+
+      var rawProgress = (startTrigger - rect.top) / (startTrigger - endTrigger);
+      var progress = Math.max(0, Math.min(1, rawProgress));
+
+      // Avoid redundant repaints
+      if (Math.abs(progress - prevProgress) < 0.001) return;
+      prevProgress = progress;
+
+      var p = easeOutCubic(progress);
+
+      var translateY = 140 * (1 - p);
+      var scale      = 0.82 + 0.18 * p;
+      var rotate     = -3 * (1 - p);
+      var opacity    = p;
+
+      card.style.opacity   = opacity;
+      card.style.transform =
+        'translateY(' + translateY + 'px) scale(' + scale + ') rotate(' + rotate + 'deg)';
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    // Run once immediately in case section is already in view
+    update();
+  })();
+
 })();

@@ -936,56 +936,126 @@ body.nav-open {
   z-index: 1;
 }
 
-.founder {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-  text-align: left;
+/* --- MTG-style founder card --- */
+.founder-card {
+  max-width: 480px;
+  margin: 1.5rem auto 0;
+  border-radius: 18px;
+  background: linear-gradient(160deg, #f9e4ec 0%, #fdf0f4 40%, #f5dce5 100%);
+  padding: 14px;
+  box-shadow:
+    0 2px 6px rgba(0,0,0,.12),
+    0 12px 40px rgba(255,107,157,.18);
+  border: 3px solid #e8a0b8;
 }
 
-.founder__image {
+.founder-card__inner {
+  border-radius: 12px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
-.founder__photo {
-  border-radius: var(--radius-card);
-  max-width: 300px;
+/* --- top title bar --- */
+.founder-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: .75rem;
+  padding: .85rem 1.1rem;
+  background: linear-gradient(135deg, #fff5f8, #fce4ec);
+}
+
+.founder-card__title {
+  font-family: var(--ff-accent);
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.35;
+}
+
+.founder-card__type {
+  flex-shrink: 0;
+  font-size: .7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+/* --- art box --- */
+.founder-card__art {
+  line-height: 0;
+  padding: 0 14px;
+}
+
+.founder-card__photo {
   width: 100%;
   height: auto;
+  aspect-ratio: 3 / 4;
   object-fit: cover;
+  display: block;
+  border-radius: 12px;
 }
 
-.founder__name {
-  margin-top: 0.75rem;
+/* --- scroll fly-in animation --- */
+.founder-card {
+  will-change: transform, opacity;
+}
+
+.founder-card--flying {
+  transition: none;
+}
+
+@keyframes founderFlyIn {
+  from {
+    opacity: 0;
+    transform: translateY(140px) scale(0.82) rotate(-3deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+/* --- name strip --- */
+.founder-card__info {
+  padding: .85rem 1.1rem;
+  text-align: center;
+}
+
+.founder-card__name {
   font-family: var(--ff-accent);
-  font-weight: 400;
-  font-size: 1.125rem;
+  font-weight: 600;
+  font-size: 1.15rem;
   color: var(--color-text);
+  line-height: 1.3;
 }
 
-.founder__role {
-  font-size: var(--fs-small);
+.founder-card__role {
+  font-size: .78rem;
   color: var(--color-primary);
   font-weight: 600;
+  margin-top: .25rem;
 }
 
-.founder__text {
-  max-width: 600px;
+/* --- text box (flavour text) --- */
+.founder-card__text {
+  padding: 1rem 1.1rem 1.25rem;
 }
 
-.founder__text p {
-  margin-bottom: 1.25rem;
-  line-height: 1.8;
+.founder-card__text p {
+  margin-bottom: .75rem;
+  line-height: 1.7;
+  font-size: .88rem;
+  font-style: italic;
+  color: var(--color-text);
+  text-align: center;
 }
 
-@media (min-width: 768px) {
-  .founder {
-    grid-template-columns: 1fr 1.5fr;
-    align-items: center;
-  }
+.founder-card__text p:last-child {
+  margin-bottom: 0;
 }
 
 /* ======== STEPS (How It Works) ======== */
