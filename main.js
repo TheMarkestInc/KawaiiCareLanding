@@ -250,12 +250,15 @@
   }
 
   // ---- WebGL Liquid Glass (fallback for non-Chromium browsers) ----
+  // Mirrors the SVG version by:
+  //  • mapping nav-local pixels → true viewport UVs so the refraction shows
+  //    the exact region behind the bar (like backdrop-filter)
+  //  • using a 32-tap golden-angle spiral blur with Gaussian weights
+  //    (replaces the sparse 16-sample Poisson disc)
   function initWebGLGlass(navEl) {
-    /* --- tunables (match SVG version) --- */
     var THICKNESS = 80, BEZEL = 60, IOR = 3.0;
-    var BLUR_AMT = 1.2, SPEC = 0.5, TINT = 0.06, SHADOW_AMT = 0.0;
+    var BLUR_AMT = 1.2, SPEC = 0.5, TINT = 0.06;
 
-    /* --- canvas & renderer --- */
     var cvs = document.createElement('canvas');
     cvs.style.cssText = 'position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;';
     navEl.insertBefore(cvs, navEl.firstChild);
@@ -264,10 +267,9 @@
     var renderer = new THREE.WebGLRenderer({ canvas: cvs, alpha: true, antialias: false });
     renderer.setPixelRatio(dpr);
 
-    var scene  = new THREE.Scene();
+    var scene = new THREE.Scene();
     var camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
-    /* --- background texture from hero video / poster --- */
     var heroVideo = document.querySelector('.hero__video');
     var bgTex = null, bgAspect = 16 / 9;
 
@@ -276,8 +278,7 @@
       new THREE.TextureLoader().load(url, function (t) {
         t.minFilter = THREE.LinearFilter; t.magFilter = THREE.LinearFilter;
         if (!bgTex || !(bgTex.isVideoTexture)) {
-          bgTex = t;
-          bgAspect = t.image.width / t.image.height;
+          bgTex = t; bgAspect = t.image.width / t.image.height;
           mat.uniforms.uBgTex.value = t;
           mat.uniforms.uBgAspect.value = bgAspect;
         }
@@ -295,13 +296,15 @@
       } catch (_) { /* keep poster */ }
     }
 
-    /* --- shaders (ported from archisvaze/liquid-glass webgl.html) --- */
+    /* ---------- shaders ---------- */
     var VS = 'varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position,1.0);}';
     var FS = [
       'precision highp float;',
       'varying vec2 vUv;',
-      'uniform vec2  uRes;',
-      'uniform vec2  uSize;',
+      '',
+      'uniform vec2  uNavSize;',    // nav element size (px × dpr)
+      'uniform vec2  uNavPos;',     // nav screen position (left,top px × dpr)
+      'uniform vec2  uViewport;',   // full viewport size (px × dpr)
       'uniform float uRadius;',
       'uniform float uBezel;',
       'uniform float uThick;',
@@ -311,43 +314,51 @@
       'uniform float uTint;',
       'uniform sampler2D uBgTex;',
       'uniform float uBgAspect;',
-      'uniform vec2  uUVoff;',
       '',
-      'float sdRR(vec2 p,vec2 h,float r){vec2 q=abs(p)-h+r;return min(max(q.x,q.y),0.0)+length(max(q,0.0))-r;}',
+      'float sdRR(vec2 p,vec2 h,float r){',
+      '  vec2 q=abs(p)-h+r;',
+      '  return min(max(q.x,q.y),0.0)+length(max(q,0.0))-r;',
+      '}',
       'float surf(float t){float s=1.0-t;return pow(1.0-s*s*s*s,0.25);}',
       '',
-      'vec3 sampleBg(vec2 uv){',
-      '  float sa=uRes.x/uRes.y;',
-      '  vec2 c=uv+uUVoff;',
+      '/* viewport UV → bg texture UV (cover-fit to viewport) */',
+      'vec3 sampleBg(vec2 vpUV){',
+      '  float sa=uViewport.x/uViewport.y;',
+      '  vec2 c=vpUV;',
       '  if(uBgAspect>sa){float s=sa/uBgAspect;c.x=c.x*s+(1.0-s)*0.5;}',
       '  else{float s=uBgAspect/sa;c.y=c.y*s+(1.0-s)*0.5;}',
       '  c.y=1.0-c.y;',
       '  return texture2D(uBgTex,clamp(c,0.0,1.0)).rgb;',
       '}',
       '',
-      'vec3 sampleBlur(vec2 uv,float r){',
-      '  if(r<0.5)return sampleBg(uv);',
-      '  vec3 s=vec3(0.0);vec2 px=1.0/uRes;',
-      '  vec2 o[16];',
-      '  o[0]=vec2(-0.94201,-0.39906);o[1]=vec2(0.94558,-0.76890);',
-      '  o[2]=vec2(-0.09418,-0.92938);o[3]=vec2(0.34495,0.29387);',
-      '  o[4]=vec2(-0.91588,-0.45771);o[5]=vec2(-0.81544,0.48568);',
-      '  o[6]=vec2(-0.38277,-0.56071);o[7]=vec2(-0.12675,0.84686);',
-      '  o[8]=vec2(0.89642,0.41254);o[9]=vec2(0.18150,-0.30020);',
-      '  o[10]=vec2(-0.01445,-0.16001);o[11]=vec2(0.59614,0.71118);',
-      '  o[12]=vec2(0.49742,-0.47280);o[13]=vec2(0.80685,0.04588);',
-      '  o[14]=vec2(-0.32490,-0.03965);o[15]=vec2(-0.60975,0.06566);',
-      '  for(int i=0;i<16;i++) s+=sampleBg(uv+o[i]*r*px);',
-      '  return s/16.0;',
+      '/* 32-tap golden-angle spiral blur with Gaussian weights */',
+      'vec3 sampleBlur(vec2 vpUV,float r){',
+      '  if(r<0.5)return sampleBg(vpUV);',
+      '  vec3 sum=sampleBg(vpUV);',
+      '  float tw=1.0;',
+      '  vec2 px=1.0/uViewport;',
+      '  const float GA=2.39996323;',
+      '  for(int i=0;i<32;i++){',
+      '    float fi=float(i+1);',
+      '    float ri=sqrt(fi/32.0)*r;',
+      '    float th=float(i)*GA;',
+      '    vec2 o=vec2(cos(th),sin(th))*ri*px;',
+      '    float w=exp(-2.0*ri*ri/(r*r));',
+      '    sum+=sampleBg(vpUV+o)*w;',
+      '    tw+=w;',
+      '  }',
+      '  return sum/tw;',
       '}',
       '',
       'void main(){',
-      '  vec2 px=vec2(vUv.x,1.0-vUv.y)*uRes;',
-      '  vec2 ctr=uRes*0.5;',
-      '  vec2 p=px-ctr;',
-      '  vec2 hs=uSize*0.5;',
+      '  vec2 lp=vec2(vUv.x,1.0-vUv.y)*uNavSize;',
+      '  vec2 ctr=uNavSize*0.5;',
+      '  vec2 p=lp-ctr;',
+      '  vec2 hs=uNavSize*0.5;',
+      '',
       '  float sd=sdRR(p,hs,uRadius);',
       '  if(sd>0.0){gl_FragColor=vec4(0.0);return;}',
+      '',
       '  float d=-sd;',
       '  float bz=min(uBezel,min(uRadius,min(hs.x,hs.y))-1.0);',
       '  float t=clamp(d/bz,0.0,1.0);',
@@ -357,21 +368,29 @@
       '  float sr=clamp(sin(sa)/uIOR,-1.0,1.0);',
       '  float tr=asin(sr);',
       '  float disp=h*uThick*(tan(sa)-tan(tr));',
+      '',
       '  vec2 g;float eps=0.5;',
       '  g.x=sdRR(p+vec2(eps,0.0),hs,uRadius)-sd;',
       '  g.y=sdRR(p+vec2(0.0,eps),hs,uRadius)-sd;',
       '  g=normalize(g);',
-      '  vec2 off=-g*disp/uRes;',
-      '  vec2 suv=px/uRes;',
-      '  vec3 col=sampleBlur(suv+off,uBlur);',
+      '',
+      '  /* displacement in px → viewport UV */',
+      '  vec2 offPx=-g*disp;',
+      '  vec2 vpUV=(lp+offPx+uNavPos)/uViewport;',
+      '',
+      '  vec3 col=sampleBlur(vpUV,uBlur);',
+      '',
       '  vec2 ld=normalize(vec2(0.5,-0.7));',
       '  float rd=abs(dot(g,ld));',
       '  float rf=1.0-smoothstep(0.0,bz*0.4,d);',
       '  col+=vec3(pow(rd*rf,1.5)*uSpec);',
-      '  float is=1.0-smoothstep(0.0,bz*0.6,d);',
-      '  col*=mix(1.0,0.7,is*0.3);',
+      '',
+      '  float is2=1.0-smoothstep(0.0,bz*0.6,d);',
+      '  col*=mix(1.0,0.7,is2*0.3);',
+      '',
       '  float ir=smoothstep(0.0,2.0,d)*(1.0-smoothstep(2.0,5.0,d));',
       '  col+=vec3(ir*0.15*uSpec);',
+      '',
       '  col=mix(col,vec3(1.0),uTint);',
       '  float a=smoothstep(0.0,1.5,d);',
       '  gl_FragColor=vec4(col,a);',
@@ -379,53 +398,44 @@
     ].join('\n');
 
     var mat = new THREE.ShaderMaterial({
-      vertexShader: VS,
-      fragmentShader: FS,
+      vertexShader: VS, fragmentShader: FS,
       uniforms: {
-        uRes:     { value: new THREE.Vector2() },
-        uSize:    { value: new THREE.Vector2() },
-        uRadius:  { value: 999.0 },
-        uBezel:   { value: BEZEL },
-        uThick:   { value: THICKNESS },
-        uIOR:     { value: IOR },
-        uBlur:    { value: BLUR_AMT },
-        uSpec:    { value: SPEC },
-        uTint:    { value: TINT },
-        uBgTex:   { value: null },
-        uBgAspect:{ value: bgAspect },
-        uUVoff:   { value: new THREE.Vector2(0, 0) }
+        uNavSize:  { value: new THREE.Vector2() },
+        uNavPos:   { value: new THREE.Vector2() },
+        uViewport: { value: new THREE.Vector2() },
+        uRadius:   { value: 999.0 },
+        uBezel:    { value: BEZEL },
+        uThick:    { value: THICKNESS },
+        uIOR:      { value: IOR },
+        uBlur:     { value: BLUR_AMT },
+        uSpec:     { value: SPEC },
+        uTint:     { value: TINT },
+        uBgTex:    { value: null },
+        uBgAspect: { value: bgAspect }
       },
-      transparent: true,
-      depthTest: false
+      transparent: true, depthTest: false
     });
     scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat));
 
-    /* --- load textures --- */
     applyPoster();
     if (heroVideo) {
-      if (heroVideo.readyState >= 2) { applyVideo(); }
-      else { heroVideo.addEventListener('loadeddata', applyVideo, { once: true }); }
+      if (heroVideo.readyState >= 2) applyVideo();
+      else heroVideo.addEventListener('loadeddata', applyVideo, { once: true });
     }
 
-    /* --- sizing --- */
     function resize() {
       var w = navEl.offsetWidth, h = navEl.offsetHeight;
       if (w < 2 || h < 2) return;
       renderer.setSize(w, h);
-      mat.uniforms.uRes.value.set(w * dpr, h * dpr);
-      mat.uniforms.uSize.value.set(w * dpr, h * dpr);
+      mat.uniforms.uNavSize.value.set(w * dpr, h * dpr);
+      mat.uniforms.uViewport.value.set(window.innerWidth * dpr, window.innerHeight * dpr);
       var r = Math.min(999, Math.min(w, h) / 2);
       mat.uniforms.uRadius.value = r * dpr;
     }
 
-    /* --- render loop --- */
-    var running = true;
     function frame() {
-      if (!running) return;
-      // update UV offset so refracted background follows scroll
-      var sy = window.pageYOffset || document.documentElement.scrollTop;
-      var vh = window.innerHeight || 1;
-      mat.uniforms.uUVoff.value.set(0, sy / vh * 0.15);
+      var rect = navEl.getBoundingClientRect();
+      mat.uniforms.uNavPos.value.set(rect.left * dpr, rect.top * dpr);
       renderer.render(scene, camera);
       requestAnimationFrame(frame);
     }
