@@ -157,7 +157,7 @@ h1, h2, h3, h4 {
   padding: 0.875rem 2rem;
   font-family: var(--ff-accent);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 400;
   border-radius: var(--radius-btn);
   border: none;
   cursor: pointer;
@@ -662,8 +662,8 @@ body.nav-open {
 }
 
 .hero__dropping-label {
-  font-family: var(--ff-heading);
-  font-weight: 600;
+  font-family: var(--ff-accent);
+  font-weight: 400;
   font-size: 0.8rem;
   color: var(--color-text);
   letter-spacing: 0.04em;
