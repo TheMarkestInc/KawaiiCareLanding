@@ -1250,6 +1250,7 @@ body.nav-open {
   padding: clamp(4rem, 8vw, 7rem) 0 clamp(3rem, 6vw, 5rem);
   overflow: hidden;
   text-align: center;
+  background: #fff1f1;
 }
 
 .reviews-section__bg {
@@ -1257,10 +1258,14 @@ body.nav-open {
   inset: 0;
   z-index: 0;
   background:
-    radial-gradient(ellipse 80% 60% at 20% 40%, rgba(192, 132, 252, .35), transparent 70%),
-    radial-gradient(ellipse 70% 50% at 80% 60%, rgba(255, 140, 66, .25), transparent 70%),
-    radial-gradient(ellipse 90% 80% at 50% 50%, rgba(30, 20, 40, .95), transparent),
-    #1a1225;
+    radial-gradient(ellipse 70% 50% at 50% 45%, rgba(255, 183, 150, .45), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 25% 55%, rgba(255, 200, 180, .5), transparent 65%),
+    radial-gradient(ellipse 50% 40% at 75% 40%, rgba(255, 175, 190, .4), transparent 60%),
+    radial-gradient(ellipse 90% 90% at 50% 50%, rgba(255, 220, 210, .6), transparent 80%);
+  mask-image: radial-gradient(circle, #fff 45%, transparent 76%);
+  -webkit-mask-image: radial-gradient(circle, #fff 45%, transparent 76%);
+  mask-size: cover;
+  -webkit-mask-size: cover;
 }
 
 /* ---- Scene (bubble container) ---- */
@@ -1287,27 +1292,24 @@ body.nav-open {
 }
 
 .bubble__card {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--color-white);
   border-radius: 22px;
   padding: 1.25rem 1.5rem;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.07);
   max-width: 380px;
   text-align: left;
   transition: box-shadow .3s ease;
 }
 
 .bubble:hover .bubble__card {
-  box-shadow: 0 8px 32px rgba(192, 132, 252, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
 }
 
 .bubble__text {
   font-size: 0.95rem;
   line-height: 1.65;
-  color: rgba(255, 255, 255, 0.88);
+  color: var(--color-text);
   margin: 0;
-  font-style: italic;
 }
 
 /* Dots tail connecting card to avatar */
@@ -1328,9 +1330,9 @@ body.nav-open {
 
 .bubble__dots span {
   display: block;
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--color-white);
   border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .bubble__dots span:nth-child(1) { width: 10px; height: 10px; }
@@ -1342,8 +1344,8 @@ body.nav-open {
   height: 52px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  border: 3px solid var(--color-white);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .bubble__avatar img {
@@ -1404,7 +1406,7 @@ body.nav-open {
   font-weight: 400;
   letter-spacing: -0.04em;
   line-height: 0.92;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text);
   margin: clamp(1.5rem, 3vw, 2.5rem) 0;
   padding: 0 1rem;
 }
@@ -1423,9 +1425,9 @@ body.nav-open {
   align-items: center;
   gap: 0.6rem;
   padding: 0.75rem 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 100px;
-  color: rgba(255, 255, 255, 0.75);
+  color: var(--color-text);
   font-size: 0.75rem;
   font-family: var(--ff-body);
   letter-spacing: 0.12em;
@@ -1435,8 +1437,8 @@ body.nav-open {
 }
 
 .reviews-cta:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--color-text);
 }
 
 .reviews-cta__arrow {
