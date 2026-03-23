@@ -36,10 +36,10 @@
   - main [ref=e26]:
     - region "Kawaii Care — AI wellness companion" [ref=e27]:
       - generic [ref=e31]:
-        - heading "The cute little thing that actually fixed my burnout ." [level=1] [ref=e32]:
+        - heading "The cute little thing that actually fixed my energy ." [level=1] [ref=e32]:
           - text: The cute little thing
           - text: that actually fixed my
-          - generic [ref=e33]: burnout
+          - generic [ref=e33]: energy
           - text: .
         - paragraph [ref=e34]: An AI companion that hangs on your bag, coaches you through weight loss, burnout, and lonely Friday nights — and never judges you. Also, you can yell at it.
         - generic [ref=e35]:
@@ -161,10 +161,10 @@
             - img "Smart watch" [ref=e82]
             - img "Doctor illustration" [ref=e83]
             - img "Expert badge" [ref=e84]
-      - generic: 💜
-      - generic: 🎶
-      - generic: 💜
-      - generic: 🐾
+      - generic: 🫧
+      - generic: 🌈
+      - generic: 💕
+      - generic: 💕
     - region "Kawaii Care benefits" [ref=e85]:
       - generic [ref=e86]:
         - generic [ref=e87]: kawaii care benefits
@@ -217,120 +217,144 @@
         - generic [ref=e157]:
           - heading "After 90 days" [level=3] [ref=e158]
           - img "After Kawaii Care" [ref=e160]
-      - generic: 💜
-      - generic: 💖
-      - generic: 🌟
+      - generic: 🩷
+      - generic: 🧸
+      - generic: 🐾
     - generic [ref=e161]:
-      - generic [ref=e162]:
-        - generic [ref=e163]:
-          - paragraph [ref=e165]: I spent $3,000 on wellness apps in two years. This $228 toy did more in a month. 🔥
-          - img "User" [ref=e171]
-        - generic [ref=e172]:
-          - paragraph [ref=e174]: I cried when it said "I'm proud of you" after my first 7-day streak. I know it's a toy. I don't care.
-          - img "User" [ref=e180]
-        - generic [ref=e181]:
-          - paragraph [ref=e183]: My therapist asked what changed. I showed her a plush bear. She wants one now too.
-          - img "User" [ref=e189]
-      - heading "Trusted by thinkers & doers everywhere." [level=2] [ref=e190]:
-        - text: Trusted by thinkers
-        - text: "& doers everywhere."
-      - generic: 🌈
-      - generic: 💖
-      - generic: 🍰
-    - region "Kawaii Care pricing and waitlist" [ref=e191]:
-      - generic [ref=e192]:
-        - generic [ref=e193]: take the first step
-        - heading "You don't have to fix everything today. You just have to start." [level=2] [ref=e194]
-        - generic [ref=e195]:
-          - generic [ref=e196]: Early Adopter
-          - generic [ref=e197]: $228 $148.8
-          - generic [ref=e198]:
-            - generic [ref=e199]:
-              - img "Free shipping icon" [ref=e201]
-              - paragraph [ref=e202]:
+      - generic [ref=e163]:
+        - generic [ref=e165]:
+          - paragraph [ref=e167]: I spent $3,000 on wellness apps in two years. This $228 toy did more in a month. 🔥
+          - generic [ref=e168]:
+            - img "User avatar" [ref=e169]
+            - generic [ref=e170]: Verified Buyer
+        - generic [ref=e171]:
+          - generic [ref=e172]:
+            - paragraph [ref=e174]: I cried when it said “I’m proud of you” after my first 7-day streak. I know it’s a toy. I don’t care.
+            - generic [ref=e175]:
+              - img "User avatar" [ref=e176]
+              - generic [ref=e177]: Verified Buyer
+          - generic [ref=e178]:
+            - paragraph [ref=e180]: My therapist asked what changed. I showed her a plush bear. She wants one now too.
+            - generic [ref=e181]:
+              - img "User avatar" [ref=e182]
+              - generic [ref=e183]: Verified Buyer
+        - heading "Trusted by thinkers & doers everywhere." [level=2] [ref=e184]:
+          - text: Trusted by thinkers
+          - text: "& doers everywhere."
+        - generic [ref=e186]:
+          - paragraph [ref=e188]: I bought it as a joke for my roommate. Now I have my own. We check in on each other’s bears. It’s our thing. 💜
+          - generic [ref=e189]:
+            - img "User avatar" [ref=e190]
+            - generic [ref=e191]: Verified Buyer
+        - generic [ref=e193]:
+          - paragraph [ref=e195]: This little bear helped me build a morning routine I’ve been trying to stick to for years. No shame, no guilt — just a gentle nudge. ✨
+          - generic [ref=e196]:
+            - img "User avatar" [ref=e197]
+            - generic [ref=e198]: Verified Buyer
+        - link "↓ NOT CONVINCED? KEEP SCROLLING" [ref=e200] [cursor=pointer]:
+          - /url: "#pricing"
+          - generic [ref=e201]: ↓
+          - text: NOT CONVINCED? KEEP SCROLLING
+      - generic: 🌸
+      - generic: 🦋
+      - generic: 🧸
+    - region "Kawaii Care pricing and waitlist" [ref=e202]:
+      - generic [ref=e203]:
+        - generic [ref=e204]: take the first step
+        - heading "You don't have to fix everything today. You just have to start." [level=2] [ref=e205]
+        - generic [ref=e206]:
+          - generic [ref=e207]: Early Adopter
+          - generic [ref=e208]: $228 $148.8
+          - generic [ref=e209]:
+            - generic [ref=e210]:
+              - generic [ref=e211]:
+                - img "Free shipping icon"
+              - paragraph [ref=e212]:
                 - text: FREE shipping &
                 - text: easy returns
-            - generic [ref=e203]:
-              - img "Companion app icon" [ref=e205]
-              - paragraph [ref=e206]:
+            - generic [ref=e213]:
+              - generic [ref=e214]:
+                - img "Companion app icon"
+              - paragraph [ref=e215]:
                 - text: Companion App &
                 - text: Expert Support
-            - generic [ref=e207]:
-              - img "30-day guarantee icon" [ref=e209]
-              - paragraph [ref=e210]:
+            - generic [ref=e216]:
+              - generic [ref=e217]:
+                - img "30-day guarantee icon"
+              - paragraph [ref=e218]:
                 - text: 30-day money
                 - text: back guarantee
-          - paragraph [ref=e211]: No credit card. Fully refundable. Zero risk.
-          - link "Join the Waitlist — It's Free" [ref=e212] [cursor=pointer]:
+          - paragraph [ref=e219]: No credit card. Fully refundable. Zero risk.
+          - link "Join the Waitlist — It's Free" [ref=e220] [cursor=pointer]:
             - /url: http://eepurl.com/jzI29o
-          - paragraph [ref=e213]: 2,000+ women already in. Your future self will be annoyed if you scroll past this.
-      - generic: ⭐
-      - generic: 🎀
-      - generic: 💗
-      - generic: 🧸
-    - region "Kawaii Care founder story" [ref=e214]:
+          - paragraph [ref=e221]: 2,000+ women already in. Your future self will be annoyed if you scroll past this.
+      - generic: 🪷
+      - generic: 🫧
+      - generic: 🌺
+      - generic: 🎶
+    - region "Kawaii Care founder story" [ref=e222]:
       - generic:
         - img
         - img
-      - generic [ref=e215]:
-        - generic [ref=e216]: why this exists
-        - heading "A year ago her life was a total mess. So she built her way out." [level=2] [ref=e217]
-        - generic [ref=e218]:
-          - generic [ref=e219]:
-            - img "Nadia Valery, Ph.D — Founder and CEO of Kawaii Care" [ref=e220]
-            - paragraph [ref=e221]: Nadia Valery, Ph.D
-            - paragraph [ref=e222]: Founder & CEO
-          - generic [ref=e223]:
-            - paragraph [ref=e224]: Burnout from 15 years of corporate strategy. Brain fog. Twenty pounds she didn't ask for. She could optimize any Fortune 500 system in the world — except herself.
-            - paragraph [ref=e225]: So she took everything she knew about behavioral systems, coaching psychology, and building things people actually use — and built a tiny creature that would just show up. Talk to her at 2am. Remind her to drink water. Tell her she's doing better than she thinks.
-            - paragraph [ref=e226]: "Six months later: 20 lbs down. New husband. A company. And a little thing on her bag that still won't shut up about hydration."
-      - generic: 💜
-      - generic: 🩷
-      - generic: 🌷
-    - region "Frequently asked questions about Kawaii Care" [ref=e227]:
-      - generic [ref=e228]:
-        - generic [ref=e229]: FAQ
-        - heading "Got questions? We've got answers." [level=2] [ref=e230]
-        - generic [ref=e231]:
-          - group [ref=e232]:
-            - generic "Is this just a Tamagotchi? +" [ref=e233] [cursor=pointer]
-          - group [ref=e234]:
-            - generic "Do I need to charge it? +" [ref=e235] [cursor=pointer]
-          - group [ref=e236]:
-            - generic "Can I yell at it? +" [ref=e237] [cursor=pointer]
-          - group [ref=e238]:
-            - generic "What if cute stuff isn't my thing? +" [ref=e239] [cursor=pointer]
+      - generic [ref=e223]:
+        - generic [ref=e224]: why this exists
+        - heading "A year ago her life was a total mess. So she built her way out." [level=2] [ref=e225]
+        - generic [ref=e226]:
+          - generic [ref=e227]:
+            - img "Nadia Valery, Ph.D — Founder and CEO of Kawaii Care" [ref=e228]
+            - paragraph [ref=e229]: Nadia Valery, Ph.D
+            - paragraph [ref=e230]: Founder & CEO
+          - generic [ref=e231]:
+            - paragraph [ref=e232]: Burnout from 15 years of corporate strategy. Brain fog. Twenty pounds she didn't ask for. She could optimize any Fortune 500 system in the world — except herself.
+            - paragraph [ref=e233]: So she took everything she knew about behavioral systems, coaching psychology, and building things people actually use — and built a tiny creature that would just show up. Talk to her at 2am. Remind her to drink water. Tell her she's doing better than she thinks.
+            - paragraph [ref=e234]: "Six months later: 20 lbs down. New husband. A company. And a little thing on her bag that still won't shut up about hydration."
+      - generic: 🍡
+      - generic: 💫
+      - generic: 🫧
+    - region "Frequently asked questions about Kawaii Care" [ref=e235]:
+      - generic [ref=e236]:
+        - generic [ref=e237]: FAQ
+        - heading "Got questions? We've got answers." [level=2] [ref=e238]
+        - generic [ref=e239]:
           - group [ref=e240]:
-            - generic "Is the AI good? +" [ref=e241] [cursor=pointer]
+            - generic "Is this just a Tamagotchi? +" [ref=e241] [cursor=pointer]
           - group [ref=e242]:
-            - generic "I've tried everything. Why would this work? +" [ref=e243] [cursor=pointer]
-        - link "Join the Waitlist — It's Free" [ref=e244] [cursor=pointer]:
+            - generic "Do I need to charge it? +" [ref=e243] [cursor=pointer]
+          - group [ref=e244]:
+            - generic "Can I yell at it? +" [ref=e245] [cursor=pointer]
+          - group [ref=e246]:
+            - generic "What if cute stuff isn't my thing? +" [ref=e247] [cursor=pointer]
+          - group [ref=e248]:
+            - generic "Is the AI good? +" [ref=e249] [cursor=pointer]
+          - group [ref=e250]:
+            - generic "I've tried everything. Why would this work? +" [ref=e251] [cursor=pointer]
+        - link "Join the Waitlist — It's Free" [ref=e252] [cursor=pointer]:
           - /url: http://eepurl.com/jzI29o
-      - generic: 🐾
-      - generic: ⭐
-      - generic: 🎶
-  - contentinfo [ref=e245]:
-    - generic [ref=e246]:
-      - generic [ref=e247]:
-        - generic [ref=e248]:
-          - img [ref=e249]
-          - generic [ref=e256]: Kawaii Care
-          - paragraph [ref=e257]: A tiny thing that gives a damn.
-        - generic [ref=e258]:
-          - link "Instagram" [ref=e259] [cursor=pointer]:
-            - /url: "#"
-            - img [ref=e260]
-          - link "TikTok" [ref=e264] [cursor=pointer]:
-            - /url: "#"
-            - img [ref=e265]
-          - link "Twitter / X" [ref=e267] [cursor=pointer]:
+      - generic: 🌺
+      - generic: 🦋
+      - generic: 🍰
+  - contentinfo [ref=e253]:
+    - generic [ref=e254]:
+      - generic [ref=e255]:
+        - generic [ref=e256]:
+          - img [ref=e257]
+          - generic [ref=e264]: Kawaii Care
+          - paragraph [ref=e265]: A tiny thing that gives a damn.
+        - generic [ref=e266]:
+          - link "Instagram" [ref=e267] [cursor=pointer]:
             - /url: "#"
             - img [ref=e268]
-      - generic [ref=e270]:
-        - paragraph [ref=e271]: © 2026 Kawaii Care. All rights reserved.
-        - generic [ref=e272]:
-          - link "Privacy Policy" [ref=e273] [cursor=pointer]:
+          - link "TikTok" [ref=e272] [cursor=pointer]:
             - /url: "#"
-          - link "Terms of Service" [ref=e274] [cursor=pointer]:
+            - img [ref=e273]
+          - link "Twitter / X" [ref=e275] [cursor=pointer]:
+            - /url: "#"
+            - img [ref=e276]
+      - generic [ref=e278]:
+        - paragraph [ref=e279]: © 2026 Kawaii Care. All rights reserved.
+        - generic [ref=e280]:
+          - link "Privacy Policy" [ref=e281] [cursor=pointer]:
+            - /url: "#"
+          - link "Terms of Service" [ref=e282] [cursor=pointer]:
             - /url: "#"
 ```
