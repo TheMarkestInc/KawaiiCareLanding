@@ -265,12 +265,28 @@ h1, h2, h3, h4 {
   isolation: isolate;
 }
 
-/* Fallback for non-Chromium (Firefox, Safari) */
+/* WebGL fallback for non-Chromium (Firefox, Safari) */
+.nav__container.liquid-glass-webgl {
+  isolation: isolate;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.nav__container.liquid-glass-webgl::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background-color: rgba(var(--tint-color), var(--tint-opacity));
+  pointer-events: none;
+}
+
+/* CSS-blur fallback (no WebGL) */
 .nav__container.liquid-glass-fallback {
-  background: rgba(255, 182, 193, 0.15);
+  background: rgba(255, 182, 193, 0.32);
   backdrop-filter: blur(28px) !important;
   -webkit-backdrop-filter: blur(28px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 200, 210, 0.25);
   border-radius: 999px;
 }
 
@@ -282,6 +298,10 @@ h1, h2, h3, h4 {
 .nav__container.nav--scrolled.liquid-glass-fallback {
   background: rgba(255, 220, 230, 0.8);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.nav__container.nav--scrolled.liquid-glass-webgl::before {
+  background-color: rgba(var(--tint-color), 0.22);
 }
 
 .nav__logo {
