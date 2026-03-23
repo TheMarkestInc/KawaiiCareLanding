@@ -3,10 +3,20 @@
    Mobile-first responsive design
    ======================================== */
 
-/* ---- Custom Font ---- */
+/* ---- Custom Fonts ---- */
 @font-face {
   font-family: 'Frankfurter Russia';
   src: url('assets/fonts/frankfurterrussia.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Louize';
+  src: url('assets/fonts/Louize/Web Fonts/df180f85d58e18017bf4cfa28468be6b.woff2') format('woff2'),
+       url('assets/fonts/Louize/Web Fonts/df180f85d58e18017bf4cfa28468be6b.woff') format('woff'),
+       url('assets/fonts/Louize/Web Fonts/df180f85d58e18017bf4cfa28468be6b.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -26,7 +36,8 @@
   --color-white: #FFFFFF;
 
   /* Typography */
-  --ff-heading: 'Frankfurter Russia', 'Quicksand', sans-serif;
+  --ff-heading: 'Louize', 'Quicksand', sans-serif;
+  --ff-accent: 'Frankfurter Russia', 'Quicksand', sans-serif;
   --ff-body: 'Nunito', sans-serif;
   --fs-hero: clamp(2rem, 5vw, 4.5rem);
   --fs-h2: clamp(1.75rem, 3.5vw, 3rem);
@@ -144,7 +155,7 @@ h1, h2, h3, h4 {
   align-items: center;
   justify-content: center;
   padding: 0.875rem 2rem;
-  font-family: var(--ff-heading);
+  font-family: var(--ff-accent);
   font-size: 1rem;
   font-weight: 600;
   border-radius: var(--radius-btn);
@@ -195,7 +206,7 @@ h1, h2, h3, h4 {
 .tag {
   display: inline-block;
   padding: 0.25rem 0.875rem;
-  font-family: var(--ff-heading);
+  font-family: var(--ff-accent);
   font-size: var(--fs-tag);
   font-weight: 600;
   text-transform: uppercase;
@@ -553,6 +564,7 @@ body.nav-open {
   display: inline-block;
   position: relative;
   color: var(--color-primary);
+  font-family: var(--ff-accent);
   min-width: 4ch;
   height: 1.2em;
   vertical-align: bottom;
@@ -948,7 +960,7 @@ body.nav-open {
 
 .founder__name {
   margin-top: 0.75rem;
-  font-family: var(--ff-heading);
+  font-family: var(--ff-accent);
   font-weight: 400;
   font-size: 1.125rem;
   color: var(--color-text);
@@ -1132,7 +1144,7 @@ body.nav-open {
 }
 
 .face-card__label {
-  font-family: var(--ff-heading);
+  font-family: var(--ff-accent);
   font-size: var(--fs-small);
   font-weight: 600;
   color: var(--color-text-muted);
@@ -1176,7 +1188,7 @@ body.nav-open {
 }
 
 .skin-card__label {
-  font-family: var(--ff-heading);
+  font-family: var(--ff-accent);
   font-size: var(--fs-small);
   font-weight: 600;
   color: var(--color-text-muted);
@@ -1404,7 +1416,7 @@ body.nav-open {
   padding: 0.25rem 1rem;
   background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
   color: var(--color-white);
-  font-family: var(--ff-heading);
+  font-family: var(--ff-accent);
   font-size: var(--fs-small);
   font-weight: 600;
   border-radius: var(--radius-btn);
@@ -1425,7 +1437,7 @@ body.nav-open {
 }
 
 .pricing-card__current {
-  font-family: var(--ff-heading);
+  font-family: var(--ff-accent);
   font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 400;
   color: var(--color-primary);
@@ -1465,7 +1477,7 @@ body.nav-open {
 }
 
 .pricing-perk__label {
-  font-family: var(--ff-heading);
+  font-family: var(--ff-accent);
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--color-text);
@@ -2100,7 +2112,7 @@ body.nav-open {
 }
 
 .marquee__text {
-  font-family: var(--ff-heading);
+  font-family: var(--ff-accent);
   font-size: clamp(1.25rem, 2.5vw, 2rem);
   font-weight: 300;
   color: var(--color-white);
