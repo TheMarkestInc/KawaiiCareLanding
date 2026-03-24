@@ -70,6 +70,13 @@
 
   if (!isChromium) {
     (function webglFallback() {
+      // Hero glass — fallback to CSS blur for non-Chromium
+      var heroGlassEl = document.getElementById('heroGlass');
+      if (heroGlassEl) {
+        heroGlassEl.classList.remove('liquid-glass');
+        heroGlassEl.classList.add('liquid-glass-fallback');
+      }
+
       var glassEl = document.getElementById('navGlass');
       // Check WebGL support
       var testCanvas = document.createElement('canvas');
@@ -204,39 +211,52 @@
     }
 
     var glassEl = document.getElementById('navGlass');
+    var heroGlassEl = document.getElementById('heroGlass');
     var lgTimer;
 
-    function rebuildGlassFilter() {
-      var w = glassEl.offsetWidth, h = glassEl.offsetHeight;
-      if (w < 2 || h < 2) return;
-      var clampedBezel = Math.min(BEZEL_WIDTH, BORDER_RADIUS > 0 ? BORDER_RADIUS - 1 : Math.min(w, h) / 2 - 1);
-      var profile = calcRefractionProfile(GLASS_THICKNESS, clampedBezel, surfaceFn, IOR, 128);
+    // Hero glass parameters (tuned for a larger content card)
+    var HERO_GLASS_THICKNESS = 60;
+    var HERO_BEZEL_WIDTH = 50;
+    var HERO_IOR = 2.5;
+    var HERO_BLUR_AMT = 1.0;
+    var HERO_SPEC_OPACITY = 0.35;
+    var HERO_SPEC_SAT = 3;
+    var HERO_BORDER_RADIUS = 32; // ~2rem
+
+    function buildFilterSVG(id, el, thickness, bezel, ior, blurAmt, specOpacity, specSat, borderRadius) {
+      var w = el.offsetWidth, h = el.offsetHeight;
+      if (w < 2 || h < 2) return '';
+      var clampedBezel = Math.min(bezel, borderRadius > 0 ? borderRadius - 1 : Math.min(w, h) / 2 - 1);
+      var profile = calcRefractionProfile(thickness, clampedBezel, surfaceFn, ior, 128);
       var maxDisp = 1;
       for (var i = 0; i < profile.length; i++) {
         var absV = Math.abs(profile[i]);
         if (absV > maxDisp) maxDisp = absV;
       }
-      var dispUrl = genDisplacementMap(w, h, BORDER_RADIUS || Math.min(w, h) / 2, clampedBezel, profile, maxDisp);
-      var specUrl = genSpecularMap(w, h, BORDER_RADIUS || Math.min(w, h) / 2, clampedBezel * 2.5);
+      var dispUrl = genDisplacementMap(w, h, borderRadius || Math.min(w, h) / 2, clampedBezel, profile, maxDisp);
+      var specUrl = genSpecularMap(w, h, borderRadius || Math.min(w, h) / 2, clampedBezel * 2.5);
       var scale = maxDisp * SCALE_RATIO;
+      return '<filter id="' + id + '" x="0%" y="0%" width="100%" height="100%">' +
+        '<feGaussianBlur in="SourceGraphic" stdDeviation="' + blurAmt + '" result="blurred_source" />' +
+        '<feImage href="' + dispUrl + '" x="0" y="0" width="' + w + '" height="' + h + '" result="disp_map" />' +
+        '<feDisplacementMap in="blurred_source" in2="disp_map" scale="' + scale + '" xChannelSelector="R" yChannelSelector="G" result="displaced" />' +
+        '<feColorMatrix in="displaced" type="saturate" values="' + specSat + '" result="displaced_sat" />' +
+        '<feImage href="' + specUrl + '" x="0" y="0" width="' + w + '" height="' + h + '" result="spec_layer" />' +
+        '<feComposite in="displaced_sat" in2="spec_layer" operator="in" result="spec_masked" />' +
+        '<feComponentTransfer in="spec_layer" result="spec_faded">' +
+          '<feFuncA type="linear" slope="' + specOpacity + '" />' +
+        '</feComponentTransfer>' +
+        '<feBlend in="spec_masked" in2="displaced" mode="normal" result="with_sat" />' +
+        '<feBlend in="spec_faded" in2="with_sat" mode="normal" />' +
+      '</filter>';
+    }
 
+    function rebuildGlassFilter() {
       var svgDefs = document.getElementById('svg-defs');
-      if (svgDefs) {
-        svgDefs.innerHTML =
-          '<filter id="liquid-glass-filter" x="0%" y="0%" width="100%" height="100%">' +
-            '<feGaussianBlur in="SourceGraphic" stdDeviation="' + BLUR_AMT + '" result="blurred_source" />' +
-            '<feImage href="' + dispUrl + '" x="0" y="0" width="' + w + '" height="' + h + '" result="disp_map" />' +
-            '<feDisplacementMap in="blurred_source" in2="disp_map" scale="' + scale + '" xChannelSelector="R" yChannelSelector="G" result="displaced" />' +
-            '<feColorMatrix in="displaced" type="saturate" values="' + SPEC_SAT + '" result="displaced_sat" />' +
-            '<feImage href="' + specUrl + '" x="0" y="0" width="' + w + '" height="' + h + '" result="spec_layer" />' +
-            '<feComposite in="displaced_sat" in2="spec_layer" operator="in" result="spec_masked" />' +
-            '<feComponentTransfer in="spec_layer" result="spec_faded">' +
-              '<feFuncA type="linear" slope="' + SPEC_OPACITY + '" />' +
-            '</feComponentTransfer>' +
-            '<feBlend in="spec_masked" in2="displaced" mode="normal" result="with_sat" />' +
-            '<feBlend in="spec_faded" in2="with_sat" mode="normal" />' +
-          '</filter>';
-      }
+      if (!svgDefs) return;
+      var navSvg = buildFilterSVG('liquid-glass-filter', glassEl, GLASS_THICKNESS, BEZEL_WIDTH, IOR, BLUR_AMT, SPEC_OPACITY, SPEC_SAT, BORDER_RADIUS);
+      var heroSvg = heroGlassEl ? buildFilterSVG('hero-glass-filter', heroGlassEl, HERO_GLASS_THICKNESS, HERO_BEZEL_WIDTH, HERO_IOR, HERO_BLUR_AMT, HERO_SPEC_OPACITY, HERO_SPEC_SAT, HERO_BORDER_RADIUS) : '';
+      svgDefs.innerHTML = navSvg + heroSvg;
     }
 
     // Build filter once DOM is ready, and rebuild on resize
