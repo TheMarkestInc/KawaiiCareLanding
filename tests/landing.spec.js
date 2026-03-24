@@ -35,11 +35,11 @@ test.describe('Navigation', () => {
     await expect(nav).toBeVisible();
   });
 
-  test('nav contains logo and brand name', async ({ page }) => {
+  test('nav contains logo icon', async ({ page }) => {
     await page.goto('/');
     const logo = page.locator('.nav__logo');
     await expect(logo).toBeVisible();
-    await expect(page.locator('.nav__logo-text')).toHaveText('Kawaii Care');
+    await expect(page.locator('.nav__logo-icon')).toBeVisible();
   });
 
   test('nav waitlist CTA links to correct URL', async ({ page }) => {
