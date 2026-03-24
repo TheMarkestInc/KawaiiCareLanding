@@ -780,6 +780,14 @@ body.nav-open {
     flex-direction: column;
     gap: 0.75rem;
   }
+  .hero__dropping-label {
+    font-size: 0.82rem;
+  }
+  .hero__cta-row .btn--lg {
+    font-size: 1rem;
+    padding: 0.9rem 1.5rem 0.7rem;
+    white-space: nowrap;
+  }
 }
 
 /* ---- Hero mobile: simple dark overlay instead of liquid glass ---- */
