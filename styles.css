@@ -527,6 +527,7 @@ body.nav-open {
   text-align: center;
   overflow: hidden;
   padding-top: 4rem;
+  padding-bottom: 2rem;
 }
 
 .hero__video-wrap {
