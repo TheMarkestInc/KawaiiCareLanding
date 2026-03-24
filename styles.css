@@ -542,7 +542,7 @@ body.nav-open {
 .hero__content {
   position: relative;
   z-index: 1;
-  padding: 2.5rem 3rem;
+  padding: 1.5rem 2rem;
   border-radius: 2rem;
   --tint-color: 255, 248, 240;
   --tint-opacity: 0.28;
@@ -761,7 +761,7 @@ body.nav-open {
 @media (max-width: 768px) {
   .hero__content {
     margin-inline: 1rem;
-    padding: 2rem 1.5rem;
+    padding: 1.25rem 1rem;
     border-radius: 1.25rem;
     background: rgba(0, 0, 0, 0.38) !important;
     backdrop-filter: blur(8px) !important;
