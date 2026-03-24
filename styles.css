@@ -283,6 +283,7 @@ h1, h2, h3, h4 {
 }
 
 /* WebGL fallback for non-Chromium (Firefox, Safari) */
+/* CSS ::after does the real backdrop blur; WebGL canvas adds specular/edge overlay */
 .nav__container.liquid-glass-webgl {
   isolation: isolate;
   border-radius: 999px;
@@ -295,6 +296,16 @@ h1, h2, h3, h4 {
   z-index: 1;
   border-radius: inherit;
   background-color: rgba(var(--tint-color), var(--tint-opacity));
+  pointer-events: none;
+}
+.nav__container.liquid-glass-webgl::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
   pointer-events: none;
 }
 
@@ -319,6 +330,10 @@ h1, h2, h3, h4 {
 
 .nav__container.nav--scrolled.liquid-glass-webgl::before {
   background-color: rgba(var(--tint-color), 0.22);
+}
+.nav__container.nav--scrolled.liquid-glass-webgl::after {
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
 }
 
 .nav__logo {

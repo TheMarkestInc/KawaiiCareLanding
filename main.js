@@ -270,17 +270,18 @@
   }
 
   // ---- WebGL Liquid Glass (fallback for non-Chromium browsers) ----
-  // backdrop-filter sees the actual composited pixels behind the element.
-  // We can't access those from WebGL, so we paint the hero video + overlay
-  // gradient onto an offscreen canvas each frame and sample from that.
+  // backdrop-filter: blur() works in Firefox & Safari — it sees real DOM pixels.
+  // SVG feDisplacementMap inside backdrop-filter does NOT.
+  // Strategy: CSS ::after does the blur (real content visible), WebGL canvas
+  // renders only the specular/edge/highlight overlay on top for the glass look.
   function initWebGLGlass(navEl) {
-    var THICKNESS = 80, BEZEL = 60, IOR = 3.0;
-    var BLUR_AMT = 1.2, SPEC = 0.5, TINT = 0.06;
+    var BEZEL = 60, SPEC = 0.55, TINT = 0.04;
 
-    /* --- WebGL canvas inside nav --- */
+    /* --- WebGL canvas for specular overlay --- */
     var cvs = document.createElement('canvas');
-    cvs.style.cssText = 'position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;';
-    navEl.insertBefore(cvs, navEl.firstChild);
+    // z-index 2 = above the ::before tint (z:1) and ::after blur (z:-1)
+    cvs.style.cssText = 'position:absolute;inset:0;z-index:2;border-radius:inherit;pointer-events:none;';
+    navEl.appendChild(cvs);
 
     var dpr = Math.min(window.devicePixelRatio, 2);
     var renderer = new THREE.WebGLRenderer({ canvas: cvs, alpha: true, antialias: false });
@@ -288,115 +289,17 @@
     var scene = new THREE.Scene();
     var camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
-    /* --- offscreen canvas: composites what the user actually sees --- */
-    var heroVideo = document.querySelector('.hero__video');
-    var heroSection = document.querySelector('.hero');
-    var offCanvas = document.createElement('canvas');
-    var offCtx = offCanvas.getContext('2d');
-    var bgTexture = new THREE.CanvasTexture(offCanvas);
-    bgTexture.minFilter = THREE.LinearFilter;
-    bgTexture.magFilter = THREE.LinearFilter;
-
-    // Gather all top-level sections once (order matters — paint back to front)
-    var allSections = Array.prototype.slice.call(
-      document.querySelectorAll('main > section, .footer, footer')
-    );
-
-    function paintBgCanvas() {
-      var vw = window.innerWidth, vh = window.innerHeight;
-      if (offCanvas.width !== vw || offCanvas.height !== vh) {
-        offCanvas.width = vw;
-        offCanvas.height = vh;
-      }
-
-      // 1) page background
-      offCtx.fillStyle = '#fff8f0';
-      offCtx.fillRect(0, 0, vw, vh);
-
-      // 2) paint every section's background at its screen rect
-      for (var i = 0; i < allSections.length; i++) {
-        var sec = allSections[i];
-        var rect = sec.getBoundingClientRect();
-        // skip off-screen or hidden sections
-        if (rect.height < 1 || rect.bottom < -50 || rect.top > vh + 50) continue;
-
-        var bg = getComputedStyle(sec).backgroundColor;
-        // skip fully transparent ones (they inherit the page bg)
-        if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
-          offCtx.fillStyle = bg;
-          offCtx.fillRect(rect.left, rect.top, rect.width, rect.height);
-        }
-
-        // handle gradient backgrounds (CSS background-image)
-        var bgImage = getComputedStyle(sec).backgroundImage;
-        if (bgImage && bgImage !== 'none' && bgImage.indexOf('gradient') !== -1) {
-          // parse CSS gradient direction + stops for known gradients
-          if (sec.classList.contains('section--gradient') || sec.classList.contains('section--cta-block')) {
-            // linear-gradient(135deg, #FF8C42, #C084FC)
-            var grd = offCtx.createLinearGradient(rect.left, rect.top, rect.right, rect.bottom);
-            grd.addColorStop(0, '#FF8C42');
-            grd.addColorStop(1, '#C084FC');
-            offCtx.fillStyle = grd;
-            offCtx.fillRect(rect.left, rect.top, rect.width, rect.height);
-          } else if (sec.classList.contains('section--final-cta')) {
-            var grd2 = offCtx.createLinearGradient(rect.left, rect.top, rect.right, rect.bottom);
-            grd2.addColorStop(0, '#2D2D2D');
-            grd2.addColorStop(1, '#1a1a1a');
-            offCtx.fillStyle = grd2;
-            offCtx.fillRect(rect.left, rect.top, rect.width, rect.height);
-          }
-        }
-      }
-
-      // 3) hero: draw video + overlay on top of everything (most important)
-      if (heroSection) {
-        var heroRect = heroSection.getBoundingClientRect();
-        if (heroRect.bottom > 0 && heroRect.top < vh) {
-          if (heroVideo && heroVideo.readyState >= 2 && heroVideo.videoWidth > 0) {
-            var vidW = heroVideo.videoWidth, vidH = heroVideo.videoHeight;
-            var hrW = heroRect.width, hrH = heroRect.height;
-            var vidAspect = vidW / vidH, hrAspect = hrW / hrH;
-            var sx, sy, sw, sh;
-            if (vidAspect > hrAspect) {
-              sh = vidH; sw = vidH * hrAspect;
-              sx = (vidW - sw) / 2; sy = 0;
-            } else {
-              sw = vidW; sh = vidW / hrAspect;
-              sx = 0; sy = (vidH - sh) / 2;
-            }
-            offCtx.drawImage(heroVideo, sx, sy, sw, sh,
-                             heroRect.left, heroRect.top, hrW, hrH);
-          }
-          // hero overlay gradient
-          var grad = offCtx.createLinearGradient(0, heroRect.top, 0, heroRect.top + heroRect.height);
-          grad.addColorStop(0,   'rgba(255,248,240,0.6)');
-          grad.addColorStop(0.5, 'rgba(255,248,240,0.75)');
-          grad.addColorStop(1,   'rgba(255,248,240,0.95)');
-          offCtx.fillStyle = grad;
-          offCtx.fillRect(heroRect.left, heroRect.top, heroRect.width, heroRect.height);
-        }
-      }
-
-      bgTexture.needsUpdate = true;
-    }
-
-    /* --- shader: much simpler now — texture IS the viewport image --- */
+    /* --- shader: specular highlights + edge glow only (no bg sampling) --- */
     var VS = 'varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position,1.0);}';
     var FS = [
       'precision highp float;',
       'varying vec2 vUv;',
       '',
-      'uniform vec2  uNavSize;',   // nav px * dpr
-      'uniform vec2  uNavPos;',    // nav (left,top) px * dpr
-      'uniform vec2  uViewport;',  // viewport px * dpr
+      'uniform vec2  uSize;',
       'uniform float uRadius;',
       'uniform float uBezel;',
-      'uniform float uThick;',
-      'uniform float uIOR;',
-      'uniform float uBlur;',
       'uniform float uSpec;',
       'uniform float uTint;',
-      'uniform sampler2D uBgTex;',
       '',
       'float sdRR(vec2 p,vec2 h,float r){',
       '  vec2 q=abs(p)-h+r;',
@@ -404,36 +307,11 @@
       '}',
       'float surf(float t){float s=1.0-t;return pow(1.0-s*s*s*s,0.25);}',
       '',
-      'vec3 sampleBg(vec2 vpUV){',
-      '  vec2 c=clamp(vpUV,0.0,1.0);',
-      '  c.y=1.0-c.y;',
-      '  return texture2D(uBgTex,c).rgb;',
-      '}',
-      '',
-      '/* 32-tap golden-angle spiral blur with Gaussian weights */',
-      'vec3 sampleBlur(vec2 vpUV,float r){',
-      '  if(r<0.5)return sampleBg(vpUV);',
-      '  vec3 sum=sampleBg(vpUV);',
-      '  float tw=1.0;',
-      '  vec2 px=1.0/uViewport;',
-      '  const float GA=2.39996323;',
-      '  for(int i=0;i<32;i++){',
-      '    float fi=float(i+1);',
-      '    float ri=sqrt(fi/32.0)*r;',
-      '    float th=float(i)*GA;',
-      '    vec2 o=vec2(cos(th),sin(th))*ri*px;',
-      '    float w=exp(-2.0*ri*ri/(r*r));',
-      '    sum+=sampleBg(vpUV+o)*w;',
-      '    tw+=w;',
-      '  }',
-      '  return sum/tw;',
-      '}',
-      '',
       'void main(){',
-      '  vec2 lp=vec2(vUv.x,1.0-vUv.y)*uNavSize;',
-      '  vec2 ctr=uNavSize*0.5;',
-      '  vec2 p=lp-ctr;',
-      '  vec2 hs=uNavSize*0.5;',
+      '  vec2 px=vec2(vUv.x,1.0-vUv.y)*uSize;',
+      '  vec2 ctr=uSize*0.5;',
+      '  vec2 p=px-ctr;',
+      '  vec2 hs=uSize*0.5;',
       '',
       '  float sd=sdRR(p,hs,uRadius);',
       '  if(sd>0.0){gl_FragColor=vec4(0.0);return;}',
@@ -441,54 +319,43 @@
       '  float d=-sd;',
       '  float bz=min(uBezel,min(uRadius,min(hs.x,hs.y))-1.0);',
       '  float t=clamp(d/bz,0.0,1.0);',
-      '  float h=surf(t);',
-      '  float dt=0.001;float h2=surf(min(t+dt,1.0));float dh=(h2-h)/dt;',
-      '  float sa=atan(dh*(uThick/bz));',
-      '  float sr=clamp(sin(sa)/uIOR,-1.0,1.0);',
-      '  float tr=asin(sr);',
-      '  float disp=h*uThick*(tan(sa)-tan(tr));',
       '',
+      '  /* edge gradient for SDF-based normal */',
       '  vec2 g;float eps=0.5;',
       '  g.x=sdRR(p+vec2(eps,0.0),hs,uRadius)-sd;',
       '  g.y=sdRR(p+vec2(0.0,eps),hs,uRadius)-sd;',
       '  g=normalize(g);',
       '',
-      '  /* local px + displacement → viewport UV */',
-      '  vec2 vpUV=(lp-g*disp+uNavPos)/uViewport;',
-      '',
-      '  vec3 col=sampleBlur(vpUV,uBlur);',
-      '',
+      '  /* specular highlight — directional light from top-left */',
       '  vec2 ld=normalize(vec2(0.5,-0.7));',
       '  float rd=abs(dot(g,ld));',
-      '  float rf=1.0-smoothstep(0.0,bz*0.4,d);',
-      '  col+=vec3(pow(rd*rf,1.5)*uSpec);',
+      '  float rimFalloff=1.0-smoothstep(0.0,bz*0.4,d);',
+      '  float specHighlight=pow(rd*rimFalloff,1.5)*uSpec;',
       '',
-      '  float is2=1.0-smoothstep(0.0,bz*0.6,d);',
-      '  col*=mix(1.0,0.7,is2*0.3);',
+      '  /* inner shadow (subtle darkening at very edge) */',
+      '  float innerShadow=1.0-smoothstep(0.0,bz*0.6,d);',
+      '  float darken=innerShadow*0.15;',
       '',
-      '  float ir=smoothstep(0.0,2.0,d)*(1.0-smoothstep(2.0,5.0,d));',
-      '  col+=vec3(ir*0.15*uSpec);',
+      '  /* thin inner rim glow */',
+      '  float rim=smoothstep(0.0,2.0,d)*(1.0-smoothstep(2.0,5.0,d));',
+      '  float rimGlow=rim*0.15*uSpec;',
       '',
-      '  col=mix(col,vec3(1.0),uTint);',
-      '  float a=smoothstep(0.0,1.5,d);',
-      '  gl_FragColor=vec4(col,a);',
+      '  /* combine: white highlights, slight darken, white tint */',
+      '  float brightness=specHighlight+rimGlow+uTint-darken;',
+      '  float alpha=smoothstep(0.0,1.5,d)*clamp(abs(brightness)*1.8,0.0,1.0);',
+      '  vec3 col=brightness>0.0?vec3(1.0):vec3(0.0);',
+      '  gl_FragColor=vec4(col,alpha*abs(brightness));',
       '}'
     ].join('\n');
 
     var mat = new THREE.ShaderMaterial({
       vertexShader: VS, fragmentShader: FS,
       uniforms: {
-        uNavSize:  { value: new THREE.Vector2() },
-        uNavPos:   { value: new THREE.Vector2() },
-        uViewport: { value: new THREE.Vector2() },
-        uRadius:   { value: 999.0 },
-        uBezel:    { value: BEZEL },
-        uThick:    { value: THICKNESS },
-        uIOR:      { value: IOR },
-        uBlur:     { value: BLUR_AMT },
-        uSpec:     { value: SPEC },
-        uTint:     { value: TINT },
-        uBgTex:    { value: bgTexture }
+        uSize:   { value: new THREE.Vector2() },
+        uRadius: { value: 999.0 },
+        uBezel:  { value: BEZEL },
+        uSpec:   { value: SPEC },
+        uTint:   { value: TINT }
       },
       transparent: true, depthTest: false
     });
@@ -498,27 +365,26 @@
       var w = navEl.offsetWidth, h = navEl.offsetHeight;
       if (w < 2 || h < 2) return;
       renderer.setSize(w, h);
-      mat.uniforms.uNavSize.value.set(w * dpr, h * dpr);
-      mat.uniforms.uViewport.value.set(window.innerWidth * dpr, window.innerHeight * dpr);
+      mat.uniforms.uSize.value.set(w * dpr, h * dpr);
       var r = Math.min(999, Math.min(w, h) / 2);
       mat.uniforms.uRadius.value = r * dpr;
     }
 
+    var needsRender = true;
     function frame() {
-      paintBgCanvas();
-      var rect = navEl.getBoundingClientRect();
-      mat.uniforms.uNavPos.value.set(rect.left * dpr, rect.top * dpr);
-      renderer.render(scene, camera);
+      if (needsRender) {
+        renderer.render(scene, camera);
+        needsRender = false;
+      }
       requestAnimationFrame(frame);
     }
 
     resize();
     requestAnimationFrame(frame);
 
-    var lgResizeTimer;
     window.addEventListener('resize', function () {
-      clearTimeout(lgResizeTimer);
-      lgResizeTimer = setTimeout(resize, 150);
+      resize();
+      needsRender = true;
     });
   }
 
