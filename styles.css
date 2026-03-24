@@ -757,6 +757,36 @@ body.nav-open {
   }
 }
 
+/* ---- Hero mobile: simple dark overlay instead of liquid glass ---- */
+@media (max-width: 768px) {
+  .hero__content {
+    margin-inline: 1rem;
+    padding: 2rem 1.5rem;
+    border-radius: 1.25rem;
+    background: rgba(0, 0, 0, 0.38) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    box-shadow: none !important;
+    --tint-opacity: 0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Disable liquid-glass pseudo-elements on mobile */
+  .hero__content.liquid-glass::before,
+  .hero__content.liquid-glass::after,
+  .hero__content.liquid-glass-webgl::before {
+    display: none !important;
+  }
+
+  .hero__content.liquid-glass-fallback {
+    background: rgba(0, 0, 0, 0.38) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: none !important;
+  }
+}
+
 /* Floating decorations */
 .hero__decor {
   position: absolute;
