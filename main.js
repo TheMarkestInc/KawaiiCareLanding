@@ -297,46 +297,85 @@
     bgTexture.minFilter = THREE.LinearFilter;
     bgTexture.magFilter = THREE.LinearFilter;
 
+    // Gather all top-level sections once (order matters — paint back to front)
+    var allSections = Array.prototype.slice.call(
+      document.querySelectorAll('main > section, .footer, footer')
+    );
+
     function paintBgCanvas() {
       var vw = window.innerWidth, vh = window.innerHeight;
-      // size the offscreen canvas to viewport (only re-allocate on change)
       if (offCanvas.width !== vw || offCanvas.height !== vh) {
         offCanvas.width = vw;
         offCanvas.height = vh;
       }
 
-      // hero rect in viewport coords (accounts for scroll)
-      var heroRect = heroSection ? heroSection.getBoundingClientRect() : { left: 0, top: 0, width: vw, height: vh };
-
-      // 1) fill with the page background colour (below the hero)
+      // 1) page background
       offCtx.fillStyle = '#fff8f0';
       offCtx.fillRect(0, 0, vw, vh);
 
-      // 2) draw the video into the hero region (object-fit: cover)
-      if (heroVideo && heroVideo.readyState >= 2 && heroVideo.videoWidth > 0) {
-        var vidW = heroVideo.videoWidth, vidH = heroVideo.videoHeight;
-        var hrW = heroRect.width, hrH = heroRect.height;
-        var vidAspect = vidW / vidH, hrAspect = hrW / hrH;
-        var sx, sy, sw, sh;
-        if (vidAspect > hrAspect) {
-          sh = vidH; sw = vidH * hrAspect;
-          sx = (vidW - sw) / 2; sy = 0;
-        } else {
-          sw = vidW; sh = vidW / hrAspect;
-          sx = 0; sy = (vidH - sh) / 2;
+      // 2) paint every section's background at its screen rect
+      for (var i = 0; i < allSections.length; i++) {
+        var sec = allSections[i];
+        var rect = sec.getBoundingClientRect();
+        // skip off-screen or hidden sections
+        if (rect.height < 1 || rect.bottom < -50 || rect.top > vh + 50) continue;
+
+        var bg = getComputedStyle(sec).backgroundColor;
+        // skip fully transparent ones (they inherit the page bg)
+        if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
+          offCtx.fillStyle = bg;
+          offCtx.fillRect(rect.left, rect.top, rect.width, rect.height);
         }
-        // draw the video into the hero's on-screen region
-        offCtx.drawImage(heroVideo, sx, sy, sw, sh,
-                         heroRect.left, heroRect.top, hrW, hrH);
+
+        // handle gradient backgrounds (CSS background-image)
+        var bgImage = getComputedStyle(sec).backgroundImage;
+        if (bgImage && bgImage !== 'none' && bgImage.indexOf('gradient') !== -1) {
+          // parse CSS gradient direction + stops for known gradients
+          if (sec.classList.contains('section--gradient') || sec.classList.contains('section--cta-block')) {
+            // linear-gradient(135deg, #FF8C42, #C084FC)
+            var grd = offCtx.createLinearGradient(rect.left, rect.top, rect.right, rect.bottom);
+            grd.addColorStop(0, '#FF8C42');
+            grd.addColorStop(1, '#C084FC');
+            offCtx.fillStyle = grd;
+            offCtx.fillRect(rect.left, rect.top, rect.width, rect.height);
+          } else if (sec.classList.contains('section--final-cta')) {
+            var grd2 = offCtx.createLinearGradient(rect.left, rect.top, rect.right, rect.bottom);
+            grd2.addColorStop(0, '#2D2D2D');
+            grd2.addColorStop(1, '#1a1a1a');
+            offCtx.fillStyle = grd2;
+            offCtx.fillRect(rect.left, rect.top, rect.width, rect.height);
+          }
+        }
       }
 
-      // 3) the hero overlay gradient (same as CSS .hero__overlay)
-      var grad = offCtx.createLinearGradient(0, heroRect.top, 0, heroRect.top + heroRect.height);
-      grad.addColorStop(0,   'rgba(255,248,240,0.6)');
-      grad.addColorStop(0.5, 'rgba(255,248,240,0.75)');
-      grad.addColorStop(1,   'rgba(255,248,240,0.95)');
-      offCtx.fillStyle = grad;
-      offCtx.fillRect(heroRect.left, heroRect.top, heroRect.width, heroRect.height);
+      // 3) hero: draw video + overlay on top of everything (most important)
+      if (heroSection) {
+        var heroRect = heroSection.getBoundingClientRect();
+        if (heroRect.bottom > 0 && heroRect.top < vh) {
+          if (heroVideo && heroVideo.readyState >= 2 && heroVideo.videoWidth > 0) {
+            var vidW = heroVideo.videoWidth, vidH = heroVideo.videoHeight;
+            var hrW = heroRect.width, hrH = heroRect.height;
+            var vidAspect = vidW / vidH, hrAspect = hrW / hrH;
+            var sx, sy, sw, sh;
+            if (vidAspect > hrAspect) {
+              sh = vidH; sw = vidH * hrAspect;
+              sx = (vidW - sw) / 2; sy = 0;
+            } else {
+              sw = vidW; sh = vidW / hrAspect;
+              sx = 0; sy = (vidH - sh) / 2;
+            }
+            offCtx.drawImage(heroVideo, sx, sy, sw, sh,
+                             heroRect.left, heroRect.top, hrW, hrH);
+          }
+          // hero overlay gradient
+          var grad = offCtx.createLinearGradient(0, heroRect.top, 0, heroRect.top + heroRect.height);
+          grad.addColorStop(0,   'rgba(255,248,240,0.6)');
+          grad.addColorStop(0.5, 'rgba(255,248,240,0.75)');
+          grad.addColorStop(1,   'rgba(255,248,240,0.95)');
+          offCtx.fillStyle = grad;
+          offCtx.fillRect(heroRect.left, heroRect.top, heroRect.width, heroRect.height);
+        }
+      }
 
       bgTexture.needsUpdate = true;
     }
