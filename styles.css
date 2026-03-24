@@ -154,15 +154,21 @@ h1, h2, h3, h4 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.875rem 2rem;
+  padding: 0.95rem 2rem 0.75rem;
   font-family: var(--ff-accent);
-  font-size: 1rem;
-  font-weight: 400;
+  font-size: 1.125rem;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-stroke: 0.3px rgba(255,255,255,0.1);
   border-radius: var(--radius-btn);
   border: none;
   cursor: pointer;
   transition: all var(--transition);
   text-decoration: none;
+  text-align: center;
+  letter-spacing: 0.02em;
   min-height: 44px;
   min-width: 44px;
 }
@@ -193,13 +199,13 @@ h1, h2, h3, h4 {
 }
 
 .btn--sm {
-  padding: 0.5rem 1.25rem;
-  font-size: var(--fs-small);
+  padding: 0.55rem 1.25rem 0.45rem;
+  font-size: 1rem;
 }
 
 .btn--lg {
-  padding: 1rem 2.5rem;
-  font-size: 1.125rem;
+  padding: 1.1rem 2.5rem 0.9rem;
+  font-size: 1.25rem;
 }
 
 /* ---- Tag Badge ---- */
@@ -356,7 +362,7 @@ h1, h2, h3, h4 {
   display: none;
   background: var(--color-accent);
   color: var(--color-text);
-  font-weight: 600;
+  font-weight: normal;
   border: none;
 }
 
@@ -544,8 +550,8 @@ body.nav-open {
   z-index: 1;
   padding: 1.5rem 2rem;
   border-radius: 2rem;
-  --tint-color: 255, 248, 240;
-  --tint-opacity: 0.28;
+  --tint-color: 255, 182, 193;
+  --tint-opacity: 0.18;
   box-shadow: inset 0 0 60px 20px rgba(0, 0, 0, 0.25);
 }
 
@@ -592,10 +598,10 @@ body.nav-open {
 
 /* CSS-blur fallback (no WebGL) */
 .hero__content.liquid-glass-fallback {
-  background: rgba(255, 248, 240, 0.42);
+  background: rgba(255, 182, 193, 0.28);
   backdrop-filter: blur(28px) !important;
   -webkit-backdrop-filter: blur(28px) !important;
-  border: 1px solid rgba(255, 248, 240, 0.3);
+  border: 1px solid rgba(255, 200, 210, 0.25);
   box-shadow: inset 0 0 60px 20px rgba(0, 0, 0, 0.25), 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
@@ -720,12 +726,15 @@ body.nav-open {
 
 .hero__dropping-label {
   font-family: var(--ff-accent);
-  font-weight: 400;
-  font-size: 0.8rem;
+  font-weight: normal;
+  font-size: 1.05rem;
   color: var(--color-white);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-stroke: 0.3px rgba(255,255,255,0.15);
 }
 
 .hero__dropping-social {
