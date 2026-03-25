@@ -2241,7 +2241,7 @@ body.nav-open {
   position: absolute;
   z-index: 4;
   right: 40%;
-  bottom: 45%;
+  bottom: 34%;
   width: 8%;
   height: auto;
   filter: drop-shadow(0 0 1px rgba(255,255,255,0.6)) drop-shadow(0 0 3px rgba(255,255,255,0.3));
