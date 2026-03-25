@@ -601,6 +601,9 @@ body.nav-open {
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
   transform: scaleX(-1);
 }
+@media (max-width: 1024px) {
+  .hero__labubu { display: none; }
+}
 
 /* Liquid Glass — Chromium (SVG displacement filter) */
 .hero__content.liquid-glass {
