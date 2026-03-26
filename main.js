@@ -39,14 +39,14 @@
     var words = ['life', 'routine', 'habits', 'burnout', 'self-care', 'energy', 'sleep', 'wellness', 'balance', 'focus', 'stability', 'rhythm'];
     var wordColors = ['#ff6b9d', '#f59e0b', '#10b981', '#8b5cf6', '#ec4899', '#06b6d4', '#6366f1', '#f43f5e', '#14b8a6', '#a855f7', '#e11d48', '#0ea5e9'];
     var wordIndex = 0;
-    var firstDelay = 2000; // "life" stays 2s
-    var wordDelay = 1000;  // rest 1s each
+    var firstDelay = 2500; // "life" stays 2.5s
+    var wordDelay = 2000;  // rest 2s each
 
     function flipToNext() {
       // Fade-out: slide up + fade
       rotatingEl.style.opacity = '0';
-      rotatingEl.style.transform = 'translateY(-20px)';
-      rotatingEl.style.webkitTransform = 'translateY(-20px)';
+      rotatingEl.style.transform = 'translateY(-12px)';
+      rotatingEl.style.webkitTransform = 'translateY(-12px)';
       setTimeout(function () {
         // Swap word while hidden
         wordIndex = (wordIndex + 1) % words.length;
@@ -55,8 +55,8 @@
         // Jump to below-position instantly (no transition)
         rotatingEl.style.transition = 'none';
         rotatingEl.style.webkitTransition = 'none';
-        rotatingEl.style.transform = 'translateY(20px)';
-        rotatingEl.style.webkitTransform = 'translateY(20px)';
+        rotatingEl.style.transform = 'translateY(12px)';
+        rotatingEl.style.webkitTransform = 'translateY(12px)';
         // Force reflow so the browser registers the instant jump
         void rotatingEl.offsetWidth;
         // Re-enable transition and animate into view
@@ -65,7 +65,7 @@
         rotatingEl.style.opacity = '1';
         rotatingEl.style.transform = 'translateY(0)';
         rotatingEl.style.webkitTransform = 'translateY(0)';
-      }, 350);
+      }, 550);
     }
 
     setTimeout(function () {
@@ -510,6 +510,66 @@
       }
     });
   });
+
+  // ---- Split Block: 3D Cube Rotation (images only, labels stay) ----
+  (function splitCubeRotation() {
+    var pairs = [
+      {
+        leftImg:  'assets/web2/upgrade/pair-01/left.webp',
+        rightImg: 'assets/web2/upgrade/pair-01/right.webp'
+      },
+      {
+        leftImg:  'assets/web2/upgrade/pair-02/left.webp',
+        rightImg: 'assets/web2/upgrade/pair-02/right.webp'
+      }
+    ];
+
+    if (pairs.length < 2) return;
+
+    var cubeLeft  = document.getElementById('cubeLeft');
+    var cubeRight = document.getElementById('cubeRight');
+    if (!cubeLeft || !cubeRight) return;
+
+    var leftImg  = cubeLeft.querySelector('img');
+    var rightImg = cubeRight.querySelector('img');
+
+    var pairIndex = 0;
+    var INTERVAL  = 3500;
+    var ANIM_DUR  = 800;
+    var isAnimating = false;
+
+    function rotateTo(nextIndex) {
+      if (isAnimating) return;
+      isAnimating = true;
+      var next = pairs[nextIndex];
+
+      var preL = new Image(); preL.src = next.leftImg;
+      var preR = new Image(); preR.src = next.rightImg;
+
+      cubeLeft.classList.add('cube-rotating');
+      cubeRight.classList.add('cube-rotating');
+
+      setTimeout(function () {
+        leftImg.src  = next.leftImg;
+        rightImg.src = next.rightImg;
+        leftImg.style.transform  = 'scaleX(-1)';
+        rightImg.style.transform = 'scaleX(-1)';
+      }, ANIM_DUR / 2);
+
+      setTimeout(function () {
+        cubeLeft.classList.remove('cube-rotating');
+        cubeRight.classList.remove('cube-rotating');
+        leftImg.style.transform  = '';
+        rightImg.style.transform = '';
+        isAnimating = false;
+      }, ANIM_DUR + 50);
+    }
+
+    setInterval(function () {
+      pairIndex = (pairIndex + 1) % pairs.length;
+      rotateTo(pairIndex);
+    }, INTERVAL);
+  })();
 
   // ---- Floating Emojis Across the Site ----
   var emojiPool = [
