@@ -9,7 +9,7 @@
   // ---- Marquee Gif Circles ----
   var gifCircles = document.querySelectorAll('.marquee__gif');
   if (gifCircles.length) {
-    var frameCount = 6;
+    var frameCount = 5;
     var tick = 0;
     // Set initial frame based on data-offset
     gifCircles.forEach(function (circle) {
@@ -43,16 +43,28 @@
     var wordDelay = 1000;  // rest 1s each
 
     function flipToNext() {
-      rotatingEl.classList.add('flip-out');
+      // Fade-out: slide up + fade
+      rotatingEl.style.opacity = '0';
+      rotatingEl.style.transform = 'translateY(-20px)';
+      rotatingEl.style.webkitTransform = 'translateY(-20px)';
       setTimeout(function () {
+        // Swap word while hidden
         wordIndex = (wordIndex + 1) % words.length;
         rotatingEl.textContent = words[wordIndex];
         rotatingEl.style.color = wordColors[wordIndex];
-        rotatingEl.classList.remove('flip-out');
-        rotatingEl.classList.add('flip-in');
-        setTimeout(function () {
-          rotatingEl.classList.remove('flip-in');
-        }, 350);
+        // Jump to below-position instantly (no transition)
+        rotatingEl.style.transition = 'none';
+        rotatingEl.style.webkitTransition = 'none';
+        rotatingEl.style.transform = 'translateY(20px)';
+        rotatingEl.style.webkitTransform = 'translateY(20px)';
+        // Force reflow so the browser registers the instant jump
+        void rotatingEl.offsetWidth;
+        // Re-enable transition and animate into view
+        rotatingEl.style.transition = '';
+        rotatingEl.style.webkitTransition = '';
+        rotatingEl.style.opacity = '1';
+        rotatingEl.style.transform = 'translateY(0)';
+        rotatingEl.style.webkitTransform = 'translateY(0)';
       }, 350);
     }
 
@@ -498,87 +510,6 @@
       }
     });
   });
-
-  // ---- Split Block: 3D Cube Rotation + Synced Label Flip ----
-  (function splitCubeRotation() {
-    var pairs = [
-      {
-        leftImg:  'assets/web2/upgrade/pair-01/left.webp',
-        rightImg: 'assets/web2/upgrade/pair-01/right.webp',
-        leftLabel:  'Emotionally engaging',
-        rightLabel: 'Supporting in process'
-      },
-      {
-        leftImg:  'assets/web2/upgrade/pair-02/left.webp',
-        rightImg: 'assets/web2/upgrade/pair-02/right.webp',
-        leftLabel:  'Always by your side',
-        rightLabel: 'Growing together'
-      }
-    ];
-
-    if (pairs.length < 2) return;
-
-    var cubeLeft  = document.getElementById('cubeLeft');
-    var cubeRight = document.getElementById('cubeRight');
-    var labelLeft  = document.getElementById('splitLabelLeft');
-    var labelRight = document.getElementById('splitLabelRight');
-    if (!cubeLeft || !cubeRight || !labelLeft || !labelRight) return;
-
-    var leftImg  = cubeLeft.querySelector('img');
-    var rightImg = cubeRight.querySelector('img');
-
-    var pairIndex = 0;
-    var INTERVAL  = 3500;
-    var ANIM_DUR  = 800;   // matches CSS animation 0.8s
-    var FLIP_DUR  = 350;
-    var isAnimating = false;
-
-    function flipLabel(el, newText) {
-      el.classList.add('flip-out');
-      setTimeout(function () {
-        el.textContent = newText;
-        el.classList.remove('flip-out');
-        el.classList.add('flip-in');
-        setTimeout(function () { el.classList.remove('flip-in'); }, FLIP_DUR);
-      }, FLIP_DUR);
-    }
-
-    function rotateTo(nextIndex) {
-      if (isAnimating) return;
-      isAnimating = true;
-      var next = pairs[nextIndex];
-
-      // Preload next images
-      var preL = new Image(); preL.src = next.leftImg;
-      var preR = new Image(); preR.src = next.rightImg;
-
-      // Start cube rotation
-      cubeLeft.classList.add('cube-rotating');
-      cubeRight.classList.add('cube-rotating');
-
-      // At 50% mark: swap images + flip horizontally to cancel mirror
-      setTimeout(function () {
-        leftImg.src  = next.leftImg;
-        rightImg.src = next.rightImg;
-        leftImg.style.transform  = 'scaleX(-1)';
-        rightImg.style.transform = 'scaleX(-1)';
-      }, ANIM_DUR / 2);
-
-      // After full animation, clean up
-      setTimeout(function () {
-        cubeLeft.classList.remove('cube-rotating');
-        cubeRight.classList.remove('cube-rotating');
-        leftImg.style.transform  = '';
-        rightImg.style.transform = '';
-        isAnimating = false;
-      }, ANIM_DUR + 50);
-    }
-
-    setInterval(function () {
-      pairIndex = (pairIndex + 1) % pairs.length;
-      rotateTo(pairIndex);
-    }, INTERVAL);
-  })();
 
   // ---- Floating Emojis Across the Site ----
   var emojiPool = [
