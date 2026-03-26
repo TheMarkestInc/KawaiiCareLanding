@@ -1814,6 +1814,10 @@ body.nav-open {
   width: 36px !important;
 }
 
+.pricing-perk__icon--double img:last-child {
+  width: 56px;
+}
+
 .pricing-perk__label {
   font-family: var(--ff-accent);
   font-size: 0.8rem;
