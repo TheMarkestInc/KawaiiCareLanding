@@ -799,8 +799,32 @@ body.nav-open {
 
 /* ---- Hero mobile: simple dark overlay instead of liquid glass ---- */
 @media (max-width: 768px) {
+  .nav {
+    padding-top: 0.5rem;
+  }
+  .nav__container {
+    padding: 0.5rem 1rem;
+  }
+  .nav__logo-icon {
+    width: 72px;
+    height: 72px;
+    margin: -10px 0;
+  }
   .hero {
-    padding-top: 6rem;
+    padding-top: 5rem;
+  }
+
+  .hero__platforms-logos {
+    flex-wrap: nowrap;
+    gap: 1.5rem;
+  }
+  .hero__platform {
+    font-size: 0.85rem;
+    gap: 0.35rem;
+  }
+  .hero__platform img {
+    width: 20px;
+    height: auto;
   }
 
   .hero__content {
