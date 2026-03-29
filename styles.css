@@ -1326,14 +1326,15 @@ body.nav-open {
 /* ======== BEFORE / AFTER ======== */
 .split {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr; /* ALWAYS horizontally side-by-side */
 }
 
 .split__panel {
-  padding: clamp(1.5rem, 4vw, 3rem);
+  padding: clamp(1rem, 3vw, 3rem);
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
 }
 
@@ -1372,9 +1373,9 @@ body.nav-open {
 }
 
 .split__label {
-  font-size: var(--fs-h3);
+  font-size: clamp(1rem, 4vw, var(--fs-h3));
   font-family: var(--ff-heading);
-  margin-bottom: 1rem;
+  margin-bottom: clamp(0.5rem, 2vw, 1rem);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   min-height: 1.3em;
@@ -1406,10 +1407,39 @@ body.nav-open {
   line-height: 1.8;
 }
 
-@media (min-width: 1024px) {
-  .split {
-    grid-template-columns: 1fr 1fr;
-  }
+/* We don't need min-width 1024px override for split if it's always 1fr 1fr */
+
+/* ======== HORIZONTAL SCROLL (STICKY) ======== */
+.sticky-h-scroll {
+  /* To have enough scroll distance for 2 items, we set height to 200vh.
+     The sticky container inside will be 100vh tall. */
+  height: 200vh;
+  position: relative;
+  overflow: clip; /* prevent content overflow outside section */
+}
+
+/* Inner sticky container */
+.sticky-h-scroll__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Flex row wrapper for all horizontal panels */
+.sticky-h-scroll__content {
+  display: flex;
+  height: 100%;
+  width: 200vw; /* 2 items * 100vw */
+  will-change: transform;
+}
+
+/* Each horizontal panel */
+.h-scroll-item {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
 }
 
 /* ======== EMOTIONS GALLERY ======== */

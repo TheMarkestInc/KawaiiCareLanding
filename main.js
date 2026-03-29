@@ -511,64 +511,37 @@
     });
   });
 
-  // ---- Split Block: 3D Cube Rotation (images only, labels stay) ----
-  (function splitCubeRotation() {
-    var pairs = [
-      {
-        leftImg:  'assets/web2/upgrade/pair-01/left.webp',
-        rightImg: 'assets/web2/upgrade/pair-01/right.webp'
-      },
-      {
-        leftImg:  'assets/web2/upgrade/pair-02/left.webp',
-        rightImg: 'assets/web2/upgrade/pair-02/right.webp'
-      }
-    ];
+  // ---- Sticky Horizontal Scroll Block ----
+  (function initStickyHScroll() {
+    var section = document.querySelector('.sticky-h-scroll');
+    var content = document.getElementById('hScrollContent');
+    if (!section || !content) return;
 
-    if (pairs.length < 2) return;
+    function onScroll() {
+      var rect = section.getBoundingClientRect();
+      var sectionTop = rect.top;
+      var sectionHeight = rect.height;
+      var windowHeight = window.innerHeight;
 
-    var cubeLeft  = document.getElementById('cubeLeft');
-    var cubeRight = document.getElementById('cubeRight');
-    if (!cubeLeft || !cubeRight) return;
+      // Scroll progress tracking when the element is pinned (top <= 0)
+      // The pinning stays active until bottom reaches window bottom.
+      // Total scrollable distance is sectionHeight - windowHeight (which is 100vh)
+      var scrollableDistance = sectionHeight - windowHeight;
+      var scrolled = -sectionTop;
 
-    var leftImg  = cubeLeft.querySelector('img');
-    var rightImg = cubeRight.querySelector('img');
+      // Clamp scrolled between 0 and scrollableDistance 
+      var progress = Math.max(0, Math.min(scrolled / scrollableDistance, 1));
 
-    var pairIndex = 0;
-    var INTERVAL  = 3500;
-    var ANIM_DUR  = 800;
-    var isAnimating = false;
-
-    function rotateTo(nextIndex) {
-      if (isAnimating) return;
-      isAnimating = true;
-      var next = pairs[nextIndex];
-
-      var preL = new Image(); preL.src = next.leftImg;
-      var preR = new Image(); preR.src = next.rightImg;
-
-      cubeLeft.classList.add('cube-rotating');
-      cubeRight.classList.add('cube-rotating');
-
-      setTimeout(function () {
-        leftImg.src  = next.leftImg;
-        rightImg.src = next.rightImg;
-        leftImg.style.transform  = 'scaleX(-1)';
-        rightImg.style.transform = 'scaleX(-1)';
-      }, ANIM_DUR / 2);
-
-      setTimeout(function () {
-        cubeLeft.classList.remove('cube-rotating');
-        cubeRight.classList.remove('cube-rotating');
-        leftImg.style.transform  = '';
-        rightImg.style.transform = '';
-        isAnimating = false;
-      }, ANIM_DUR + 50);
+      // Translate linearly based on progress. 
+      // progress=0 => 0vw. progress=1 => -100vw (so 2nd item is fully visible)
+      // Since container has 2 items, moving by 50% of container width (-100vw).
+      var translateX = progress * -50; 
+      content.style.transform = 'translate3d(' + translateX + '%, 0, 0)';
     }
 
-    setInterval(function () {
-      pairIndex = (pairIndex + 1) % pairs.length;
-      rotateTo(pairIndex);
-    }, INTERVAL);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    onScroll();
   })();
 
   // ---- Floating Emojis Across the Site ----
