@@ -511,11 +511,19 @@
     });
   });
 
-  // ---- Sticky Horizontal Scroll Block ----
+  // ---- Sticky Horizontal Scroll Block (Dynamic single slide) ----
   (function initStickyHScroll() {
     var section = document.querySelector('.sticky-h-scroll');
     var content = document.getElementById('hScrollContent');
     if (!section || !content) return;
+
+    var items = content.children;
+    var numItems = items.length;
+    if (numItems === 0) return;
+
+    // Set scrollable distance based on number of items
+    section.style.height = (numItems * 100) + 'vh';
+    content.style.width = (numItems * 100) + 'vw';
 
     function onScroll() {
       var rect = section.getBoundingClientRect();
@@ -523,19 +531,19 @@
       var sectionHeight = rect.height;
       var windowHeight = window.innerHeight;
 
-      // Scroll progress tracking when the element is pinned (top <= 0)
-      // The pinning stays active until bottom reaches window bottom.
-      // Total scrollable distance is sectionHeight - windowHeight (which is 100vh)
+      // Scroll progress tracking when the element is pinned
       var scrollableDistance = sectionHeight - windowHeight;
+      if (scrollableDistance <= 0) return;
+
       var scrolled = -sectionTop;
-
-      // Clamp scrolled between 0 and scrollableDistance 
       var progress = Math.max(0, Math.min(scrolled / scrollableDistance, 1));
+      
+      // We want to translate exactly up to the last slide.
+      // If there are N items, the container is N*100% wide.
+      // To show the last item, we need to translate by (N-1)/N * 100%.
+      var maxTranslate = ((numItems - 1) / numItems) * 100;
+      var translateX = progress * -maxTranslate;
 
-      // Translate linearly based on progress. 
-      // progress=0 => 0vw. progress=1 => -100vw (so 2nd item is fully visible)
-      // Since container has 2 items, moving by 50% of container width (-100vw).
-      var translateX = progress * -50; 
       content.style.transform = 'translate3d(' + translateX + '%, 0, 0)';
     }
 
